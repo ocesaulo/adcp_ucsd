@@ -147,6 +147,26 @@ nav a.active { background: var(--teal); color: #fff; }
 .map-legend { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
 .leg-item  { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
 .leg-dot   { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+/* ─── CRUISE SELECTOR ─── */
+.cruise-sel-bar {
+  padding: 10px 16px; border-top: 1px solid var(--border); background: var(--sand);
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+}
+.cruise-sel-label { font-size: 11px; font-weight: 600; color: var(--muted); margin-right: 2px; white-space: nowrap; }
+.cruise-sel-all {
+  font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 100px;
+  border: 1px solid var(--border); background: var(--white); color: var(--muted);
+  cursor: pointer; font-family: var(--sans); transition: .12s;
+}
+.cruise-sel-all:hover { background: var(--teal-pale); color: var(--teal); border-color: var(--teal); }
+.cruise-chip {
+  display: inline-flex; align-items: center;
+  font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 100px;
+  border: 1px solid var(--border); background: var(--white); color: var(--navy);
+  cursor: pointer; user-select: none; font-family: var(--mono); transition: .12s;
+}
+.cruise-chip.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+.cruise-chip input[type=checkbox] { display: none; }
 
 /* ─── IMAGE GALLERY ─── */
 .gallery-outer { padding: 1.5rem; }
@@ -402,6 +422,7 @@ footer a:hover { color: #fff; }
 
 let SITE = null;          // populated after load
 let mapsInitialized = {}; // track which Leaflet maps are built
+let mapCruiseLayers = {}; // per-project, per-cruise LayerGroups
 
 async function loadData() {
   if (location.protocol !== 'file:') {
@@ -647,6 +668,23 @@ function buildProjectHTML(p) {
         </div>
       </div>
       <div id="map-${p.id}" class="leaflet-map"></div>
+      ${(() => {
+        const withTracks = p.cruises.filter(c => c.track && c.track.length > 1);
+        if (!withTracks.length) return '';
+        const chips = withTracks.map(c => {
+          const map = mapsInitialized[p.id];
+          const lg  = mapCruiseLayers[p.id]?.[c.id];
+          const on  = !map || !lg || map.hasLayer(lg);
+          return `<label class="cruise-chip${on ? ' active' : ''}" id="chip-${p.id}-${c.id}">`
+            + `<input type="checkbox" ${on ? 'checked' : ''} data-cruise="${c.id}"`
+            + ` onchange="toggleCruiseLayer('${p.id}','${c.id}',this.checked)">${c.id}</label>`;
+        }).join('');
+        return `<div class="cruise-sel-bar" id="cruise-sel-${p.id}">`
+          + `<span class="cruise-sel-label">Show:</span>`
+          + `<button class="cruise-sel-all" onclick="setCruisesAll('${p.id}',true)">All</button>`
+          + `<button class="cruise-sel-all" onclick="setCruisesAll('${p.id}',false)">None</button>`
+          + chips + `</div>`;
+      })()}
     </div>
 
     <!-- ── IMAGE GALLERY ── -->
@@ -823,14 +861,18 @@ function initProjectMap(p) {
     { position: 'topright', collapsed: false }
   ).addTo(map);
 
-  // Draw cruise tracks and markers
+  // Draw cruise tracks and markers — one LayerGroup per cruise for toggling
+  if (!mapCruiseLayers[p.id]) mapCruiseLayers[p.id] = {};
+
   p.cruises.forEach(cruise => {
+    if (!cruise.track || cruise.track.length < 2) return;
+
+    const lg = L.layerGroup();
+
     // Track polyline
-    if (cruise.track && cruise.track.length > 1) {
-      L.polyline(cruise.track, {
-        color: p.color, weight: 2.5, opacity: 0.8, dashArray: '5 4'
-      }).addTo(map);
-    }
+    L.polyline(cruise.track, {
+      color: p.color, weight: 2.5, opacity: 0.8, dashArray: '5 4'
+    }).addTo(lg);
 
     // Station markers (small blue dots)
     if (cruise.stations) {
@@ -838,11 +880,11 @@ function initProjectMap(p) {
         L.circleMarker([st.lat, st.lng], {
           radius: 4, fillColor: '#2874c5', color: '#fff', weight: 1.5,
           opacity: 1, fillOpacity: 0.85
-        }).addTo(map).bindTooltip(st.label, {permanent: false, direction: 'top', className: 'lbl-tip'});
+        }).addTo(lg).bindTooltip(st.label, {permanent: false, direction: 'top', className: 'lbl-tip'});
       });
     }
 
-    // Main cruise marker (larger, coloured)
+    // Main cruise marker (larger, coloured) with popup
     const midIdx = Math.floor(cruise.track.length / 2);
     const midPt = cruise.track[midIdx];
     const pop = `
@@ -858,10 +900,34 @@ function initProjectMap(p) {
     L.circleMarker(midPt, {
       radius: 9, fillColor: p.color, color: '#fff', weight: 2.5,
       opacity: 1, fillOpacity: 0.95
-    }).addTo(map).bindPopup(pop);
+    }).addTo(lg).bindPopup(pop);
+
+    mapCruiseLayers[p.id][cruise.id] = lg;
+    lg.addTo(map); // visible by default
   });
 
   mapsInitialized[p.id] = map;
+}
+
+/* ════════════════════════════════════════════════════════
+   CRUISE LAYER TOGGLE
+   ════════════════════════════════════════════════════════ */
+function toggleCruiseLayer(projId, cruiseId, show) {
+  const lg  = mapCruiseLayers[projId]?.[cruiseId];
+  const map = mapsInitialized[projId];
+  if (!lg || !map) return;
+  if (show) lg.addTo(map); else map.removeLayer(lg);
+  const chip = document.getElementById(`chip-${projId}-${cruiseId}`);
+  if (chip) chip.classList.toggle('active', show);
+}
+
+function setCruisesAll(projId, show) {
+  const bar = document.getElementById(`cruise-sel-${projId}`);
+  if (!bar) return;
+  bar.querySelectorAll('input[type=checkbox]').forEach(cb => {
+    cb.checked = show;
+    toggleCruiseLayer(projId, cb.dataset.cruise, show);
+  });
 }
 
 /* ════════════════════════════════════════════════════════

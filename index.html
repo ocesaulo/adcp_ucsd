@@ -749,7 +749,7 @@ function buildProjectHTML(p) {
                   <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 6h8M6 2l4 4-4 4"/></svg>NCEI
                 </a>
                 <a class="lnk-plots" href="${c.plots_url}" target="_blank">Plots</a>
-                <a class="lnk-jasadcp" href="${SITE.site.jasadcp_url}" target="_blank">JASADCP</a>
+                ${c.jasadcp_url ? `<a class="lnk-jasadcp" href="${c.jasadcp_url}" target="_blank">JASADCP</a>` : ''}
               </td>
             </tr>`;
   });

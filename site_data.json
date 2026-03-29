@@ -17,7 +17,7 @@
     "institution_url": "https://scripps.ucsd.edu",
     "lab_url": "http://tryfan.ucsd.edu",
     "original_site_url": "https://adcp.ucsd.edu",
-    "jasadcp_url": "http://ilikai.soest.hawaii.edu/sadcp/",
+    "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
     "ncei_search_base": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=",
     "citation": "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography, UC San Diego. http://adcp.ucsd.edu/calcofi",
     "footer_note": "Data archived at NCEI / NOAA. Processing via CODAS3."
@@ -54,7 +54,7 @@
           "status": "processed",
           "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0402",
           "plots_url": "https://adcp.ucsd.edu/lmgould/",
-          "jasadcp_url": "http://ilikai.soest.hawaii.edu/sadcp/",
+          "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
           "notes": "Two Drake Passage transects. Good data quality throughout.",
           "track": [
             [-53.5, -68.2], [-55.1, -65.8], [-57.2, -64.1],
@@ -98,7 +98,7 @@
           "status": "processed",
           "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0501",
           "plots_url": "https://adcp.ucsd.edu/lmgould/",
-          "jasadcp_url": "http://ilikai.soest.hawaii.edu/sadcp/",
+          "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
           "notes": "Bransfield Strait transect including Palmer Station operations.",
           "track": [
             [-62.0, -64.0], [-63.1, -61.5], [-63.8, -59.8],
@@ -130,7 +130,7 @@
           "status": "processed",
           "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0601",
           "plots_url": "https://adcp.ucsd.edu/lmgould/",
-          "jasadcp_url": "http://ilikai.soest.hawaii.edu/sadcp/",
+          "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
           "notes": "Three Drake Passage transects with complete calibration data.",
           "track": [
             [-53.8, -67.0], [-55.5, -65.2], [-57.8, -63.5],
@@ -167,7 +167,7 @@
           "status": "archived",
           "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0801",
           "plots_url": "https://adcp.ucsd.edu/lmgould/",
-          "jasadcp_url": "http://ilikai.soest.hawaii.edu/sadcp/",
+          "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
           "notes": "Final Bransfield Strait survey of the program.",
           "track": [
             [-61.5, -64.8], [-62.9, -62.3], [-63.6, -60.2],
@@ -191,7 +191,7 @@
           "status": "in_review",
           "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG1001",
           "plots_url": "https://adcp.ucsd.edu/lmgould/",
-          "jasadcp_url": "http://ilikai.soest.hawaii.edu/sadcp/",
+          "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
           "notes": "Data processing in progress.",
           "track": [
             [-53.2, -68.8], [-55.8, -66.5], [-57.5, -65.1],
@@ -237,7 +237,7 @@
           "status": "processed",
           "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9310",
           "plots_url": "https://adcp.ucsd.edu/calcofi/1993/nh9310/nh9310.htm",
-          "jasadcp_url": "ftp://ilikai.soest.hawaii.edu/caldwell_pub/adcp/INVNTORY/calcofi.html",
+          "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
           "notes": "First cruise of the CalCOFI ADCP program. Full CalCOFI grid surveyed.",
           "track": [
             [34.5, -120.8], [33.8, -120.2], [33.2, -119.5],
@@ -281,7 +281,7 @@
           "status": "processed",
           "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9401",
           "plots_url": "https://adcp.ucsd.edu/calcofi/",
-          "jasadcp_url": "ftp://ilikai.soest.hawaii.edu/caldwell_pub/adcp/INVNTORY/calcofi.html",
+          "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
           "notes": "Winter cruise. El Niño conditions beginning.",
           "track": [
             [34.2, -121.0], [33.5, -120.5], [32.8, -119.5],
@@ -313,7 +313,7 @@
           "status": "processed",
           "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9407",
           "plots_url": "https://adcp.ucsd.edu/calcofi/",
-          "jasadcp_url": "ftp://ilikai.soest.hawaii.edu/caldwell_pub/adcp/INVNTORY/calcofi.html",
+          "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
           "notes": "Summer survey. Extended grid to central California.",
           "track": [
             [36.5, -122.5], [35.5, -121.8], [34.5, -120.8],
@@ -345,7 +345,7 @@
           "status": "processed",
           "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9501",
           "plots_url": "https://adcp.ucsd.edu/calcofi/",
-          "jasadcp_url": "ftp://ilikai.soest.hawaii.edu/caldwell_pub/adcp/INVNTORY/calcofi.html",
+          "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
           "notes": "Winter survey during developing El Niño.",
           "track": [
             [34.0, -120.9], [33.2, -120.1], [32.5, -119.2],
@@ -369,7 +369,7 @@
           "status": "archived",
           "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9601",
           "plots_url": "https://adcp.ucsd.edu/calcofi/",
-          "jasadcp_url": "ftp://ilikai.soest.hawaii.edu/caldwell_pub/adcp/INVNTORY/calcofi.html",
+          "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
           "notes": "Extended grid cruise.",
           "track": [
             [36.2, -122.8], [35.2, -122.0], [34.2, -121.0],
@@ -394,7 +394,7 @@
           "status": "processed",
           "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH0301",
           "plots_url": "https://adcp.ucsd.edu/calcofi/",
-          "jasadcp_url": "ftp://ilikai.soest.hawaii.edu/caldwell_pub/adcp/INVNTORY/calcofi.html",
+          "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
           "notes": "Final cruise of the CalCOFI ADCP program. Broadband instrument used.",
           "track": [
             [33.8, -120.6], [33.0, -119.9], [32.3, -119.1],

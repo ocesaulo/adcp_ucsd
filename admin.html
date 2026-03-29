@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Admin — Chereskin Lab ADCP Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0b2240; --teal:#0e8c7a; --teal-pale:#e0f4f1; --teal-lt:#1ab8a0;
+  --sand:#f4f1eb; --white:#fff; --text:#0f1c2e; --muted:#4a5e78; --light:#8097b2;
+  --border:#d6dfe8; --accent:#c9832e; --accent-pale:#fdf0e0;
+  --red:#c0392b; --red-pale:#fdeded;
+  --green:#1a7a55; --green-pale:#e6f7f1;
+  --sans:'IBM Plex Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); background: var(--sand); color: var(--text); font-size: 14px; line-height: 1.6; }
+
+header {
+  background: var(--navy); color: #fff; padding: 0;
+  border-bottom: 3px solid var(--teal); position: sticky; top: 0; z-index: 100;
+}
+.hdr { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 58px; }
+.hdr-title { font-size: 15px; font-weight: 500; }
+.hdr-sub   { font-size: 11px; color: rgba(255,255,255,.45); margin-top: 2px; }
+.hdr-link  { color: rgba(255,255,255,.65); text-decoration: none; font-size: 13px; padding: 6px 14px; border: 1px solid rgba(255,255,255,.2); border-radius: 6px; transition: .15s; }
+.hdr-link:hover { border-color: rgba(255,255,255,.5); color: #fff; }
+
+.wrap { max-width: 1100px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 240px 1fr; gap: 2rem; }
+
+/* ── SIDEBAR ── */
+aside { position: sticky; top: 72px; height: fit-content; }
+.step-nav { background: var(--white); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.step-nav-title { font-size: 10.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--light); padding: .75rem 1rem; border-bottom: 1px solid var(--border); background: var(--sand); }
+.step-item { display: flex; align-items: center; gap: 10px; padding: .65rem 1rem; border-bottom: 1px solid var(--border); cursor: pointer; transition: .12s; font-size: 13px; color: var(--muted); text-decoration: none; }
+.step-item:last-child { border-bottom: none; }
+.step-item:hover { background: var(--sand); color: var(--text); }
+.step-item.active { background: var(--teal-pale); color: var(--teal); font-weight: 500; }
+.step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--border); color: var(--light); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.step-item.active .step-num { background: var(--teal); color: #fff; }
+.aside-info { margin-top: 1rem; background: var(--accent-pale); border: 1px solid #f0d5b0; border-radius: 10px; padding: 1rem; font-size: 12.5px; color: #7a4e1a; line-height: 1.65; }
+.aside-info code { font-family: var(--mono); font-size: 11.5px; background: rgba(0,0,0,.06); padding: 1px 5px; border-radius: 3px; }
+
+/* ── MAIN ── */
+main { display: flex; flex-direction: column; gap: 2rem; }
+
+.card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.card-hdr { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); background: var(--sand); display: flex; align-items: center; gap: 12px; }
+.card-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
+.card-title { font-size: 15px; font-weight: 600; color: var(--navy); }
+.card-sub   { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.card-body  { padding: 1.5rem; }
+
+/* ── FORM ── */
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.field-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+.field-row.single { grid-template-columns: 1fr; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+label { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: .02em; }
+label .req { color: var(--red); margin-left: 2px; }
+label .tip { font-weight: 300; color: var(--light); font-style: italic; }
+input[type=text], input[type=url], input[type=date], input[type=number], select, textarea {
+  font-family: var(--sans); font-size: 13.5px; color: var(--text);
+  background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+  padding: 8px 12px; transition: border-color .15s; width: 100%;
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,140,122,.1); }
+textarea { resize: vertical; min-height: 80px; }
+.mono-input { font-family: var(--mono); font-size: 12.5px; }
+
+/* ── TRACK INPUT ── */
+.track-hint { font-size: 12px; color: var(--muted); margin-bottom: 8px; line-height: 1.6; }
+.track-hint code { font-family: var(--mono); font-size: 11.5px; background: #f0f4f8; padding: 1px 5px; border-radius: 3px; }
+.coord-table { width: 100%; border-collapse: collapse; margin-bottom: .75rem; }
+.coord-table th { font-size: 11px; font-weight: 600; color: var(--light); text-transform: uppercase; letter-spacing: .06em; padding: 6px 8px; border-bottom: 1px solid var(--border); text-align: left; }
+.coord-table td { padding: 4px 4px; }
+.coord-table input { border-radius: 5px; padding: 5px 8px; font-size: 13px; text-align: right; }
+.coord-table .del-btn { background: none; border: none; color: var(--light); cursor: pointer; font-size: 16px; padding: 4px 8px; transition: color .12s; font-family: var(--mono); }
+.coord-table .del-btn:hover { color: var(--red); }
+.add-row-btn { font-size: 12.5px; font-weight: 500; color: var(--teal); background: var(--teal-pale); border: 1px dashed var(--teal); border-radius: 6px; padding: 6px 14px; cursor: pointer; font-family: var(--sans); transition: .12s; }
+.add-row-btn:hover { background: var(--teal); color: #fff; border-style: solid; }
+
+/* ── IMAGE ROWS ── */
+.image-rows { display: flex; flex-direction: column; gap: 10px; }
+.img-row { background: var(--sand); border: 1px solid var(--border); border-radius: 8px; padding: 12px; display: grid; grid-template-columns: 1fr 2fr 140px 36px; gap: 8px; align-items: start; }
+.img-row input, .img-row select { font-size: 13px; }
+.rm-btn { width: 34px; height: 34px; border: 1px solid #f0c0b8; background: #fff5f5; color: var(--red); border-radius: 6px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: .12s; flex-shrink: 0; font-family: var(--mono); }
+.rm-btn:hover { background: var(--red); color: #fff; }
+
+/* ── SECTION DIVIDER ── */
+.divider { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--light); padding: .75rem 0 .5rem; margin-top: .5rem; border-top: 1px solid var(--border); }
+
+/* ── STATUS SELECT ── */
+.status-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+.status-opt { display: none; }
+.status-lbl { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 100px; border: 1px solid var(--border); font-size: 12.5px; cursor: pointer; transition: .12s; }
+.status-opt:checked + .status-lbl { border-color: var(--teal); background: var(--teal-pale); color: var(--teal); font-weight: 500; }
+.status-opt[value=archived]:checked + .status-lbl { border-color: var(--navy); background: #edf1f8; color: var(--navy); }
+.status-opt[value=in_review]:checked + .status-lbl { border-color: var(--accent); background: var(--accent-pale); color: var(--accent); }
+.status-opt[value=pending]:checked + .status-lbl { border-color: #aaa; background: #f5f5f5; color: #666; }
+
+/* ── ACTION BUTTONS ── */
+.actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 1.5rem; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; font-family: var(--sans); transition: .15s; }
+.btn-primary { background: var(--teal); color: #fff; }
+.btn-primary:hover { background: var(--teal-lt); }
+.btn-secondary { background: var(--navy); color: #fff; }
+.btn-secondary:hover { background: #1a3a6a; }
+.btn-outline { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+.btn-outline:hover { background: var(--sand); color: var(--text); }
+
+/* ── OUTPUT PANEL ── */
+.output-panel { display: none; }
+.output-panel.visible { display: block; }
+.output-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: .75rem; }
+.output-hdr h3 { font-size: 14px; font-weight: 600; color: var(--navy); }
+pre {
+  background: #0f1c2e; color: #a8d8c8; font-family: var(--mono); font-size: 12.5px;
+  padding: 1.5rem; border-radius: 10px; overflow-x: auto; line-height: 1.7;
+  max-height: 500px; overflow-y: auto;
+}
+.copy-btn { font-size: 12.5px; font-weight: 500; color: var(--teal); background: var(--teal-pale); border: 1px solid var(--teal); border-radius: 6px; padding: 5px 14px; cursor: pointer; font-family: var(--sans); transition: .12s; }
+.copy-btn:hover { background: var(--teal); color: #fff; }
+.copy-btn.copied { background: var(--green); border-color: var(--green); color: #fff; }
+
+/* ── ALERTS ── */
+.alert { border-radius: 8px; padding: .9rem 1.2rem; font-size: 13px; margin-bottom: 1rem; line-height: 1.6; display: none; }
+.alert.visible { display: block; }
+.alert-err  { background: var(--red-pale);   border: 1px solid #f5b8b8; color: var(--red); }
+.alert-ok   { background: var(--green-pale); border: 1px solid #9fe5cc; color: var(--green); }
+
+/* ── INSTRUCTIONS PANEL ── */
+.how-to { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; }
+.how-to h3 { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: .75rem; }
+.how-to ol, .how-to ul { padding-left: 1.25rem; }
+.how-to li { font-size: 13px; color: var(--muted); margin-bottom: .5rem; line-height: 1.65; }
+.how-to code { font-family: var(--mono); font-size: 11.5px; background: #f0f4f8; padding: 1px 6px; border-radius: 3px; color: var(--navy); }
+.how-to .cmd { display: block; background: #0f1c2e; color: #a8d8c8; font-family: var(--mono); font-size: 12.5px; padding: .6rem 1rem; border-radius: 7px; margin: .4rem 0; }
+
+@media(max-width:760px){ .wrap{grid-template-columns:1fr} aside{position:static} .field-row{grid-template-columns:1fr} .img-row{grid-template-columns:1fr 1fr} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr">
+    <div>
+      <div class="hdr-title">Admin — ADCP Data Portal</div>
+      <div class="hdr-sub">Add or update cruise data → copy JSON → paste into site_data.json</div>
+    </div>
+    <a class="hdr-link" href="index.html">← Back to Portal</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="step-nav">
+      <div class="step-nav-title">Steps</div>
+      <a class="step-item active" href="#sec-cruise"><span class="step-num">1</span> Cruise details</a>
+      <a class="step-item" href="#sec-track"><span class="step-num">2</span> Track & stations</a>
+      <a class="step-item" href="#sec-images"><span class="step-num">3</span> Images</a>
+      <a class="step-item" href="#sec-generate"><span class="step-num">4</span> Generate JSON</a>
+      <a class="step-item" href="#sec-hosting"><span class="step-num">5</span> Hosting guide</a>
+    </div>
+
+    <div class="aside-info">
+      <strong>Quick workflow:</strong><br>
+      Fill form → Generate JSON → Copy the cruise block → Open <code>site_data.json</code> → Paste inside the correct project's <code>"cruises": [...]</code> array.
+      <br><br>
+      <strong>Images:</strong><br>
+      Place image files in the <code>images/</code> folder next to <code>index.html</code>. Filenames must exactly match what you enter here.
+    </div>
+  </aside>
+
+  <!-- MAIN FORM -->
+  <main>
+
+    <!-- STEP 1: CRUISE DETAILS -->
+    <div class="card" id="sec-cruise">
+      <div class="card-hdr">
+        <div class="card-icon" style="background:#e0f4f1">🚢</div>
+        <div>
+          <div class="card-title">Step 1 — Cruise Details</div>
+          <div class="card-sub">Basic metadata. Required fields are marked <span style="color:var(--red)">✱</span></div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="alert alert-err" id="alert-err"></div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Project / Program <span class="req">✱</span> <span class="tip">— which project does this cruise belong to?</span></label>
+            <select id="f-project">
+              <option value="antarctic">Antarctic — Laurence M. Gould</option>
+              <option value="calcofi">CalCOFI — California Cooperative</option>
+              <option value="new">+ Add to new project (edit JSON manually)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Cruise ID <span class="req">✱</span> <span class="tip">— e.g. LMG0402, NH9310</span></label>
+            <input type="text" id="f-id" placeholder="NH9310" class="mono-input" maxlength="16">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Start date <span class="req">✱</span></label>
+            <input type="date" id="f-date-start">
+          </div>
+          <div class="field">
+            <label>End date <span class="req">✱</span></label>
+            <input type="date" id="f-date-end">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Ship / Vessel <span class="req">✱</span></label>
+            <input type="text" id="f-ship" placeholder="R/V New Horizon">
+          </div>
+          <div class="field">
+            <label>Region <span class="req">✱</span> <span class="tip">— short description</span></label>
+            <input type="text" id="f-region" placeholder="Drake Passage">
+          </div>
+        </div>
+
+        <div class="field-row triple">
+          <div class="field">
+            <label>Principal Investigator</label>
+            <input type="text" id="f-pi" placeholder="T.K. Chereskin">
+          </div>
+          <div class="field">
+            <label>ADCP Instrument</label>
+            <input type="text" id="f-instr" placeholder="RDI 150 kHz NB">
+          </div>
+          <div class="field">
+            <label>Depth range (m) <span class="tip">— min / max</span></label>
+            <div style="display:flex;gap:6px">
+              <input type="number" id="f-dmin" placeholder="8" style="text-align:center">
+              <input type="number" id="f-dmax" placeholder="250" style="text-align:center">
+            </div>
+          </div>
+        </div>
+
+        <div class="divider">Data Access URLs</div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>NCEI Accession URL <span class="req">✱</span> <span class="tip">— permanent NCEI permalink</span></label>
+            <input type="url" id="f-ncei" placeholder="https://www.ncei.noaa.gov/data/oceans/accession/XXXXXXX/">
+          </div>
+          <div class="field">
+            <label>Plots / cruise page URL</label>
+            <input type="url" id="f-plots" placeholder="https://adcp.ucsd.edu/calcofi/1993/nh9310/">
+          </div>
+        </div>
+
+        <div class="field-row single">
+          <div class="field">
+            <label>Notes <span class="tip">— brief processing or data quality notes (optional)</span></label>
+            <textarea id="f-notes" placeholder="Full CalCOFI grid surveyed. Good data quality throughout. Bottom tracking available in shallow regions."></textarea>
+          </div>
+        </div>
+
+        <div class="divider">Status</div>
+        <div class="status-opts">
+          <input class="status-opt" type="radio" name="status" id="s-proc" value="processed" checked>
+          <label class="status-lbl" for="s-proc">✓ Processed</label>
+          <input class="status-opt" type="radio" name="status" id="s-arch" value="archived">
+          <label class="status-lbl" for="s-arch">📦 Archived</label>
+          <input class="status-opt" type="radio" name="status" id="s-rev" value="in_review">
+          <label class="status-lbl" for="s-rev">⏳ In review</label>
+          <input class="status-opt" type="radio" name="status" id="s-pend" value="pending">
+          <label class="status-lbl" for="s-pend">⌛ Pending</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: TRACK -->
+    <div class="card" id="sec-track">
+      <div class="card-hdr">
+        <div class="card-icon" style="background:#e8f0fb">🗺️</div>
+        <div>
+          <div class="card-title">Step 2 — Cruise Track & Station Positions</div>
+          <div class="card-sub">Track waypoints draw the cruise line on the map. Stations are individually labeled markers.</div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="track-hint">
+          Enter <strong>track waypoints</strong> in order. Latitude: negative = South. Longitude: negative = West.<br>
+          Minimum 2 waypoints to draw a line. <code>Example: Lat -57.2, Lon -64.1 → 57.2°S, 64.1°W</code><br>
+          You can get coordinates from Google Maps (right-click → copy coordinates) or from your CODAS nav files.
+        </div>
+
+        <table class="coord-table">
+          <thead><tr><th>#</th><th>Latitude</th><th>Longitude</th><th></th></tr></thead>
+          <tbody id="track-rows">
+            <tr>
+              <td style="color:var(--light);font-size:12px;padding:4px 8px">1</td>
+              <td><input type="number" step="0.01" placeholder="-53.5" class="track-lat"></td>
+              <td><input type="number" step="0.01" placeholder="-68.2" class="track-lon"></td>
+              <td><button class="del-btn" onclick="delTrackRow(this)">×</button></td>
+            </tr>
+            <tr>
+              <td style="color:var(--light);font-size:12px;padding:4px 8px">2</td>
+              <td><input type="number" step="0.01" placeholder="-57.2" class="track-lat"></td>
+              <td><input type="number" step="0.01" placeholder="-64.1" class="track-lon"></td>
+              <td><button class="del-btn" onclick="delTrackRow(this)">×</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="add-row-btn" onclick="addTrackRow()">+ Add waypoint</button>
+
+        <div class="divider">Station Positions <span style="font-weight:300;font-style:italic">(optional — labeled dots)</span></div>
+
+        <table class="coord-table">
+          <thead><tr><th>#</th><th>Latitude</th><th>Longitude</th><th>Label</th><th></th></tr></thead>
+          <tbody id="station-rows">
+            <tr>
+              <td style="color:var(--light);font-size:12px;padding:4px 8px">1</td>
+              <td><input type="number" step="0.01" placeholder="-55.1" class="stn-lat"></td>
+              <td><input type="number" step="0.01" placeholder="-65.8" class="stn-lon"></td>
+              <td><input type="text" placeholder="DP-01" class="stn-lbl"></td>
+              <td><button class="del-btn" onclick="delStnRow(this)">×</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="add-row-btn" onclick="addStnRow()">+ Add station</button>
+
+      </div>
+    </div>
+
+    <!-- STEP 3: IMAGES -->
+    <div class="card" id="sec-images">
+      <div class="card-hdr">
+        <div class="card-icon" style="background:#f0eefd">🖼️</div>
+        <div>
+          <div class="card-title">Step 3 — Images</div>
+          <div class="card-sub">Image files go in the <code>images/</code> folder. Filenames must match exactly.</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:1rem;line-height:1.65">
+          Supported image types: <strong>velocity_plot</strong> (depth-colored velocity maps),
+          <strong>station_map</strong> (cruise track plots), <strong>cruise_photo</strong> (shipboard photos),
+          <strong>echo_intensity</strong> (backscatter profiles), <strong>calibration</strong> (cal run plots).
+          <br>Supported file types: <code>.jpg</code> <code>.jpeg</code> <code>.png</code> <code>.pdf</code>
+        </p>
+        <div class="image-rows" id="image-rows">
+          <div class="img-row">
+            <input type="text" placeholder="nh9310_100_oa.jpg" class="img-fname mono-input">
+            <input type="text" placeholder="Objectively mapped velocity at 100 m, NH9310" class="img-cap">
+            <select class="img-type">
+              <option value="velocity_plot">Velocity plot</option>
+              <option value="station_map">Station map</option>
+              <option value="cruise_photo">Cruise photo</option>
+              <option value="echo_intensity">Echo intensity</option>
+              <option value="calibration">Calibration</option>
+            </select>
+            <button class="rm-btn" onclick="removeImg(this)">×</button>
+          </div>
+        </div>
+        <br>
+        <button class="add-row-btn" onclick="addImgRow()">+ Add image</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: GENERATE -->
+    <div class="card" id="sec-generate">
+      <div class="card-hdr">
+        <div class="card-icon" style="background:#e0f4f1">⚙️</div>
+        <div>
+          <div class="card-title">Step 4 — Generate JSON</div>
+          <div class="card-sub">Review the output, copy it, and paste into site_data.json</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="actions">
+          <button class="btn btn-primary" onclick="generate()">Generate cruise JSON</button>
+          <button class="btn btn-outline" onclick="clearForm()">Clear form</button>
+        </div>
+
+        <div class="output-panel" id="output-panel">
+          <br>
+          <div class="alert alert-ok visible" id="alert-ok"></div>
+          <div class="output-hdr">
+            <h3>Cruise JSON block — paste inside the correct <code>"cruises": [...]</code> array in site_data.json</h3>
+            <button class="copy-btn" id="copy-btn" onclick="copyJSON()">Copy JSON</button>
+          </div>
+          <pre id="json-out"></pre>
+          <br>
+          <div style="background:var(--sand);border:1px solid var(--border);border-radius:10px;padding:1rem;font-size:12.5px;color:var(--muted);line-height:1.7">
+            <strong style="color:var(--navy)">📋 How to apply:</strong><br>
+            1. Open <code>site_data.json</code> in a text editor.<br>
+            2. Find the project this cruise belongs to (look for <code>"id": "antarctic"</code> or <code>"id": "calcofi"</code>).<br>
+            3. Inside its <code>"cruises": [...]</code> array, paste the JSON block above (add a comma before it if not the first cruise).<br>
+            4. Save the file. Refresh the portal in your browser.<br>
+            5. <strong>Validate</strong> your JSON at <a href="https://jsonlint.com" target="_blank">jsonlint.com</a> if you see site errors.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5: HOSTING -->
+    <div class="how-to" id="sec-hosting">
+      <h3>Step 5 — Hosting Options</h3>
+      <br>
+
+      <strong style="font-size:13px;color:var(--navy)">Option A — GitHub Pages (recommended, free, permanent URL)</strong>
+      <ol style="margin-top:.5rem">
+        <li>Create a free account at <a href="https://github.com" target="_blank">github.com</a>.</li>
+        <li>Create a new repository, e.g. <code>adcp-data-portal</code>. Make it public.</li>
+        <li>Upload <code>index.html</code>, <code>admin.html</code>, <code>site_data.json</code>, and your <code>images/</code> folder.</li>
+        <li>Go to Settings → Pages → Source: "Deploy from branch: main / (root)".</li>
+        <li>Your site is live at <code>https://yourusername.github.io/adcp-data-portal/</code> within ~2 minutes.</li>
+        <li><strong>To update data:</strong> Edit <code>site_data.json</code> on GitHub (click the file → pencil icon → commit). Changes go live automatically.</li>
+      </ol>
+
+      <br><strong style="font-size:13px;color:var(--navy)">Option B — Netlify Drop (instant, drag-and-drop, free)</strong>
+      <ol style="margin-top:.5rem">
+        <li>Go to <a href="https://netlify.com/drop" target="_blank">netlify.com/drop</a>.</li>
+        <li>Drag and drop the folder containing all your files (index.html, admin.html, site_data.json, images/).</li>
+        <li>Get a random URL like <code>https://happy-tesla-123.netlify.app</code> immediately.</li>
+        <li>Create a free account to keep the site and set a custom subdomain.</li>
+        <li><strong>To update:</strong> Re-drag the folder, or connect to a GitHub repo for automatic deploys.</li>
+      </ol>
+
+      <br><strong style="font-size:13px;color:var(--navy)">Option C — Local development (Python, no internet needed)</strong>
+      <ol style="margin-top:.5rem">
+        <li>Place all files in one folder.</li>
+        <li>Open a terminal in that folder and run:
+          <code class="cmd">python3 -m http.server 8000</code>
+        </li>
+        <li>Open <a href="http://localhost:8000" target="_blank">http://localhost:8000</a> in your browser.</li>
+        <li><strong>Important:</strong> You must use <code>python3 -m http.server</code> (not open the HTML file directly) for <code>site_data.json</code> to load and for the maps to work. The <code>fetch()</code> API is blocked on <code>file://</code> URLs.</li>
+      </ol>
+
+      <br><strong style="font-size:13px;color:var(--navy)">Adding new images</strong>
+      <ol style="margin-top:.5rem">
+        <li>Place image files (.jpg, .png) in the <code>images/</code> folder.</li>
+        <li>Use this admin page to add the cruise entry, generate JSON, and paste it into <code>site_data.json</code>.</li>
+        <li>If using GitHub Pages, upload both the image files and the updated <code>site_data.json</code>.</li>
+      </ol>
+
+      <br><strong style="font-size:13px;color:var(--navy)">File structure</strong>
+      <pre style="font-size:12px;padding:1rem;max-height:none">adcp-portal/
+├── index.html        ← main portal
+├── admin.html        ← this file (data ingestion)
+├── site_data.json    ← all cruise data (edit this to update the site)
+└── images/
+    ├── nh9310_100_oa.jpg
+    ├── lmg0402_uv_30m.jpg
+    └── ...           ← place all cruise images here</pre>
+    </div>
+
+  </main>
+</div>
+
+<script>
+/* ── TRACK ROWS ── */
+let trackCount = 2, stnCount = 1;
+
+function addTrackRow() {
+  trackCount++;
+  const tbody = document.getElementById('track-rows');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td style="color:var(--light);font-size:12px;padding:4px 8px">${trackCount}</td>
+    <td><input type="number" step="0.01" placeholder="lat" class="track-lat"></td>
+    <td><input type="number" step="0.01" placeholder="lon" class="track-lon"></td>
+    <td><button class="del-btn" onclick="delTrackRow(this)">×</button></td>`;
+  tbody.appendChild(tr);
+}
+
+function delTrackRow(btn) {
+  const rows = document.querySelectorAll('#track-rows tr');
+  if (rows.length <= 2) { alert('Need at least 2 track waypoints.'); return; }
+  btn.closest('tr').remove();
+  renumberRows('track-rows');
+}
+
+function addStnRow() {
+  stnCount++;
+  const tbody = document.getElementById('station-rows');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td style="color:var(--light);font-size:12px;padding:4px 8px">${stnCount}</td>
+    <td><input type="number" step="0.01" placeholder="lat" class="stn-lat"></td>
+    <td><input type="number" step="0.01" placeholder="lon" class="stn-lon"></td>
+    <td><input type="text" placeholder="ST-01" class="stn-lbl"></td>
+    <td><button class="del-btn" onclick="delStnRow(this)">×</button></td>`;
+  tbody.appendChild(tr);
+}
+
+function delStnRow(btn) { btn.closest('tr').remove(); renumberRows('station-rows'); }
+
+function renumberRows(tbodyId) {
+  document.querySelectorAll(`#${tbodyId} tr`).forEach((tr, i) => {
+    tr.querySelector('td:first-child').textContent = i + 1;
+  });
+}
+
+/* ── IMAGE ROWS ── */
+function addImgRow() {
+  const rows = document.getElementById('image-rows');
+  const div = document.createElement('div');
+  div.className = 'img-row';
+  div.innerHTML = `
+    <input type="text" placeholder="filename.jpg" class="img-fname mono-input">
+    <input type="text" placeholder="Caption for this image" class="img-cap">
+    <select class="img-type">
+      <option value="velocity_plot">Velocity plot</option>
+      <option value="station_map">Station map</option>
+      <option value="cruise_photo">Cruise photo</option>
+      <option value="echo_intensity">Echo intensity</option>
+      <option value="calibration">Calibration</option>
+    </select>
+    <button class="rm-btn" onclick="removeImg(this)">×</button>`;
+  rows.appendChild(div);
+}
+
+function removeImg(btn) { btn.closest('.img-row').remove(); }
+
+/* ── GENERATE JSON ── */
+function generate() {
+  // --- collect + validate ---
+  const id = document.getElementById('f-id').value.trim().toUpperCase();
+  const ds = document.getElementById('f-date-start').value;
+  const de = document.getElementById('f-date-end').value;
+  const ship = document.getElementById('f-ship').value.trim();
+  const region = document.getElementById('f-region').value.trim();
+  const ncei = document.getElementById('f-ncei').value.trim();
+  const errs = [];
+  if (!id)     errs.push('Cruise ID is required.');
+  if (!ds)     errs.push('Start date is required.');
+  if (!de)     errs.push('End date is required.');
+  if (!ship)   errs.push('Ship name is required.');
+  if (!region) errs.push('Region is required.');
+  if (!ncei)   errs.push('NCEI URL is required.');
+
+  const ae = document.getElementById('alert-err');
+  if (errs.length) { ae.textContent = errs.join(' '); ae.classList.add('visible'); return; }
+  ae.classList.remove('visible');
+
+  // --- dates ---
+  const d1 = new Date(ds), d2 = new Date(de);
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const fmtDate = d => `${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+  let datesStr = fmtDate(d1) === fmtDate(d2) ? fmtDate(d1) : `${fmtDate(d1)}–${fmtDate(d2)}`;
+
+  // --- track ---
+  const trackPts = [];
+  document.querySelectorAll('#track-rows tr').forEach(tr => {
+    const lat = parseFloat(tr.querySelector('.track-lat').value);
+    const lon = parseFloat(tr.querySelector('.track-lon').value);
+    if (!isNaN(lat) && !isNaN(lon)) trackPts.push([lat, lon]);
+  });
+  if (trackPts.length < 2) errs.push('At least 2 track waypoints with valid coordinates are required.');
+
+  // --- stations ---
+  const stations = [];
+  document.querySelectorAll('#station-rows tr').forEach(tr => {
+    const lat = parseFloat(tr.querySelector('.stn-lat').value);
+    const lon = parseFloat(tr.querySelector('.stn-lon').value);
+    const lbl = tr.querySelector('.stn-lbl').value.trim();
+    if (!isNaN(lat) && !isNaN(lon)) stations.push({lat, lng: lon, label: lbl || `ST-${stations.length+1}`});
+  });
+
+  // --- images ---
+  const images = [];
+  document.querySelectorAll('#image-rows .img-row').forEach(row => {
+    const fn  = row.querySelector('.img-fname').value.trim();
+    const cap = row.querySelector('.img-cap').value.trim();
+    const typ = row.querySelector('.img-type').value;
+    if (fn) images.push({filename: fn, caption: cap || fn, type: typ});
+  });
+
+  // --- build object ---
+  const cruise = {
+    id,
+    dates: datesStr,
+    dates_iso: [ds, de],
+    ship,
+    region,
+    pi: document.getElementById('f-pi').value.trim() || undefined,
+    depths_m: [
+      parseInt(document.getElementById('f-dmin').value) || 8,
+      parseInt(document.getElementById('f-dmax').value) || 250
+    ],
+    instrument: document.getElementById('f-instr').value.trim() || 'RDI 150 kHz NB',
+    status: document.querySelector('input[name="status"]:checked').value,
+    ncei_url: ncei,
+    plots_url: document.getElementById('f-plots').value.trim() || undefined,
+    jasadcp_url: 'http://ilikai.soest.hawaii.edu/sadcp/',
+    notes: document.getElementById('f-notes').value.trim() || undefined,
+    track: trackPts,
+    stations,
+    images
+  };
+
+  // Remove undefined keys
+  Object.keys(cruise).forEach(k => cruise[k] === undefined && delete cruise[k]);
+
+  const proj = document.getElementById('f-project').value;
+  const json = JSON.stringify(cruise, null, 2);
+  document.getElementById('json-out').textContent = json;
+
+  const ao = document.getElementById('alert-ok');
+  ao.innerHTML = `✓ JSON generated for <strong>${id}</strong>. Paste this block into the <strong>"${proj}"</strong> project's <code>"cruises": [...]</code> array in <code>site_data.json</code>.`;
+  document.getElementById('output-panel').classList.add('visible');
+  document.getElementById('sec-generate').scrollIntoView({behavior:'smooth'});
+}
+
+function copyJSON() {
+  const text = document.getElementById('json-out').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy JSON'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function clearForm() {
+  document.querySelectorAll('input[type=text], input[type=url], input[type=date], input[type=number], textarea').forEach(el => el.value = '');
+  document.getElementById('s-proc').checked = true;
+  document.getElementById('output-panel').classList.remove('visible');
+  document.getElementById('alert-err').classList.remove('visible');
+  // Reset track to 2 rows
+  document.getElementById('track-rows').innerHTML = `
+    <tr><td style="color:var(--light);font-size:12px;padding:4px 8px">1</td>
+      <td><input type="number" step="0.01" placeholder="lat" class="track-lat"></td>
+      <td><input type="number" step="0.01" placeholder="lon" class="track-lon"></td>
+      <td><button class="del-btn" onclick="delTrackRow(this)">×</button></td></tr>
+    <tr><td style="color:var(--light);font-size:12px;padding:4px 8px">2</td>
+      <td><input type="number" step="0.01" placeholder="lat" class="track-lat"></td>
+      <td><input type="number" step="0.01" placeholder="lon" class="track-lon"></td>
+      <td><button class="del-btn" onclick="delTrackRow(this)">×</button></td></tr>`;
+  document.getElementById('station-rows').innerHTML = `
+    <tr><td style="color:var(--light);font-size:12px;padding:4px 8px">1</td>
+      <td><input type="number" step="0.01" placeholder="lat" class="stn-lat"></td>
+      <td><input type="number" step="0.01" placeholder="lon" class="stn-lon"></td>
+      <td><input type="text" placeholder="DP-01" class="stn-lbl"></td>
+      <td><button class="del-btn" onclick="delStnRow(this)">×</button></td></tr>`;
+  document.getElementById('image-rows').innerHTML = `
+    <div class="img-row">
+      <input type="text" placeholder="filename.jpg" class="img-fname mono-input">
+      <input type="text" placeholder="Caption for this image" class="img-cap">
+      <select class="img-type">
+        <option value="velocity_plot">Velocity plot</option>
+        <option value="station_map">Station map</option>
+        <option value="cruise_photo">Cruise photo</option>
+        <option value="echo_intensity">Echo intensity</option>
+        <option value="calibration">Calibration</option>
+      </select>
+      <button class="rm-btn" onclick="removeImg(this)">×</button></div>`;
+  trackCount = 2; stnCount = 1;
+}
+
+// Highlight sidebar steps on scroll
+const steps = ['sec-cruise','sec-track','sec-images','sec-generate','sec-hosting'];
+window.addEventListener('scroll', () => {
+  let active = steps[0];
+  steps.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 120) active = id;
+  });
+  document.querySelectorAll('.step-item').forEach((a, i) => {
+    a.classList.toggle('active', '#' + steps[i] === '#' + active || (active === steps[i]));
+  });
+});
+</script>
+</body>
+</html>

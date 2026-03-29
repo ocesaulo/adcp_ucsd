@@ -1,0 +1,420 @@
+{
+  "_README": {
+    "description": "Master data file for the Chereskin Lab ADCP Data Portal. Edit this file to update all site content. Then run 'python3 -m http.server 8000' and open localhost:8000 to preview changes.",
+    "image_paths": "All image filenames in cruise.images[] are relative to the images/ folder. Example: 'nh9310_100_oa.jpg' → place file at images/nh9310_100_oa.jpg",
+    "track_format": "cruise.track is an array of [latitude, longitude] pairs forming the cruise track polyline. Latitude: negative = South. Longitude: negative = West.",
+    "station_format": "cruise.stations is an array of {lat, lon, label} objects for individual station markers on the map.",
+    "status_values": ["processed", "archived", "in_review", "pending"],
+    "image_type_values": ["velocity_plot", "cruise_photo", "station_map", "echo_intensity", "calibration"],
+    "ncei_url_note": "Replace ncei_url with the permanent NCEI accession permalink for each cruise. Format: https://www.ncei.noaa.gov/data/oceans/accession/XXXXXXX/",
+    "last_updated": "2024-01-01",
+    "contact": "Chereskin Lab, Scripps Institution of Oceanography, UCSD"
+  },
+
+  "site": {
+    "title": "Chereskin Lab · ADCP Data Portal",
+    "institution": "Scripps Institution of Oceanography",
+    "institution_url": "https://scripps.ucsd.edu",
+    "lab_url": "http://tryfan.ucsd.edu",
+    "original_site_url": "https://adcp.ucsd.edu",
+    "jasadcp_url": "http://ilikai.soest.hawaii.edu/sadcp/",
+    "ncei_search_base": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=",
+    "citation": "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography, UC San Diego. http://adcp.ucsd.edu/calcofi",
+    "footer_note": "Data archived at NCEI / NOAA. Processing via CODAS3."
+  },
+
+  "projects": [
+    {
+      "id": "antarctic",
+      "name": "Antarctic — Laurence M. Gould",
+      "short_name": "Antarctic LMG",
+      "region": "Southern Ocean",
+      "color": "#0e8c7a",
+      "color_light": "#e0f4f1",
+      "vessel": "ARSV Laurence M. Gould",
+      "years": "2004–2010",
+      "description": "Shipboard ADCP data from cruises aboard the ARSV Laurence M. Gould operating in Drake Passage and the Antarctic Peninsula region. Measurements of upper ocean currents were collected with a hull-mounted 150 kHz narrowband RDI instrument.",
+      "methods_text": "Data processed using CODAS3 with standard heading calibration procedures. Bottom tracking was available for shallow transits near the Peninsula. Navigation corrections applied via differential GPS.",
+      "map_center": [-61, -61],
+      "map_zoom": 5,
+      "references": [
+        "Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619–22629.",
+        "Lenn, Y.-D., Chereskin, T.K., Sprintall, J. and McClean, J.L. (2011). Near-surface eddy heat and momentum fluxes in the Antarctic Circumpolar Current in Drake Passage. J. Phys. Oceanogr., 41, 1385–1407."
+      ],
+      "cruises": [
+        {
+          "id": "LMG0402",
+          "dates": "Feb–Mar 2004",
+          "dates_iso": ["2004-02-10", "2004-03-05"],
+          "ship": "ARSV Laurence M. Gould",
+          "region": "Drake Passage",
+          "pi": "T.K. Chereskin",
+          "depths_m": [30, 300],
+          "instrument": "RDI 150 kHz NB",
+          "status": "processed",
+          "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0402",
+          "plots_url": "https://adcp.ucsd.edu/lmgould/",
+          "jasadcp_url": "http://ilikai.soest.hawaii.edu/sadcp/",
+          "notes": "Two Drake Passage transects. Good data quality throughout.",
+          "track": [
+            [-53.5, -68.2], [-55.1, -65.8], [-57.2, -64.1],
+            [-59.3, -62.5], [-61.8, -59.9], [-63.2, -58.0]
+          ],
+          "stations": [
+            {"lat": -55.1, "lng": -65.8, "label": "DP-01"},
+            {"lat": -57.2, "lng": -64.1, "label": "DP-02"},
+            {"lat": -59.3, "lng": -62.5, "label": "DP-03"},
+            {"lat": -61.8, "lng": -59.9, "label": "DP-04"}
+          ],
+          "images": [
+            {
+              "filename": "lmg0402_uv_30m.jpg",
+              "caption": "Velocity vectors at 30 m depth, LMG0402",
+              "type": "velocity_plot",
+              "depth_m": 30
+            },
+            {
+              "filename": "lmg0402_uv_150m.jpg",
+              "caption": "Velocity vectors at 150 m depth, LMG0402",
+              "type": "velocity_plot",
+              "depth_m": 150
+            },
+            {
+              "filename": "lmg0402_track.jpg",
+              "caption": "Cruise track map, LMG0402",
+              "type": "station_map"
+            }
+          ]
+        },
+        {
+          "id": "LMG0501",
+          "dates": "Jan 2005",
+          "dates_iso": ["2005-01-08", "2005-01-28"],
+          "ship": "ARSV Laurence M. Gould",
+          "region": "Bransfield Strait",
+          "pi": "T.K. Chereskin",
+          "depths_m": [30, 300],
+          "instrument": "RDI 150 kHz NB",
+          "status": "processed",
+          "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0501",
+          "plots_url": "https://adcp.ucsd.edu/lmgould/",
+          "jasadcp_url": "http://ilikai.soest.hawaii.edu/sadcp/",
+          "notes": "Bransfield Strait transect including Palmer Station operations.",
+          "track": [
+            [-62.0, -64.0], [-63.1, -61.5], [-63.8, -59.8],
+            [-64.2, -57.5], [-63.5, -55.0]
+          ],
+          "stations": [
+            {"lat": -62.0, "lng": -64.0, "label": "BS-01"},
+            {"lat": -63.1, "lng": -61.5, "label": "BS-02"},
+            {"lat": -63.8, "lng": -59.8, "label": "BS-03"}
+          ],
+          "images": [
+            {
+              "filename": "lmg0501_uv_30m.jpg",
+              "caption": "Velocity vectors at 30 m depth, LMG0501",
+              "type": "velocity_plot",
+              "depth_m": 30
+            }
+          ]
+        },
+        {
+          "id": "LMG0601",
+          "dates": "Jan–Feb 2006",
+          "dates_iso": ["2006-01-12", "2006-02-02"],
+          "ship": "ARSV Laurence M. Gould",
+          "region": "Drake Passage",
+          "pi": "T.K. Chereskin",
+          "depths_m": [30, 300],
+          "instrument": "RDI 150 kHz NB",
+          "status": "processed",
+          "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0601",
+          "plots_url": "https://adcp.ucsd.edu/lmgould/",
+          "jasadcp_url": "http://ilikai.soest.hawaii.edu/sadcp/",
+          "notes": "Three Drake Passage transects with complete calibration data.",
+          "track": [
+            [-53.8, -67.0], [-55.5, -65.2], [-57.8, -63.5],
+            [-60.1, -61.8], [-62.5, -60.0]
+          ],
+          "stations": [
+            {"lat": -55.5, "lng": -65.2, "label": "DP-01"},
+            {"lat": -57.8, "lng": -63.5, "label": "DP-02"},
+            {"lat": -60.1, "lng": -61.8, "label": "DP-03"}
+          ],
+          "images": [
+            {
+              "filename": "lmg0601_uv_30m.jpg",
+              "caption": "Velocity vectors at 30 m depth, LMG0601",
+              "type": "velocity_plot",
+              "depth_m": 30
+            },
+            {
+              "filename": "lmg0601_echo.jpg",
+              "caption": "Echo intensity profile, LMG0601",
+              "type": "echo_intensity"
+            }
+          ]
+        },
+        {
+          "id": "LMG0801",
+          "dates": "Jan–Feb 2008",
+          "dates_iso": ["2008-01-07", "2008-02-01"],
+          "ship": "ARSV Laurence M. Gould",
+          "region": "Bransfield Strait",
+          "pi": "T.K. Chereskin",
+          "depths_m": [30, 300],
+          "instrument": "RDI 150 kHz NB",
+          "status": "archived",
+          "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0801",
+          "plots_url": "https://adcp.ucsd.edu/lmgould/",
+          "jasadcp_url": "http://ilikai.soest.hawaii.edu/sadcp/",
+          "notes": "Final Bransfield Strait survey of the program.",
+          "track": [
+            [-61.5, -64.8], [-62.9, -62.3], [-63.6, -60.2],
+            [-64.0, -58.1], [-63.8, -56.0]
+          ],
+          "stations": [
+            {"lat": -62.9, "lng": -62.3, "label": "BS-01"},
+            {"lat": -63.6, "lng": -60.2, "label": "BS-02"}
+          ],
+          "images": []
+        },
+        {
+          "id": "LMG1001",
+          "dates": "Jan 2010",
+          "dates_iso": ["2010-01-05", "2010-01-25"],
+          "ship": "ARSV Laurence M. Gould",
+          "region": "Drake Passage",
+          "pi": "T.K. Chereskin",
+          "depths_m": [30, 300],
+          "instrument": "RDI 150 kHz NB",
+          "status": "in_review",
+          "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG1001",
+          "plots_url": "https://adcp.ucsd.edu/lmgould/",
+          "jasadcp_url": "http://ilikai.soest.hawaii.edu/sadcp/",
+          "notes": "Data processing in progress.",
+          "track": [
+            [-53.2, -68.8], [-55.8, -66.5], [-57.5, -65.1],
+            [-59.8, -63.2], [-62.3, -61.0]
+          ],
+          "stations": [
+            {"lat": -55.8, "lng": -66.5, "label": "DP-01"},
+            {"lat": -57.5, "lng": -65.1, "label": "DP-02"},
+            {"lat": -59.8, "lng": -63.2, "label": "DP-03"}
+          ],
+          "images": []
+        }
+      ]
+    },
+
+    {
+      "id": "calcofi",
+      "name": "CalCOFI — California Cooperative Cruises",
+      "short_name": "CalCOFI",
+      "region": "California Current System",
+      "color": "#c9832e",
+      "color_light": "#fdf0e0",
+      "vessel": "R/V New Horizon",
+      "years": "1993–2003",
+      "description": "A decade of shipboard ADCP measurements of upper ocean currents off Southern and Central California as part of the quarterly California Cooperative Oceanic Fisheries Investigations (CalCOFI) cruises.",
+      "methods_text": "Data collected with RDI 150 kHz narrowband instrument, hull-mounted aboard R/V New Horizon. Processed with CODAS3. Objective mapping applied to produce velocity streamfunctions consistent with geostrophy.",
+      "map_center": [33.5, -121.5],
+      "map_zoom": 6,
+      "references": [
+        "Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619–22629.",
+        "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography."
+      ],
+      "cruises": [
+        {
+          "id": "NH9310",
+          "dates": "Oct 1993",
+          "dates_iso": ["1993-10-11", "1993-10-28"],
+          "ship": "R/V New Horizon",
+          "region": "S. California",
+          "pi": "T.K. Chereskin",
+          "depths_m": [8, 250],
+          "instrument": "RDI 150 kHz NB",
+          "status": "processed",
+          "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9310",
+          "plots_url": "https://adcp.ucsd.edu/calcofi/1993/nh9310/nh9310.htm",
+          "jasadcp_url": "ftp://ilikai.soest.hawaii.edu/caldwell_pub/adcp/INVNTORY/calcofi.html",
+          "notes": "First cruise of the CalCOFI ADCP program. Full CalCOFI grid surveyed.",
+          "track": [
+            [34.5, -120.8], [33.8, -120.2], [33.2, -119.5],
+            [32.5, -118.8], [31.8, -118.0], [31.2, -117.5]
+          ],
+          "stations": [
+            {"lat": 34.5, "lng": -120.8, "label": "80.55"},
+            {"lat": 33.5, "lng": -119.8, "label": "83.55"},
+            {"lat": 32.5, "lng": -118.8, "label": "86.70"},
+            {"lat": 31.8, "lng": -118.0, "label": "90.70"}
+          ],
+          "images": [
+            {
+              "filename": "nh9310_100_oa.jpg",
+              "caption": "Objectively mapped velocity at 100 m depth, NH9310 — from the CalCOFI ADCP Digital Atlas",
+              "type": "velocity_plot",
+              "depth_m": 100
+            },
+            {
+              "filename": "nh9310_30_oa.jpg",
+              "caption": "Objectively mapped velocity at 30 m depth, NH9310",
+              "type": "velocity_plot",
+              "depth_m": 30
+            },
+            {
+              "filename": "nh9310_track.jpg",
+              "caption": "Cruise track and CalCOFI station grid, NH9310",
+              "type": "station_map"
+            }
+          ]
+        },
+        {
+          "id": "NH9401",
+          "dates": "Jan 1994",
+          "dates_iso": ["1994-01-06", "1994-01-23"],
+          "ship": "R/V New Horizon",
+          "region": "S. California",
+          "pi": "T.K. Chereskin",
+          "depths_m": [8, 250],
+          "instrument": "RDI 150 kHz NB",
+          "status": "processed",
+          "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9401",
+          "plots_url": "https://adcp.ucsd.edu/calcofi/",
+          "jasadcp_url": "ftp://ilikai.soest.hawaii.edu/caldwell_pub/adcp/INVNTORY/calcofi.html",
+          "notes": "Winter cruise. El Niño conditions beginning.",
+          "track": [
+            [34.2, -121.0], [33.5, -120.5], [32.8, -119.5],
+            [32.0, -118.5], [31.3, -117.8]
+          ],
+          "stations": [
+            {"lat": 34.2, "lng": -121.0, "label": "80.51"},
+            {"lat": 33.0, "lng": -119.8, "label": "83.55"},
+            {"lat": 31.8, "lng": -118.2, "label": "90.70"}
+          ],
+          "images": [
+            {
+              "filename": "nh9401_100_oa.jpg",
+              "caption": "Objectively mapped velocity at 100 m, NH9401",
+              "type": "velocity_plot",
+              "depth_m": 100
+            }
+          ]
+        },
+        {
+          "id": "NH9407",
+          "dates": "Jul 1994",
+          "dates_iso": ["1994-07-05", "1994-07-25"],
+          "ship": "R/V New Horizon",
+          "region": "S.–C. California",
+          "pi": "T.K. Chereskin",
+          "depths_m": [8, 250],
+          "instrument": "RDI 150 kHz NB",
+          "status": "processed",
+          "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9407",
+          "plots_url": "https://adcp.ucsd.edu/calcofi/",
+          "jasadcp_url": "ftp://ilikai.soest.hawaii.edu/caldwell_pub/adcp/INVNTORY/calcofi.html",
+          "notes": "Summer survey. Extended grid to central California.",
+          "track": [
+            [36.5, -122.5], [35.5, -121.8], [34.5, -120.8],
+            [33.5, -119.8], [32.5, -118.8], [31.5, -117.8]
+          ],
+          "stations": [
+            {"lat": 36.5, "lng": -122.5, "label": "70.45"},
+            {"lat": 34.8, "lng": -121.0, "label": "80.55"},
+            {"lat": 33.0, "lng": -119.5, "label": "86.70"}
+          ],
+          "images": [
+            {
+              "filename": "nh9407_100_oa.jpg",
+              "caption": "Objectively mapped velocity at 100 m, NH9407",
+              "type": "velocity_plot",
+              "depth_m": 100
+            }
+          ]
+        },
+        {
+          "id": "NH9501",
+          "dates": "Jan 1995",
+          "dates_iso": ["1995-01-08", "1995-01-26"],
+          "ship": "R/V New Horizon",
+          "region": "S. California",
+          "pi": "T.K. Chereskin",
+          "depths_m": [8, 250],
+          "instrument": "RDI 150 kHz NB",
+          "status": "processed",
+          "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9501",
+          "plots_url": "https://adcp.ucsd.edu/calcofi/",
+          "jasadcp_url": "ftp://ilikai.soest.hawaii.edu/caldwell_pub/adcp/INVNTORY/calcofi.html",
+          "notes": "Winter survey during developing El Niño.",
+          "track": [
+            [34.0, -120.9], [33.2, -120.1], [32.5, -119.2],
+            [31.8, -118.3], [31.2, -117.6]
+          ],
+          "stations": [
+            {"lat": 33.5, "lng": -120.2, "label": "83.55"},
+            {"lat": 32.5, "lng": -119.2, "label": "86.70"}
+          ],
+          "images": []
+        },
+        {
+          "id": "NH9601",
+          "dates": "Jan 1996",
+          "dates_iso": ["1996-01-09", "1996-01-28"],
+          "ship": "R/V New Horizon",
+          "region": "S.–C. California",
+          "pi": "T.K. Chereskin",
+          "depths_m": [8, 250],
+          "instrument": "RDI 150 kHz NB",
+          "status": "archived",
+          "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9601",
+          "plots_url": "https://adcp.ucsd.edu/calcofi/",
+          "jasadcp_url": "ftp://ilikai.soest.hawaii.edu/caldwell_pub/adcp/INVNTORY/calcofi.html",
+          "notes": "Extended grid cruise.",
+          "track": [
+            [36.2, -122.8], [35.2, -122.0], [34.2, -121.0],
+            [33.2, -120.0], [32.2, -118.8], [31.2, -117.7]
+          ],
+          "stations": [
+            {"lat": 35.2, "lng": -122.0, "label": "73.45"},
+            {"lat": 33.5, "lng": -120.2, "label": "83.55"},
+            {"lat": 31.8, "lng": -118.2, "label": "90.70"}
+          ],
+          "images": []
+        },
+        {
+          "id": "NH0301",
+          "dates": "Jan 2003",
+          "dates_iso": ["2003-01-07", "2003-01-25"],
+          "ship": "R/V New Horizon",
+          "region": "S. California",
+          "pi": "T.K. Chereskin",
+          "depths_m": [8, 250],
+          "instrument": "RDI 150 kHz BB",
+          "status": "processed",
+          "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH0301",
+          "plots_url": "https://adcp.ucsd.edu/calcofi/",
+          "jasadcp_url": "ftp://ilikai.soest.hawaii.edu/caldwell_pub/adcp/INVNTORY/calcofi.html",
+          "notes": "Final cruise of the CalCOFI ADCP program. Broadband instrument used.",
+          "track": [
+            [33.8, -120.6], [33.0, -119.9], [32.3, -119.1],
+            [31.6, -118.2], [31.0, -117.5]
+          ],
+          "stations": [
+            {"lat": 33.0, "lng": -119.9, "label": "83.55"},
+            {"lat": 32.3, "lng": -119.1, "label": "86.70"},
+            {"lat": 31.6, "lng": -118.2, "label": "90.70"}
+          ],
+          "images": [
+            {
+              "filename": "nh0301_100_oa.jpg",
+              "caption": "Objectively mapped velocity at 100 m, NH0301",
+              "type": "velocity_plot",
+              "depth_m": 100
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

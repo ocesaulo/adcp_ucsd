@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chereskin Lab · ADCP Data Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+:root {
+  --navy:       #0b2240;
+  --navy-mid:   #163460;
+  --teal:       #0e8c7a;
+  --teal-lt:    #1ab8a0;
+  --teal-pale:  #e0f4f1;
+  --sand:       #f4f1eb;
+  --white:      #ffffff;
+  --text:       #0f1c2e;
+  --muted:      #4a5e78;
+  --light:      #8097b2;
+  --border:     #d6dfe8;
+  --accent:     #c9832e;
+  --accent-pale:#fdf0e0;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans:  'IBM Plex Sans', system-ui, sans-serif;
+  --mono:  'IBM Plex Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--sand); color: var(--text); font-size: 15px; line-height: 1.65; }
+
+/* ─── HEADER ─── */
+header {
+  background: var(--navy);
+  color: #fff;
+  position: sticky; top: 0; z-index: 900;
+  border-bottom: 3px solid var(--teal);
+}
+.hdr-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; height: 62px;
+}
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; }
+.logo-icon {
+  width: 36px; height: 36px; background: var(--teal); border-radius: 7px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.logo-icon svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; }
+.logo-name { font-family: var(--serif); font-size: 16px; color: #fff; }
+.logo-sub  { font-size: 10.5px; color: rgba(255,255,255,0.45); letter-spacing: .07em; text-transform: uppercase; font-weight: 300; }
+nav { display: flex; gap: 2px; }
+nav a {
+  color: rgba(255,255,255,0.6); text-decoration: none; font-size: 13px; font-weight: 500;
+  padding: 6px 14px; border-radius: 6px; letter-spacing: .02em; transition: .15s;
+}
+nav a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+nav a.active { background: var(--teal); color: #fff; }
+
+/* ─── LAYOUT ─── */
+.page { max-width: 1280px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
+.section { display: none; }
+.section.visible { display: block; }
+
+/* ─── HERO ─── */
+.hero {
+  background: var(--navy); border-radius: 16px;
+  padding: 3rem 3.5rem; margin-bottom: 2.5rem;
+  position: relative; overflow: hidden; color: #fff;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(45deg, rgba(14,140,122,.04) 0, rgba(14,140,122,.04) 1px, transparent 1px, transparent 40px);
+}
+.hero-label { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--teal-lt); font-weight: 600; margin-bottom: .75rem; }
+.hero h1 { font-family: var(--serif); font-size: 2.5rem; font-weight: 400; line-height: 1.15; color: #fff; margin-bottom: 1rem; max-width: 580px; }
+.hero p { font-size: 14.5px; font-weight: 300; color: rgba(255,255,255,.68); max-width: 540px; line-height: 1.8; margin-bottom: 1.75rem; }
+.hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 500; cursor: pointer; text-decoration: none; border: none; transition: .15s; }
+.btn-teal   { background: var(--teal); color: #fff; }
+.btn-teal:hover { background: var(--teal-lt); }
+.btn-amber  { background: var(--accent); color: #fff; }
+.btn-amber:hover { background: #de9838; }
+.btn-ghost  { background: transparent; color: rgba(255,255,255,.75); border: 1px solid rgba(255,255,255,.2); }
+.btn-ghost:hover { border-color: rgba(255,255,255,.5); color: #fff; }
+
+/* ─── STATS ─── */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
+.stat { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; }
+.stat-lbl { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--light); font-weight: 500; margin-bottom: 6px; }
+.stat-val { font-family: var(--serif); font-size: 2rem; color: var(--navy); line-height: 1; margin-bottom: 4px; }
+.stat-note { font-size: 12px; color: var(--muted); }
+
+/* ─── SECTION TITLE ─── */
+.sec-title { font-family: var(--serif); font-size: 1.65rem; color: var(--navy); margin-bottom: .2rem; }
+.sec-sub   { font-size: 13.5px; color: var(--muted); margin-bottom: 1.75rem; font-weight: 300; }
+
+/* ─── PROJECT CARDS ─── */
+.proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.25rem; margin-bottom: 2.5rem; }
+.proj-card {
+  background: var(--white); border: 1px solid var(--border); border-radius: 14px;
+  overflow: hidden; cursor: pointer; text-decoration: none; color: inherit;
+  display: block; transition: .15s;
+}
+.proj-card:hover { border-color: var(--teal); box-shadow: 0 4px 20px rgba(14,140,122,.1); transform: translateY(-1px); }
+.proj-accent { height: 5px; }
+.proj-body { padding: 1.5rem; }
+.proj-region { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+.proj-card h3 { font-family: var(--serif); font-size: 1.2rem; color: var(--navy); margin-bottom: 8px; line-height: 1.3; }
+.proj-card p  { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+.proj-meta { display: flex; gap: 1.25rem; }
+.pm { font-size: 12px; color: var(--light); }
+.pm strong { display: block; color: var(--text); font-weight: 600; }
+.proj-foot { padding: .75rem 1.5rem; border-top: 1px solid var(--border); background: var(--sand); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--muted); }
+
+/* ─── PANEL WRAPPER ─── */
+.panel { background: var(--white); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 2.5rem; }
+.panel-hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);
+}
+.panel-title { font-size: 14px; font-weight: 600; color: var(--navy); }
+.panel-sub   { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.panel-count { font-size: 11px; font-weight: 500; letter-spacing: .06em; background: var(--teal-pale); color: var(--teal); padding: 3px 10px; border-radius: 100px; }
+
+/* ─── MAP ─── */
+.leaflet-map { height: 480px; width: 100%; }
+.leaflet-popup-content-wrapper { border-radius: 10px !important; box-shadow: 0 8px 30px rgba(0,0,0,.15) !important; font-family: var(--sans) !important; }
+.leaflet-popup-content { margin: 12px 16px !important; }
+.pop-id    { font-family: var(--mono); font-size: 11.5px; color: var(--teal); font-weight: 500; }
+.pop-title { font-size: 14px; font-weight: 600; color: var(--navy); margin: 2px 0 6px; }
+.pop-row   { font-size: 12.5px; color: var(--muted); margin-bottom: 3px; }
+.pop-row strong { color: var(--text); }
+.pop-link  { display: inline-block; margin-top: 8px; color: var(--teal); font-size: 12px; font-weight: 500; text-decoration: none; }
+.map-legend { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+.leg-item  { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.leg-dot   { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+/* ─── IMAGE GALLERY ─── */
+.gallery-outer { padding: 1.5rem; }
+.gallery-controls { display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; }
+.gal-btn {
+  font-size: 11.5px; font-weight: 500; padding: 4px 12px; border-radius: 100px;
+  border: 1px solid var(--border); background: var(--white); color: var(--muted);
+  cursor: pointer; transition: .12s; font-family: var(--sans);
+}
+.gal-btn.active, .gal-btn:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.gal-item {
+  border-radius: 10px; overflow: hidden; border: 1px solid var(--border);
+  cursor: pointer; transition: .15s; background: var(--sand);
+}
+.gal-item:hover { border-color: var(--teal); box-shadow: 0 4px 14px rgba(14,140,122,.12); }
+.gal-img {
+  width: 100%; aspect-ratio: 4/3; object-fit: cover;
+  display: block; background: #e8f0f8;
+}
+.gal-img-placeholder {
+  width: 100%; aspect-ratio: 4/3; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px;
+  background: linear-gradient(135deg, #edf2f8 0%, #e0eaf6 100%);
+  color: var(--light); font-size: 12px; text-align: center; padding: 1rem;
+}
+.gal-img-placeholder svg { width: 32px; height: 32px; opacity: .5; }
+.gal-cap {
+  padding: 8px 10px; font-size: 11.5px; color: var(--muted); line-height: 1.4;
+  border-top: 1px solid var(--border); background: var(--white);
+}
+.gal-type-badge { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; margin-bottom: 4px; }
+.no-images { padding: 2rem; text-align: center; color: var(--light); font-size: 13px; font-style: italic; }
+
+/* Lightbox */
+#lightbox {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.85);
+  z-index: 9999; align-items: center; justify-content: center; flex-direction: column;
+}
+#lightbox.open { display: flex; }
+#lb-img { max-width: 90vw; max-height: 80vh; border-radius: 8px; object-fit: contain; }
+#lb-cap { color: rgba(255,255,255,.8); font-size: 13px; margin-top: 12px; text-align: center; max-width: 600px; }
+#lb-close { position: fixed; top: 18px; right: 24px; color: #fff; font-size: 28px; cursor: pointer; font-weight: 300; line-height: 1; }
+
+/* ─── TABLE ─── */
+.tbl-filters { display: flex; gap: 10px; padding: .75rem 1.5rem; border-bottom: 1px solid var(--border); background: var(--sand); }
+.f-input, .f-select {
+  padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px;
+  font-size: 12.5px; font-family: var(--sans); background: var(--white); color: var(--text);
+}
+.f-input { flex: 1; max-width: 280px; }
+.data-tbl { width: 100%; border-collapse: collapse; }
+.data-tbl th {
+  text-align: left; font-size: 10.5px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--light); padding: 10px 1.5rem;
+  border-bottom: 1px solid var(--border); white-space: nowrap; background: var(--sand);
+}
+.data-tbl td { padding: 11px 1.5rem; font-size: 13.5px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
+.data-tbl tr:last-child td { border-bottom: none; }
+.data-tbl tr:hover td { background: rgba(14,140,122,.03); }
+.cid { font-family: var(--mono); font-size: 12.5px; font-weight: 500; color: var(--navy); background: #f0f4f8; padding: 3px 8px; border-radius: 5px; white-space: nowrap; }
+.badge { display: inline-block; font-size: 10.5px; font-weight: 500; padding: 2px 9px; border-radius: 100px; }
+.b-teal   { background: var(--teal-pale); color: var(--teal); }
+.b-navy   { background: #edf1f8; color: var(--navy); }
+.b-amber  { background: var(--accent-pale); color: var(--accent); }
+.b-gray   { background: #f0f0f0; color: #777; }
+.cell-acts { display: flex; gap: 8px; flex-wrap: wrap; }
+.lnk-ncei {
+  display: inline-flex; align-items: center; gap: 5px; color: var(--teal);
+  text-decoration: none; font-size: 12px; font-weight: 500;
+  padding: 4px 10px; border: 1px solid var(--teal); border-radius: 6px; transition: .12s; white-space: nowrap;
+}
+.lnk-ncei:hover { background: var(--teal); color: #fff; }
+.lnk-plots {
+  display: inline-flex; align-items: center; gap: 5px; color: var(--muted);
+  text-decoration: none; font-size: 12px; padding: 4px 10px;
+  border: 1px solid var(--border); border-radius: 6px; transition: .12s; white-space: nowrap;
+}
+.lnk-plots:hover { background: var(--sand); color: var(--text); }
+.lnk-jasadcp {
+  display: inline-flex; align-items: center; gap: 5px; color: #6c5cb0;
+  text-decoration: none; font-size: 12px; padding: 4px 10px;
+  border: 1px solid #c8bef0; border-radius: 6px; transition: .12s; white-space: nowrap;
+}
+.lnk-jasadcp:hover { background: #f3f0fd; }
+
+/* ─── INFO / METHODS ─── */
+.info-panel { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem 2rem; margin-bottom: 2rem; }
+.info-panel h3 { font-family: var(--serif); font-size: 1.2rem; color: var(--navy); margin-bottom: .75rem; }
+.info-panel p  { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: .75rem; }
+.info-panel p:last-child { margin-bottom: 0; }
+.info-panel a  { color: var(--teal); }
+.ref-list { list-style: none; }
+.ref-list li { font-size: 13px; color: var(--muted); padding: .6rem 0; border-bottom: 1px solid var(--border); line-height: 1.6; }
+.ref-list li:last-child { border-bottom: none; }
+
+/* ─── NOTICE ─── */
+.notice { display: flex; align-items: flex-start; gap: 12px; background: var(--accent-pale); border: 1px solid #f0d5b0; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 2rem; font-size: 13px; color: #7a4e1a; line-height: 1.6; }
+
+/* ─── PROJ BREADCRUMB ─── */
+.breadcrumb { display: flex; align-items: center; gap: 8px; margin-bottom: 1.25rem; font-size: 13px; color: var(--light); }
+.breadcrumb a { color: var(--teal); text-decoration: none; cursor: pointer; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb span { color: var(--border); }
+
+/* ─── BACK BTN ─── */
+.back-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--teal); text-decoration: none; margin-bottom: 1.5rem; cursor: pointer; font-weight: 500; padding: 6px 0; }
+.back-btn:hover { text-decoration: underline; }
+
+/* ─── FOOTER ─── */
+footer { background: var(--navy); color: rgba(255,255,255,.45); text-align: center; padding: 1.5rem; font-size: 12px; border-top: 3px solid var(--teal); }
+footer a { color: rgba(255,255,255,.65); text-decoration: none; }
+footer a:hover { color: #fff; }
+
+@media (max-width: 860px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .hero { padding: 2rem; }
+  .hero h1 { font-size: 1.9rem; }
+  .page { padding: 1.5rem 1rem 3rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLB()">
+  <div id="lb-close" onclick="closeLB()">×</div>
+  <img id="lb-img" src="" alt="">
+  <div id="lb-cap"></div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr-inner">
+    <div class="logo" onclick="showSection('home')">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M2 12c2-3 4-3 6 0s4 3 6 0 4-3 6 0"/><path d="M12 6v2M7 9l1 1.5M16 13l1 1.5"/></svg>
+      </div>
+      <div>
+        <div class="logo-name">Chereskin Lab · ADCP Data Portal</div>
+        <div class="logo-sub">Scripps Institution of Oceanography</div>
+      </div>
+    </div>
+    <nav id="main-nav">
+      <a href="#" class="active" onclick="navTo('home',this)">Overview</a>
+      <a href="#" onclick="navTo('antarctic',this)">Antarctic</a>
+      <a href="#" onclick="navTo('calcofi',this)">CalCOFI</a>
+      <a href="#" onclick="navTo('about',this)">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- ══ HOME ══════════════════════════════════════════════ -->
+  <section id="section-home" class="section visible">
+
+    <div class="hero">
+      <div class="hero-label">Shipboard ADCP Research Data</div>
+      <h1>Upper Ocean Current Measurements from Research Cruises</h1>
+      <p>Processed acoustic Doppler current profiler data from the Chereskin Lab at Scripps Institution of Oceanography — collected aboard research vessels in the Southern Ocean and California Current System.</p>
+      <div class="hero-btns" id="hero-btns">
+        <!-- filled by JS -->
+      </div>
+    </div>
+
+    <div class="stats" id="home-stats"><!-- filled by JS --></div>
+
+    <div class="sec-title">External Archives</div>
+    <div class="sec-sub">Processed data are mirrored in the following national repositories.</div>
+    <div class="proj-grid" style="margin-bottom:2.5rem">
+      <a class="proj-card" href="https://www.ncei.noaa.gov" target="_blank" style="border-left: 4px solid #2874c5;">
+        <div class="proj-body">
+          <div class="proj-region" style="color:#2874c5">NOAA / National Archive</div>
+          <h3>NCEI — National Centers for Environmental Information</h3>
+          <p>Primary national archive for processed shipboard ADCP data. All cruises on this portal have NCEI accession records with full data packages.</p>
+        </div>
+        <div class="proj-foot"><span>ncei.noaa.gov</span><span style="color:#2874c5;font-weight:500">Visit ↗</span></div>
+      </a>
+      <a class="proj-card" href="http://ilikai.soest.hawaii.edu/sadcp/" target="_blank" style="border-left: 4px solid #6c5cb0;">
+        <div class="proj-body">
+          <div class="proj-region" style="color:#6c5cb0">University of Hawaii</div>
+          <h3>JASADCP — Joint Archive for Shipboard ADCP</h3>
+          <p>The UH Currents Group JASADCP archive provides an alternative view of many of these cruises with direct file downloads in CODAS format.</p>
+        </div>
+        <div class="proj-foot"><span>ilikai.soest.hawaii.edu</span><span style="color:#6c5cb0;font-weight:500">Visit ↗</span></div>
+      </a>
+    </div>
+
+    <div class="sec-title">Programs</div>
+    <div class="sec-sub">Click a project to explore interactive maps, image galleries, and download links.</div>
+    <div class="proj-grid" id="project-cards"><!-- filled by JS --></div>
+
+    <div class="info-panel">
+      <h3>About This Portal</h3>
+      <p>This site presents processed ADCP data from cruises led by the Chereskin Lab. Data are available for public download from NCEI (NOAA) and from JASADCP at the University of Hawaii. Graphical images (.jpg, .pdf) may be used in publications with the credit line: <em>"From the Chereskin Lab ADCP Data Portal, Scripps Institution of Oceanography."</em></p>
+      <p>For data format documentation, calibration history, and processing software, see the <a href="#" onclick="navTo('about',null)">About</a> page.</p>
+    </div>
+
+  </section>
+
+  <!-- ══ PROJECT SECTION (Antarctic / CalCOFI) ════════════ -->
+  <section id="section-project" class="section">
+    <div id="proj-content"><!-- filled by JS --></div>
+  </section>
+
+  <!-- ══ ABOUT ════════════════════════════════════════════ -->
+  <section id="section-about" class="section">
+    <div class="sec-title">About This Portal</div>
+    <div class="sec-sub">Data collection, processing methodology, and citation information.</div>
+
+    <div class="info-panel">
+      <h3>Instrumentation</h3>
+      <p>Shipboard ADCP data were collected with RD Instruments narrowband (NB, 150 kHz) and broadband (BB, 150 kHz) instruments. The transducer was mounted in the ship's hull, pinging continuously during transit and on-station periods. Data were recorded at 2-minute ensemble intervals with 8 m depth bins.</p>
+      <p>Navigation data were integrated from shipboard GPS and from the PHINS/Octans gyrocompass systems depending on cruise year. Heading corrections were applied using the Firing et al. (1995) calibration procedure based on GPS velocity.</p>
+    </div>
+
+    <div class="info-panel">
+      <h3>Data Processing — CODAS3</h3>
+      <p>All data were processed using <strong>CODAS3</strong> (Common Ocean Data Access System version 3), developed by E. Firing at the University of Hawaii. Standard processing steps:</p>
+      <p><strong>1.</strong> Navigation smoothing and heading calibration via GPS ship velocity. <strong>2.</strong> Water-tracking mode; bottom-tracking correction when available. <strong>3.</strong> Outlier editing and ensemble averaging. <strong>4.</strong> Absolute velocity referencing via GPS. <strong>5.</strong> Echo intensity profiling for bin quality assessment.</p>
+      <p>Calibration constants (amplitude A and phase φ) were determined from dedicated calibration runs and applied to correct for transducer misalignment.</p>
+    </div>
+
+    <div class="info-panel">
+      <h3>Available File Formats</h3>
+      <p><strong>CODAS3 binary</strong> — native format, readable with the <code>pycurrents</code> Python package (UH Currents Group). <strong>NetCDF (.nc)</strong> — CF-convention compliant, one file per cruise. <strong>ASCII/CSV</strong> — tabular text of ensemble-averaged profiles. <strong>MATLAB (.mat)</strong> — available on request.</p>
+      <p>Python reading example: <code>from pycurrents.data.navcalc import lonlat_inside_km</code> — see the <a href="https://currents.soest.hawaii.edu/home/software/" target="_blank">UH CODAS documentation</a> for full API details.</p>
+    </div>
+
+    <div class="info-panel">
+      <h3>Citation</h3>
+      <ul class="ref-list" id="about-refs"><!-- filled by JS --></ul>
+    </div>
+
+    <div class="info-panel">
+      <h3>Contact</h3>
+      <p>For data access questions or to report processing issues, contact the <a href="http://tryfan.ucsd.edu" target="_blank">Chereskin Lab</a> at Scripps Institution of Oceanography, University of California San Diego.</p>
+      <p>For software support, see the <a href="https://currents.soest.hawaii.edu/home/" target="_blank">UH Currents Group</a> — maintainers of CODAS and JASADCP.</p>
+    </div>
+  </section>
+
+</div><!-- .page -->
+
+<footer id="site-footer"><!-- filled by JS --></footer>
+
+<script>
+/* ════════════════════════════════════════════════════════
+   DATA LOADING — reads site_data.json if served over HTTP,
+   falls back to embedded stub for file:// preview.
+   ════════════════════════════════════════════════════════ */
+
+let SITE = null;          // populated after load
+let mapsInitialized = {}; // track which Leaflet maps are built
+
+async function loadData() {
+  if (location.protocol !== 'file:') {
+    try {
+      const r = await fetch('site_data.json');
+      SITE = await r.json();
+    } catch(e) {
+      console.warn('Could not load site_data.json, using embedded data:', e);
+      SITE = EMBEDDED_DATA;
+    }
+  } else {
+    // file:// — fetch is blocked, use embedded stub
+    SITE = EMBEDDED_DATA;
+  }
+  initSite();
+}
+
+/* ── EMBEDDED FALLBACK DATA (minimal, for file:// preview) ── */
+const EMBEDDED_DATA = {
+  site: {
+    title: "Chereskin Lab · ADCP Data Portal",
+    institution: "Scripps Institution of Oceanography",
+    lab_url: "http://tryfan.ucsd.edu",
+    citation: "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography.",
+    ncei_search_base: "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=",
+    jasadcp_url: "http://ilikai.soest.hawaii.edu/sadcp/"
+  },
+  projects: [
+    {
+      id: "antarctic", name: "Antarctic — Laurence M. Gould", short_name: "Antarctic LMG",
+      region: "Southern Ocean", color: "#0e8c7a", color_light: "#e0f4f1",
+      vessel: "ARSV Laurence M. Gould", years: "2004–2010",
+      description: "Shipboard ADCP data from the ARSV Laurence M. Gould in Drake Passage and the Antarctic Peninsula region.",
+      methods_text: "Processed with CODAS3. RDI 150 kHz NB instrument, hull-mounted.",
+      map_center: [-61, -61], map_zoom: 5,
+      references: ["Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619–22629."],
+      cruises: [
+        { id:"LMG0402", dates:"Feb–Mar 2004", ship:"ARSV Laurence M. Gould", region:"Drake Passage", depths_m:[30,300], instrument:"RDI 150 kHz NB", status:"processed",
+          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0402",
+          plots_url:"https://adcp.ucsd.edu/lmgould/", notes:"Two Drake Passage transects.",
+          track:[[-53.5,-68.2],[-55.1,-65.8],[-57.2,-64.1],[-59.3,-62.5],[-61.8,-59.9],[-63.2,-58.0]],
+          stations:[{lat:-55.1,lng:-65.8,label:"DP-01"},{lat:-57.2,lng:-64.1,label:"DP-02"},{lat:-59.3,lng:-62.5,label:"DP-03"}],
+          images:[{filename:"lmg0402_uv_30m.jpg",caption:"Velocity at 30 m, LMG0402",type:"velocity_plot",depth_m:30}] },
+        { id:"LMG0501", dates:"Jan 2005", ship:"ARSV Laurence M. Gould", region:"Bransfield Strait", depths_m:[30,300], instrument:"RDI 150 kHz NB", status:"processed",
+          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0501",
+          plots_url:"https://adcp.ucsd.edu/lmgould/", notes:"Bransfield Strait transect.",
+          track:[[-62.0,-64.0],[-63.1,-61.5],[-63.8,-59.8]],
+          stations:[{lat:-62.0,lng:-64.0,label:"BS-01"},{lat:-63.1,lng:-61.5,label:"BS-02"}],
+          images:[] },
+        { id:"LMG0601", dates:"Jan–Feb 2006", ship:"ARSV Laurence M. Gould", region:"Drake Passage", depths_m:[30,300], instrument:"RDI 150 kHz NB", status:"processed",
+          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0601",
+          plots_url:"https://adcp.ucsd.edu/lmgould/", notes:"Three transects.",
+          track:[[-53.8,-67.0],[-55.5,-65.2],[-57.8,-63.5],[-60.1,-61.8],[-62.5,-60.0]],
+          stations:[{lat:-55.5,lng:-65.2,label:"DP-01"},{lat:-57.8,lng:-63.5,label:"DP-02"}],
+          images:[] },
+        { id:"LMG0801", dates:"Jan–Feb 2008", ship:"ARSV Laurence M. Gould", region:"Bransfield Strait", depths_m:[30,300], instrument:"RDI 150 kHz NB", status:"archived",
+          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0801",
+          plots_url:"https://adcp.ucsd.edu/lmgould/", notes:"Final Bransfield survey.",
+          track:[[-61.5,-64.8],[-62.9,-62.3],[-63.6,-60.2]],
+          stations:[{lat:-62.9,lng:-62.3,label:"BS-01"}], images:[] },
+        { id:"LMG1001", dates:"Jan 2010", ship:"ARSV Laurence M. Gould", region:"Drake Passage", depths_m:[30,300], instrument:"RDI 150 kHz NB", status:"in_review",
+          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG1001",
+          plots_url:"https://adcp.ucsd.edu/lmgould/", notes:"Processing in progress.",
+          track:[[-53.2,-68.8],[-55.8,-66.5],[-57.5,-65.1],[-59.8,-63.2],[-62.3,-61.0]],
+          stations:[{lat:-55.8,lng:-66.5,label:"DP-01"},{lat:-57.5,lng:-65.1,label:"DP-02"}], images:[] }
+      ]
+    },
+    {
+      id: "calcofi", name: "CalCOFI — California Cooperative Cruises", short_name: "CalCOFI",
+      region: "California Current System", color: "#c9832e", color_light: "#fdf0e0",
+      vessel: "R/V New Horizon", years: "1993–2003",
+      description: "A decade of quarterly ADCP measurements off Southern and Central California as part of the CalCOFI program.",
+      methods_text: "RDI 150 kHz NB instrument. CODAS3 processing. Objective mapping to produce velocity streamfunctions.",
+      map_center: [33.5, -121.5], map_zoom: 6,
+      references: [
+        "Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619–22629.",
+        "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography."
+      ],
+      cruises: [
+        { id:"NH9310", dates:"Oct 1993", ship:"R/V New Horizon", region:"S. California", depths_m:[8,250], instrument:"RDI 150 kHz NB", status:"processed",
+          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9310",
+          plots_url:"https://adcp.ucsd.edu/calcofi/1993/nh9310/nh9310.htm", notes:"First cruise of program.",
+          track:[[34.5,-120.8],[33.8,-120.2],[33.2,-119.5],[32.5,-118.8],[31.8,-118.0],[31.2,-117.5]],
+          stations:[{lat:34.5,lng:-120.8,label:"80.55"},{lat:33.5,lng:-119.8,label:"83.55"},{lat:32.5,lng:-118.8,label:"86.70"},{lat:31.8,lng:-118.0,label:"90.70"}],
+          images:[{filename:"nh9310_100_oa.jpg",caption:"Objectively mapped velocity at 100 m, NH9310",type:"velocity_plot",depth_m:100},{filename:"nh9310_30_oa.jpg",caption:"Objectively mapped velocity at 30 m, NH9310",type:"velocity_plot",depth_m:30},{filename:"nh9310_track.jpg",caption:"Cruise track and CalCOFI grid, NH9310",type:"station_map"}] },
+        { id:"NH9401", dates:"Jan 1994", ship:"R/V New Horizon", region:"S. California", depths_m:[8,250], instrument:"RDI 150 kHz NB", status:"processed",
+          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9401",
+          plots_url:"https://adcp.ucsd.edu/calcofi/", notes:"Winter cruise.",
+          track:[[34.2,-121.0],[33.5,-120.5],[32.8,-119.5],[32.0,-118.5],[31.3,-117.8]],
+          stations:[{lat:34.2,lng:-121.0,label:"80.51"},{lat:33.0,lng:-119.8,label:"83.55"},{lat:31.8,lng:-118.2,label:"90.70"}],
+          images:[{filename:"nh9401_100_oa.jpg",caption:"Objectively mapped velocity at 100 m, NH9401",type:"velocity_plot",depth_m:100}] },
+        { id:"NH9407", dates:"Jul 1994", ship:"R/V New Horizon", region:"S.–C. California", depths_m:[8,250], instrument:"RDI 150 kHz NB", status:"processed",
+          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9407",
+          plots_url:"https://adcp.ucsd.edu/calcofi/", notes:"Summer survey.",
+          track:[[36.5,-122.5],[35.5,-121.8],[34.5,-120.8],[33.5,-119.8],[32.5,-118.8],[31.5,-117.8]],
+          stations:[{lat:36.5,lng:-122.5,label:"70.45"},{lat:34.8,lng:-121.0,label:"80.55"},{lat:33.0,lng:-119.5,label:"86.70"}],
+          images:[] },
+        { id:"NH9501", dates:"Jan 1995", ship:"R/V New Horizon", region:"S. California", depths_m:[8,250], instrument:"RDI 150 kHz NB", status:"processed",
+          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9501",
+          plots_url:"https://adcp.ucsd.edu/calcofi/", notes:"El Niño winter.",
+          track:[[34.0,-120.9],[33.2,-120.1],[32.5,-119.2],[31.8,-118.3],[31.2,-117.6]],
+          stations:[{lat:33.5,lng:-120.2,label:"83.55"},{lat:32.5,lng:-119.2,label:"86.70"}], images:[] },
+        { id:"NH9601", dates:"Jan 1996", ship:"R/V New Horizon", region:"S.–C. California", depths_m:[8,250], instrument:"RDI 150 kHz NB", status:"archived",
+          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9601",
+          plots_url:"https://adcp.ucsd.edu/calcofi/", notes:"Extended grid cruise.",
+          track:[[36.2,-122.8],[35.2,-122.0],[34.2,-121.0],[33.2,-120.0],[32.2,-118.8],[31.2,-117.7]],
+          stations:[{lat:35.2,lng:-122.0,label:"73.45"},{lat:33.5,lng:-120.2,label:"83.55"},{lat:31.8,lng:-118.2,label:"90.70"}], images:[] },
+        { id:"NH0301", dates:"Jan 2003", ship:"R/V New Horizon", region:"S. California", depths_m:[8,250], instrument:"RDI 150 kHz BB", status:"processed",
+          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH0301",
+          plots_url:"https://adcp.ucsd.edu/calcofi/", notes:"Final cruise. Broadband instrument.",
+          track:[[33.8,-120.6],[33.0,-119.9],[32.3,-119.1],[31.6,-118.2],[31.0,-117.5]],
+          stations:[{lat:33.0,lng:-119.9,label:"83.55"},{lat:32.3,lng:-119.1,label:"86.70"},{lat:31.6,lng:-118.2,label:"90.70"}],
+          images:[{filename:"nh0301_100_oa.jpg",caption:"Objectively mapped velocity at 100 m, NH0301",type:"velocity_plot",depth_m:100}] }
+      ]
+    }
+  ]
+};
+
+/* ════════════════════════════════════════════════════════
+   SITE INITIALIZATION
+   ════════════════════════════════════════════════════════ */
+function initSite() {
+  const s = SITE;
+  // Footer
+  document.getElementById('site-footer').innerHTML =
+    `© Chereskin Lab · ${s.site.institution} · UC San Diego &nbsp;|&nbsp;
+     Data archived at <a href="https://www.ncei.noaa.gov" target="_blank">NCEI / NOAA</a> &nbsp;|&nbsp;
+     <a href="http://ilikai.soest.hawaii.edu/sadcp/" target="_blank">JASADCP</a> &nbsp;|&nbsp;
+     <a href="https://adcp.ucsd.edu" target="_blank">Original site</a>`;
+
+  // Hero buttons
+  const hb = document.getElementById('hero-btns');
+  s.projects.forEach(p => {
+    const btnStyle = p.color === '#c9832e' ? 'btn-amber' : 'btn-teal';
+    hb.innerHTML += `<a class="btn ${btnStyle}" href="#" onclick="showProject('${p.id}')">${p.short_name}</a>`;
+  });
+  hb.innerHTML += `<a class="btn btn-ghost" href="https://www.ncei.noaa.gov" target="_blank">NCEI Archive ↗</a>`;
+
+  // Stats
+  const totalCruises = s.projects.reduce((n, p) => n + p.cruises.length, 0);
+  const allYears = s.projects.map(p => p.years).join(', ');
+  const vessels = [...new Set(s.projects.map(p => p.vessel))];
+  document.getElementById('home-stats').innerHTML = `
+    <div class="stat"><div class="stat-lbl">Total Cruises</div><div class="stat-val">${totalCruises}</div><div class="stat-note">Across ${s.projects.length} programs</div></div>
+    <div class="stat"><div class="stat-lbl">Programs</div><div class="stat-val">${s.projects.length}</div><div class="stat-note">${s.projects.map(p=>p.short_name).join(' · ')}</div></div>
+    <div class="stat"><div class="stat-lbl">Research Vessels</div><div class="stat-val">${vessels.length}</div><div class="stat-note">${vessels.map(v=>v.replace('ARSV ','').replace('R/V ','')).join(' · ')}</div></div>
+    <div class="stat"><div class="stat-lbl">NCEI Accessions</div><div class="stat-val">${totalCruises}</div><div class="stat-note">All cruises archived</div></div>`;
+
+  // Project cards
+  const pc = document.getElementById('project-cards');
+  s.projects.forEach(p => {
+    const totalImgs = p.cruises.reduce((n,c) => n + c.images.length, 0);
+    pc.innerHTML += `
+      <a class="proj-card" href="#" onclick="showProject('${p.id}')">
+        <div class="proj-accent" style="background: ${p.color}"></div>
+        <div class="proj-body">
+          <div class="proj-region" style="color:${p.color}">${p.region}</div>
+          <h3>${p.name}</h3>
+          <p>${p.description}</p>
+          <div class="proj-meta">
+            <div class="pm"><strong>${p.cruises.length}</strong> cruises</div>
+            <div class="pm"><strong>${p.years}</strong> period</div>
+            <div class="pm"><strong>${totalImgs}</strong> images</div>
+          </div>
+        </div>
+        <div class="proj-foot"><span>${p.vessel}</span><span style="color:${p.color};font-weight:500">Explore →</span></div>
+      </a>`;
+  });
+
+  // About refs
+  const ar = document.getElementById('about-refs');
+  s.projects.forEach(p => p.references && p.references.forEach(r => {
+    ar.innerHTML += `<li>${r}</li>`;
+  }));
+}
+
+/* ════════════════════════════════════════════════════════
+   NAVIGATION
+   ════════════════════════════════════════════════════════ */
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  document.getElementById('section-' + id).classList.add('visible');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function navTo(id, el) {
+  if (el) {
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    el.classList.add('active');
+  }
+  if (id === 'antarctic' || id === 'calcofi') {
+    showProject(id);
+  } else {
+    showSection(id);
+  }
+}
+
+function showProject(projId) {
+  const p = SITE.projects.find(x => x.id === projId);
+  if (!p) return;
+
+  // Update nav
+  document.querySelectorAll('nav a').forEach(a => {
+    a.classList.toggle('active', a.textContent.toLowerCase().includes(projId === 'calcofi' ? 'calcofi' : 'antarctic'));
+  });
+
+  buildProjectHTML(p);
+  showSection('project');
+
+  // Defer map init until DOM is painted
+  setTimeout(() => initProjectMap(p), 100);
+}
+
+/* ════════════════════════════════════════════════════════
+   PROJECT PAGE BUILDER
+   ════════════════════════════════════════════════════════ */
+function buildProjectHTML(p) {
+  const processed = p.cruises.filter(c => c.status === 'processed').length;
+  const totalImgs = p.cruises.reduce((n,c) => n + c.images.length, 0);
+
+  let html = `
+    <div class="breadcrumb">
+      <a onclick="navTo('home',null)">Overview</a>
+      <span>›</span>
+      <span>${p.name}</span>
+    </div>
+
+    <div class="sec-title">${p.name}</div>
+    <div class="sec-sub">${p.vessel} · ${p.region} · ${p.years}</div>
+
+    <div class="notice">⚠️ &nbsp;<span>Station positions shown are representative waypoints. Full cruise tracks are in the NCEI accession files. All coordinates from shipboard GPS integrated with CODAS3.</span></div>
+
+    <!-- ── MAP ── -->
+    <div class="panel">
+      <div class="panel-hdr">
+        <div>
+          <div class="panel-title">Cruise Tracks & Station Positions</div>
+          <div class="panel-sub">Click a marker to view cruise details and access data.</div>
+        </div>
+        <div class="map-legend">
+          <div class="leg-item"><div class="leg-dot" style="background:${p.color}"></div> Cruise track</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#2874c5"></div> Station</div>
+        </div>
+      </div>
+      <div id="map-${p.id}" class="leaflet-map"></div>
+    </div>
+
+    <!-- ── IMAGE GALLERY ── -->
+    <div class="panel">
+      <div class="panel-hdr">
+        <div>
+          <div class="panel-title">Image Gallery</div>
+          <div class="panel-sub">Velocity plots, cruise photos, and station maps. Click to enlarge.</div>
+        </div>
+        <span class="panel-count">${totalImgs} images</span>
+      </div>
+      <div class="gallery-outer">
+        <div class="gallery-controls">
+          <button class="gal-btn active" onclick="filterGallery('${p.id}', 'all', this)">All</button>
+          <button class="gal-btn" onclick="filterGallery('${p.id}', 'velocity_plot', this)">Velocity Plots</button>
+          <button class="gal-btn" onclick="filterGallery('${p.id}', 'station_map', this)">Station Maps</button>
+          <button class="gal-btn" onclick="filterGallery('${p.id}', 'cruise_photo', this)">Cruise Photos</button>
+          <button class="gal-btn" onclick="filterGallery('${p.id}', 'echo_intensity', this)">Echo Intensity</button>
+        </div>
+        <div class="gallery-grid" id="gallery-${p.id}">`;
+
+  let hasAnyImages = false;
+  p.cruises.forEach(c => {
+    c.images.forEach(img => {
+      hasAnyImages = true;
+      const typeLabels = {velocity_plot:'Velocity Plot', station_map:'Station Map', cruise_photo:'Photo', echo_intensity:'Echo Intensity', calibration:'Calibration'};
+      const typeColors = {velocity_plot:'#1ab8a0', station_map:'#2874c5', cruise_photo:'#c9832e', echo_intensity:'#6c5cb0', calibration:'#888'};
+      const lbl = typeLabels[img.type] || img.type;
+      const clr = typeColors[img.type] || '#888';
+      html += `
+          <div class="gal-item" data-type="${img.type}" data-proj="${p.id}" onclick="openLB('images/${img.filename}','${img.caption.replace(/'/g,"\\'")} — ${c.id}')">
+            <img class="gal-img" src="images/${img.filename}" alt="${img.caption}"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="gal-img-placeholder" style="display:none">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+              <span>${c.id}<br>${img.filename}</span>
+            </div>
+            <div class="gal-cap">
+              <span class="gal-type-badge" style="background:${clr}22;color:${clr}">${lbl}</span><br>
+              ${img.caption}
+            </div>
+          </div>`;
+    });
+  });
+
+  if (!hasAnyImages) {
+    html += `<div class="no-images" style="grid-column:1/-1">No images have been added for this project yet. Add image filenames and captions to <code>site_data.json</code> and place image files in the <code>images/</code> folder.</div>`;
+  }
+
+  html += `
+        </div>
+      </div>
+    </div>
+
+    <!-- ── DATA TABLE ── -->
+    <div class="panel">
+      <div class="panel-hdr">
+        <div class="panel-title">Cruise Data Index</div>
+        <span class="panel-count">${p.cruises.length} cruises · ${processed} processed</span>
+      </div>
+      <div class="tbl-filters">
+        <input class="f-input" placeholder="Filter by cruise ID, region…" oninput="filterTbl('${p.id}', this.value)">
+        <select class="f-select" onchange="filterTbl('${p.id}', this.value)">
+          <option value="">All statuses</option>
+          <option value="processed">Processed</option>
+          <option value="archived">Archived</option>
+          <option value="in_review">In review</option>
+          <option value="pending">Pending</option>
+        </select>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="data-tbl" id="tbl-${p.id}">
+          <thead>
+            <tr>
+              <th>Cruise ID</th><th>Dates</th><th>Ship</th><th>Region</th>
+              <th>Depth Range</th><th>Instrument</th><th>Status</th><th>Data Access</th>
+            </tr>
+          </thead>
+          <tbody>`;
+
+  const statusBadge = {
+    processed: '<span class="badge b-teal">Processed</span>',
+    archived:  '<span class="badge b-navy">Archived</span>',
+    in_review: '<span class="badge b-amber">In review</span>',
+    pending:   '<span class="badge b-gray">Pending</span>'
+  };
+
+  p.cruises.forEach(c => {
+    html += `
+            <tr data-search="${c.id} ${c.region} ${c.status} ${c.dates}">
+              <td><span class="cid">${c.id}</span></td>
+              <td>${c.dates}</td>
+              <td>${c.ship}</td>
+              <td>${c.region}</td>
+              <td>${c.depths_m[0]}–${c.depths_m[1]} m</td>
+              <td style="font-size:12px;color:var(--muted)">${c.instrument}</td>
+              <td>${statusBadge[c.status] || c.status}</td>
+              <td class="cell-acts">
+                <a class="lnk-ncei" href="${c.ncei_url}" target="_blank">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 6h8M6 2l4 4-4 4"/></svg>NCEI
+                </a>
+                <a class="lnk-plots" href="${c.plots_url}" target="_blank">Plots</a>
+                <a class="lnk-jasadcp" href="${SITE.site.jasadcp_url}" target="_blank">JASADCP</a>
+              </td>
+            </tr>`;
+  });
+
+  html += `
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── METHODS ── -->
+    <div class="info-panel">
+      <h3>Processing Methods</h3>
+      <p>${p.methods_text}</p>
+    </div>
+    <div class="info-panel">
+      <h3>References</h3>
+      <ul class="ref-list">${p.references.map(r => `<li>${r}</li>`).join('')}</ul>
+    </div>`;
+
+  document.getElementById('proj-content').innerHTML = html;
+}
+
+/* ════════════════════════════════════════════════════════
+   LEAFLET MAP BUILDER
+   The tile layers below work when the page is served over
+   HTTP/HTTPS. For file:// preview, tiles may not load —
+   run: python3 -m http.server 8000
+   ════════════════════════════════════════════════════════ */
+function initProjectMap(p) {
+  const mapId = `map-${p.id}`;
+  if (mapsInitialized[p.id]) {
+    // Map already exists — Leaflet keeps it, just invalidate size
+    setTimeout(() => mapsInitialized[p.id].invalidateSize(), 50);
+    return;
+  }
+
+  const map = L.map(mapId, {
+    center: p.map_center,
+    zoom: p.map_zoom,
+    zoomControl: true,
+    scrollWheelZoom: false
+  });
+
+  /* ── PRIMARY: ESRI Ocean Basemap (shows bathymetry + continents) ── */
+  const esriOcean = L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}',
+    { attribution: 'Tiles © Esri, GEBCO, NOAA, NGA, DeLorme', maxZoom: 13 }
+  );
+
+  /* ── SECONDARY: ESRI Ocean Reference (labels on top) ── */
+  const esriRef = L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}',
+    { attribution: '', maxZoom: 13, opacity: 0.7 }
+  );
+
+  /* ── FALLBACK: OpenStreetMap (if ESRI not available) ── */
+  const osm = L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    { attribution: '© OpenStreetMap contributors', maxZoom: 18 }
+  );
+
+  // Add ESRI layers; they work fine without an API key
+  esriOcean.addTo(map);
+  esriRef.addTo(map);
+
+  // Layer switcher
+  L.control.layers(
+    { 'Ocean (ESRI)': esriOcean, 'OpenStreetMap': osm },
+    { 'Place labels': esriRef },
+    { position: 'topright', collapsed: false }
+  ).addTo(map);
+
+  // Draw cruise tracks and markers
+  p.cruises.forEach(cruise => {
+    // Track polyline
+    if (cruise.track && cruise.track.length > 1) {
+      L.polyline(cruise.track, {
+        color: p.color, weight: 2.5, opacity: 0.8, dashArray: '5 4'
+      }).addTo(map);
+    }
+
+    // Station markers (small blue dots)
+    if (cruise.stations) {
+      cruise.stations.forEach(st => {
+        L.circleMarker([st.lat, st.lng], {
+          radius: 4, fillColor: '#2874c5', color: '#fff', weight: 1.5,
+          opacity: 1, fillOpacity: 0.85
+        }).addTo(map).bindTooltip(st.label, {permanent: false, direction: 'top', className: 'lbl-tip'});
+      });
+    }
+
+    // Main cruise marker (larger, coloured)
+    const midIdx = Math.floor(cruise.track.length / 2);
+    const midPt = cruise.track[midIdx];
+    const pop = `
+      <div class="pop-id">${cruise.id}</div>
+      <div class="pop-title">${cruise.ship}</div>
+      <div class="pop-row"><strong>Dates:</strong> ${cruise.dates}</div>
+      <div class="pop-row"><strong>Region:</strong> ${cruise.region}</div>
+      <div class="pop-row"><strong>Depth range:</strong> ${cruise.depths_m[0]}–${cruise.depths_m[1]} m</div>
+      <div class="pop-row"><strong>Instrument:</strong> ${cruise.instrument}</div>
+      ${cruise.notes ? `<div class="pop-row" style="margin-top:5px;font-style:italic">${cruise.notes}</div>` : ''}
+      <a class="pop-link" href="${cruise.ncei_url}" target="_blank">View on NCEI →</a>
+    `;
+    L.circleMarker(midPt, {
+      radius: 9, fillColor: p.color, color: '#fff', weight: 2.5,
+      opacity: 1, fillOpacity: 0.95
+    }).addTo(map).bindPopup(pop);
+  });
+
+  mapsInitialized[p.id] = map;
+}
+
+/* ════════════════════════════════════════════════════════
+   GALLERY FILTER
+   ════════════════════════════════════════════════════════ */
+function filterGallery(projId, type, btn) {
+  document.querySelectorAll('.gal-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.querySelectorAll(`#gallery-${projId} .gal-item`).forEach(el => {
+    el.style.display = (type === 'all' || el.dataset.type === type) ? '' : 'none';
+  });
+}
+
+/* ════════════════════════════════════════════════════════
+   TABLE FILTER
+   ════════════════════════════════════════════════════════ */
+function filterTbl(projId, val) {
+  const q = val.toLowerCase();
+  document.querySelectorAll(`#tbl-${projId} tbody tr`).forEach(tr => {
+    tr.style.display = (tr.dataset.search || '').toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+/* ════════════════════════════════════════════════════════
+   LIGHTBOX
+   ════════════════════════════════════════════════════════ */
+function openLB(src, cap) {
+  document.getElementById('lb-img').src = src;
+  document.getElementById('lb-cap').textContent = cap;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLB() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLB(); });
+
+/* ════════════════════════════════════════════════════════
+   BOOT
+   ════════════════════════════════════════════════════════ */
+loadData();
+</script>
+</body>
+</html>

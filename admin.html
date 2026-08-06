@@ -239,11 +239,8 @@ pre {
             <input type="text" id="f-instr" placeholder="RDI 150 kHz NB">
           </div>
           <div class="field">
-            <label>Depth range (m) <span class="tip">— min / max</span></label>
-            <div style="display:flex;gap:6px">
-              <input type="number" id="f-dmin" placeholder="8" style="text-align:center">
-              <input type="number" id="f-dmax" placeholder="250" style="text-align:center">
-            </div>
+            <label>Sonar <span class="tip">— e.g. NB150, BB150</span></label>
+            <input type="text" id="f-sonar" placeholder="NB150">
           </div>
         </div>
 
@@ -589,10 +586,7 @@ function generate() {
     ship,
     region,
     pi: document.getElementById('f-pi').value.trim() || undefined,
-    depths_m: [
-      parseInt(document.getElementById('f-dmin').value) || 8,
-      parseInt(document.getElementById('f-dmax').value) || 250
-    ],
+    sonar: document.getElementById('f-sonar').value.trim() || 'NB150',
     instrument: document.getElementById('f-instr').value.trim() || 'RDI 150 kHz NB',
     status: document.querySelector('input[name="status"]:checked').value,
     ncei_url: ncei,

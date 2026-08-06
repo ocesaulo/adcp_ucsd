@@ -1,0 +1,5 @@
+# Image files referenced by site_data.json — not committed
+images/
+
+# Raw material for the site (tarballs, scraped copies of the old portal)
+input_info/

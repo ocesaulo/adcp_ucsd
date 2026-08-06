@@ -281,11 +281,77 @@ footer { background: var(--navy); color: rgba(255,255,255,.45); text-align: cent
 footer a { color: rgba(255,255,255,.65); text-decoration: none; }
 footer a:hover { color: #fff; }
 
+/* ─── COVERAGE DRAWER ─── */
+.cov-backdrop { display: none; position: fixed; inset: 0; background: rgba(11,34,64,.45); z-index: 1200; }
+.cov-backdrop.open { display: block; }
+.cov-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 620px; max-width: 96vw;
+  background: var(--white); z-index: 1201; overflow-y: auto;
+  box-shadow: -8px 0 40px rgba(11,34,64,.18);
+  transform: translateX(102%); transition: transform .22s ease;
+}
+.cov-drawer.open { transform: none; }
+.cov-hdr { position: sticky; top: 0; background: var(--navy); color: #fff; padding: 1.15rem 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; z-index: 2; }
+.cov-hdr h3 { font-family: var(--serif); font-size: 1.35rem; font-weight: 400; line-height: 1.2; }
+.cov-hdr .cov-sub { font-size: 12.5px; color: rgba(255,255,255,.6); margin-top: 3px; }
+.cov-close { background: none; border: none; color: rgba(255,255,255,.7); font-size: 26px; line-height: 1; cursor: pointer; padding: 0 2px; }
+.cov-close:hover { color: #fff; }
+.cov-body { padding: 1.5rem; }
+.cov-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+.cov-stat { border: 1px solid var(--border); border-radius: 10px; padding: .7rem .8rem; }
+.cov-stat .k { font-size: 9.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--light); font-weight: 600; }
+.cov-stat .v { font-family: var(--serif); font-size: 1.35rem; color: var(--navy); line-height: 1.25; }
+.cov-stat .u { font-size: 11px; color: var(--muted); }
+.cov-sec-title { font-size: 12.5px; font-weight: 600; color: var(--navy); margin: 0 0 .15rem; }
+.cov-sec-sub { font-size: 12px; color: var(--muted); margin-bottom: .9rem; line-height: 1.5; }
+.cov-inst { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem; }
+.cov-inst-card { flex: 1 1 240px; border: 1px solid var(--border); border-left-width: 4px; border-radius: 10px; padding: .7rem .9rem; }
+.cov-inst-card .nm { font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--navy); }
+.cov-inst-card .dl { display: grid; grid-template-columns: auto 1fr; gap: 1px 10px; font-size: 11.5px; color: var(--muted); margin-top: 5px; }
+.cov-inst-card .dl b { color: var(--text); font-weight: 500; }
+.cov-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; margin-bottom: 1rem; }
+.cov-chart-box { border: 1px solid var(--border); border-radius: 10px; padding: .8rem .9rem .5rem; }
+.cov-chart-ttl { font-size: 11.5px; font-weight: 600; color: var(--navy); }
+.cov-legend { display: flex; gap: 12px; flex-wrap: wrap; margin: 4px 0 6px; }
+.cov-legend span { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); }
+.cov-legend i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.cov-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.cov-grid { stroke: var(--border); stroke-width: 1; }
+.cov-axis { stroke: #b9c6d4; stroke-width: 1; }
+.cov-tick { font-family: var(--sans); font-size: 9.5px; fill: var(--light); }
+.cov-axlbl { font-family: var(--sans); font-size: 10px; fill: var(--muted); }
+.cov-endlbl { font-family: var(--mono); font-size: 9.5px; font-weight: 500; }
+.cov-cross { stroke: var(--navy); stroke-width: 1; stroke-dasharray: 3 3; opacity: 0; }
+.cov-readout { font-family: var(--mono); font-size: 11px; color: var(--muted); min-height: 16px; padding: 2px 0 4px; }
+.cov-tbl-btn { background: var(--white); border: 1px solid var(--border); border-radius: 7px; font-size: 11.5px; color: var(--muted); padding: 5px 12px; cursor: pointer; font-family: var(--sans); }
+.cov-tbl-btn:hover { border-color: var(--teal); color: var(--teal); }
+.cov-numbers { display: none; margin-top: .9rem; max-height: 260px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; }
+.cov-numbers.open { display: block; }
+.cov-numbers table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+.cov-numbers th { position: sticky; top: 0; background: var(--sand); text-align: left; padding: 6px 10px; font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); }
+.cov-numbers td { padding: 4px 10px; border-bottom: 1px solid #eef2f6; font-family: var(--mono); color: var(--text); }
+.cov-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1.25rem; padding-top: 1.1rem; border-top: 1px solid var(--border); }
+.cov-note { font-size: 12px; color: var(--muted); line-height: 1.6; margin-top: .9rem; }
+
+/* ─── TRACK ↔ TABLE LINKING ─── */
+.data-tbl tr.row-hl td { background: rgba(14,140,122,.09); }
+.data-tbl tr[data-track] { cursor: pointer; }
+.lnk-track {
+  display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 500;
+  padding: 3px 9px; border-radius: 6px; text-decoration: none; border: 1px solid var(--teal);
+  color: var(--teal); background: var(--teal-pale); cursor: pointer;
+}
+.lnk-track:hover { background: var(--teal); color: #fff; }
+.cov-cell { font-size: 11.5px; color: var(--muted); font-family: var(--mono); white-space: nowrap; }
+.cov-cell .dash { color: var(--border); }
+
 @media (max-width: 860px) {
   .stats { grid-template-columns: repeat(2, 1fr); }
   .hero { padding: 2rem; }
   .hero h1 { font-size: 1.9rem; }
   .page { padding: 1.5rem 1rem 3rem; }
+  .cov-charts { grid-template-columns: 1fr; }
+  .cov-stats { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
@@ -297,6 +363,10 @@ footer a:hover { color: #fff; }
   <img id="lb-img" src="" alt="">
   <div id="lb-cap"></div>
 </div>
+
+<!-- COVERAGE DRAWER (measured tracks: per-cruise data coverage) -->
+<div class="cov-backdrop" id="cov-backdrop" onclick="closeCoverage()"></div>
+<aside class="cov-drawer" id="cov-drawer" aria-hidden="true"><!-- filled by JS --></aside>
 
 <!-- HEADER -->
 <header>
@@ -421,8 +491,19 @@ footer a:hover { color: #fff; }
    ════════════════════════════════════════════════════════ */
 
 let SITE = null;          // populated after load
+let TRACKS = {};          // measured ship tracks, keyed by cruise id
+let TRACK_META = null;    // header of the tracks file (provenance)
 let mapsInitialized = {}; // track which Leaflet maps are built
 let mapCruiseLayers = {}; // per-project, per-cruise LayerGroups
+let mapCruiseLines  = {}; // per-project, per-cruise track polylines (for highlighting)
+
+/* Files holding measured tracks + depth-coverage statistics, produced from the
+   CODAS databases by make_drake_passage_web_tracks.py (see _README). */
+const TRACK_FILES = ['data/drake_passage_tracks.json'];
+
+/* Series colours for the coverage charts, one per sonar. */
+const SONAR_COLORS = { nb150: '#0e8c7a', os38nb: '#c9832e' };
+const SONAR_NAMES  = { nb150: 'NB150', os38nb: 'OS38NB' };
 
 async function loadData() {
   if (location.protocol !== 'file:') {
@@ -433,11 +514,37 @@ async function loadData() {
       console.warn('Could not load site_data.json, using embedded data:', e);
       SITE = EMBEDDED_DATA;
     }
+    await loadTracks();
   } else {
     // file:// — fetch is blocked, use embedded stub
     SITE = EMBEDDED_DATA;
   }
   initSite();
+}
+
+async function loadTracks() {
+  for (const f of TRACK_FILES) {
+    try {
+      const r = await fetch(f);
+      if (!r.ok) throw new Error(r.status + ' ' + r.statusText);
+      const d = await r.json();
+      TRACK_META = TRACK_META || d;
+      (d.cruises || []).forEach(c => { TRACKS[c.site_id || c.cruise_id] = c; });
+    } catch(e) {
+      console.warn('Could not load ' + f + ' — falling back to listed tracks:', e);
+    }
+  }
+}
+
+/* Measured track for a cruise, or null when the CODAS load has not been
+   processed into the tracks file yet. */
+function trackFor(cruise) {
+  return TRACKS[cruise.track_key || cruise.id] || null;
+}
+function hasTrack(cruise) {
+  const t = trackFor(cruise);
+  if (t && t.segments && t.segments.length) return true;
+  return !!(cruise.track && cruise.track.length > 1);
 }
 
 /* ── EMBEDDED FALLBACK DATA (minimal, for file:// preview) ── */
@@ -460,30 +567,30 @@ const EMBEDDED_DATA = {
       map_center: [-61, -61], map_zoom: 5,
       references: ["Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619–22629."],
       cruises: [
-        { id:"LMG0402", dates:"Feb–Mar 2004", ship:"ARSV Laurence M. Gould", region:"Drake Passage", depths_m:[30,300], instrument:"RDI 150 kHz NB", status:"processed",
+        { id:"LMG0402", dates:"Feb–Mar 2004", ship:"ARSV Laurence M. Gould", region:"Drake Passage", sonar:"NB150", instrument:"RDI 150 kHz NB", status:"processed",
           ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0402",
           plots_url:"https://adcp.ucsd.edu/lmgould/", notes:"Two Drake Passage transects.",
           track:[[-53.5,-68.2],[-55.1,-65.8],[-57.2,-64.1],[-59.3,-62.5],[-61.8,-59.9],[-63.2,-58.0]],
           stations:[{lat:-55.1,lng:-65.8,label:"DP-01"},{lat:-57.2,lng:-64.1,label:"DP-02"},{lat:-59.3,lng:-62.5,label:"DP-03"}],
           images:[{filename:"lmg0402_uv_30m.jpg",caption:"Velocity at 30 m, LMG0402",type:"velocity_plot",depth_m:30}] },
-        { id:"LMG0501", dates:"Jan 2005", ship:"ARSV Laurence M. Gould", region:"Bransfield Strait", depths_m:[30,300], instrument:"RDI 150 kHz NB", status:"processed",
+        { id:"LMG0501", dates:"Jan 2005", ship:"ARSV Laurence M. Gould", region:"Bransfield Strait", sonar:"NB150", instrument:"RDI 150 kHz NB", status:"processed",
           ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0501",
           plots_url:"https://adcp.ucsd.edu/lmgould/", notes:"Bransfield Strait transect.",
           track:[[-62.0,-64.0],[-63.1,-61.5],[-63.8,-59.8]],
           stations:[{lat:-62.0,lng:-64.0,label:"BS-01"},{lat:-63.1,lng:-61.5,label:"BS-02"}],
           images:[] },
-        { id:"LMG0601", dates:"Jan–Feb 2006", ship:"ARSV Laurence M. Gould", region:"Drake Passage", depths_m:[30,300], instrument:"RDI 150 kHz NB", status:"processed",
+        { id:"LMG0601", dates:"Jan–Feb 2006", ship:"ARSV Laurence M. Gould", region:"Drake Passage", sonar:"NB150", instrument:"RDI 150 kHz NB", status:"processed",
           ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0601",
           plots_url:"https://adcp.ucsd.edu/lmgould/", notes:"Three transects.",
           track:[[-53.8,-67.0],[-55.5,-65.2],[-57.8,-63.5],[-60.1,-61.8],[-62.5,-60.0]],
           stations:[{lat:-55.5,lng:-65.2,label:"DP-01"},{lat:-57.8,lng:-63.5,label:"DP-02"}],
           images:[] },
-        { id:"LMG0801", dates:"Jan–Feb 2008", ship:"ARSV Laurence M. Gould", region:"Bransfield Strait", depths_m:[30,300], instrument:"RDI 150 kHz NB", status:"archived",
+        { id:"LMG0801", dates:"Jan–Feb 2008", ship:"ARSV Laurence M. Gould", region:"Bransfield Strait", sonar:"NB150", instrument:"RDI 150 kHz NB", status:"archived",
           ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0801",
           plots_url:"https://adcp.ucsd.edu/lmgould/", notes:"Final Bransfield survey.",
           track:[[-61.5,-64.8],[-62.9,-62.3],[-63.6,-60.2]],
           stations:[{lat:-62.9,lng:-62.3,label:"BS-01"}], images:[] },
-        { id:"LMG1001", dates:"Jan 2010", ship:"ARSV Laurence M. Gould", region:"Drake Passage", depths_m:[30,300], instrument:"RDI 150 kHz NB", status:"in_review",
+        { id:"LMG1001", dates:"Jan 2010", ship:"ARSV Laurence M. Gould", region:"Drake Passage", sonar:"NB150", instrument:"RDI 150 kHz NB", status:"in_review",
           ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG1001",
           plots_url:"https://adcp.ucsd.edu/lmgould/", notes:"Processing in progress.",
           track:[[-53.2,-68.8],[-55.8,-66.5],[-57.5,-65.1],[-59.8,-63.2],[-62.3,-61.0]],
@@ -502,35 +609,35 @@ const EMBEDDED_DATA = {
         "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography."
       ],
       cruises: [
-        { id:"NH9310", dates:"Oct 1993", ship:"R/V New Horizon", region:"S. California", depths_m:[8,250], instrument:"RDI 150 kHz NB", status:"processed",
+        { id:"NH9310", dates:"Oct 1993", ship:"R/V New Horizon", region:"S. California", sonar:"NB150", instrument:"RDI 150 kHz NB", status:"processed",
           ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9310",
           plots_url:"https://adcp.ucsd.edu/calcofi/1993/nh9310/nh9310.htm", notes:"First cruise of program.",
           track:[[34.5,-120.8],[33.8,-120.2],[33.2,-119.5],[32.5,-118.8],[31.8,-118.0],[31.2,-117.5]],
           stations:[{lat:34.5,lng:-120.8,label:"80.55"},{lat:33.5,lng:-119.8,label:"83.55"},{lat:32.5,lng:-118.8,label:"86.70"},{lat:31.8,lng:-118.0,label:"90.70"}],
           images:[{filename:"nh9310_100_oa.jpg",caption:"Objectively mapped velocity at 100 m, NH9310",type:"velocity_plot",depth_m:100},{filename:"nh9310_30_oa.jpg",caption:"Objectively mapped velocity at 30 m, NH9310",type:"velocity_plot",depth_m:30},{filename:"nh9310_track.jpg",caption:"Cruise track and CalCOFI grid, NH9310",type:"station_map"}] },
-        { id:"NH9401", dates:"Jan 1994", ship:"R/V New Horizon", region:"S. California", depths_m:[8,250], instrument:"RDI 150 kHz NB", status:"processed",
+        { id:"NH9401", dates:"Jan 1994", ship:"R/V New Horizon", region:"S. California", sonar:"NB150", instrument:"RDI 150 kHz NB", status:"processed",
           ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9401",
           plots_url:"https://adcp.ucsd.edu/calcofi/", notes:"Winter cruise.",
           track:[[34.2,-121.0],[33.5,-120.5],[32.8,-119.5],[32.0,-118.5],[31.3,-117.8]],
           stations:[{lat:34.2,lng:-121.0,label:"80.51"},{lat:33.0,lng:-119.8,label:"83.55"},{lat:31.8,lng:-118.2,label:"90.70"}],
           images:[{filename:"nh9401_100_oa.jpg",caption:"Objectively mapped velocity at 100 m, NH9401",type:"velocity_plot",depth_m:100}] },
-        { id:"NH9407", dates:"Jul 1994", ship:"R/V New Horizon", region:"S.–C. California", depths_m:[8,250], instrument:"RDI 150 kHz NB", status:"processed",
+        { id:"NH9407", dates:"Jul 1994", ship:"R/V New Horizon", region:"S.–C. California", sonar:"NB150", instrument:"RDI 150 kHz NB", status:"processed",
           ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9407",
           plots_url:"https://adcp.ucsd.edu/calcofi/", notes:"Summer survey.",
           track:[[36.5,-122.5],[35.5,-121.8],[34.5,-120.8],[33.5,-119.8],[32.5,-118.8],[31.5,-117.8]],
           stations:[{lat:36.5,lng:-122.5,label:"70.45"},{lat:34.8,lng:-121.0,label:"80.55"},{lat:33.0,lng:-119.5,label:"86.70"}],
           images:[] },
-        { id:"NH9501", dates:"Jan 1995", ship:"R/V New Horizon", region:"S. California", depths_m:[8,250], instrument:"RDI 150 kHz NB", status:"processed",
+        { id:"NH9501", dates:"Jan 1995", ship:"R/V New Horizon", region:"S. California", sonar:"NB150", instrument:"RDI 150 kHz NB", status:"processed",
           ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9501",
           plots_url:"https://adcp.ucsd.edu/calcofi/", notes:"El Niño winter.",
           track:[[34.0,-120.9],[33.2,-120.1],[32.5,-119.2],[31.8,-118.3],[31.2,-117.6]],
           stations:[{lat:33.5,lng:-120.2,label:"83.55"},{lat:32.5,lng:-119.2,label:"86.70"}], images:[] },
-        { id:"NH9601", dates:"Jan 1996", ship:"R/V New Horizon", region:"S.–C. California", depths_m:[8,250], instrument:"RDI 150 kHz NB", status:"archived",
+        { id:"NH9601", dates:"Jan 1996", ship:"R/V New Horizon", region:"S.–C. California", sonar:"NB150", instrument:"RDI 150 kHz NB", status:"archived",
           ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9601",
           plots_url:"https://adcp.ucsd.edu/calcofi/", notes:"Extended grid cruise.",
           track:[[36.2,-122.8],[35.2,-122.0],[34.2,-121.0],[33.2,-120.0],[32.2,-118.8],[31.2,-117.7]],
           stations:[{lat:35.2,lng:-122.0,label:"73.45"},{lat:33.5,lng:-120.2,label:"83.55"},{lat:31.8,lng:-118.2,label:"90.70"}], images:[] },
-        { id:"NH0301", dates:"Jan 2003", ship:"R/V New Horizon", region:"S. California", depths_m:[8,250], instrument:"RDI 150 kHz BB", status:"processed",
+        { id:"NH0301", dates:"Jan 2003", ship:"R/V New Horizon", region:"S. California", sonar:"BB150", instrument:"RDI 150 kHz BB", status:"processed",
           ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH0301",
           plots_url:"https://adcp.ucsd.edu/calcofi/", notes:"Final cruise. Broadband instrument.",
           track:[[33.8,-120.6],[33.0,-119.9],[32.3,-119.1],[31.6,-118.2],[31.0,-117.5]],
@@ -565,11 +672,17 @@ function initSite() {
   const totalCruises = s.projects.reduce((n, p) => n + p.cruises.length, 0);
   const allYears = s.projects.map(p => p.years).join(', ');
   const vessels = [...new Set(s.projects.map(p => p.vessel))];
+  const archived = s.projects.reduce((n, p) => n + p.cruises.filter(c => c.ncei_url).length, 0);
+  const measured = Object.values(TRACKS);
+  const trackKm  = measured.reduce((n, t) => n + (t.track_length_km || 0), 0);
+  const lastTile = measured.length
+    ? `<div class="stat"><div class="stat-lbl">Measured Track</div><div class="stat-val">${fmtInt(trackKm)}</div><div class="stat-note">km from ${measured.length} CODAS loads</div></div>`
+    : `<div class="stat"><div class="stat-lbl">NCEI Accessions</div><div class="stat-val">${archived}</div><div class="stat-note">of ${totalCruises} cruises archived</div></div>`;
   document.getElementById('home-stats').innerHTML = `
     <div class="stat"><div class="stat-lbl">Total Cruises</div><div class="stat-val">${totalCruises}</div><div class="stat-note">Across ${s.projects.length} programs</div></div>
     <div class="stat"><div class="stat-lbl">Programs</div><div class="stat-val">${s.projects.length}</div><div class="stat-note">${s.projects.map(p=>p.short_name).join(' · ')}</div></div>
     <div class="stat"><div class="stat-lbl">Research Vessels</div><div class="stat-val">${vessels.length}</div><div class="stat-note">${vessels.map(v=>v.replace('ARSV ','').replace('R/V ','')).join(' · ')}</div></div>
-    <div class="stat"><div class="stat-lbl">NCEI Accessions</div><div class="stat-val">${totalCruises}</div><div class="stat-note">All cruises archived</div></div>`;
+    ${lastTile}`;
 
   // Project cards
   const pc = document.getElementById('project-cards');
@@ -642,6 +755,7 @@ function showProject(projId) {
 function buildProjectHTML(p) {
   const processed = p.cruises.filter(c => c.status === 'processed').length;
   const totalImgs = p.cruises.reduce((n,c) => n + c.images.length, 0);
+  const measuredCount = p.cruises.filter(c => trackFor(c)).length;
 
   let html = `
     <div class="breadcrumb">
@@ -653,14 +767,16 @@ function buildProjectHTML(p) {
     <div class="sec-title">${p.name}</div>
     <div class="sec-sub">${p.vessel} · ${p.region} · ${p.years}</div>
 
-    <div class="notice">⚠️ &nbsp;<span>Station positions shown are representative waypoints. Full cruise tracks are in the NCEI accession files. All coordinates from shipboard GPS integrated with CODAS3.</span></div>
+    ${measuredCount
+      ? `<div class="notice">📡 &nbsp;<span><strong>${measuredCount} of ${p.cruises.length} cruises</strong> draw their measured ship track: the positions of the ADCP ensembles that carry valid <em>u</em> and <em>v</em>, read straight from the CODAS databases. Click a track (or a table row) for that cruise's data coverage by depth bin. Cruises whose loads have not been processed yet carry no track.</span></div>`
+      : `<div class="notice">⚠️ &nbsp;<span>Station positions shown are representative waypoints. Full cruise tracks are in the NCEI accession files. All coordinates from shipboard GPS integrated with CODAS3.</span></div>`}
 
     <!-- ── MAP ── -->
     <div class="panel">
       <div class="panel-hdr">
         <div>
           <div class="panel-title">Cruise Tracks & Station Positions</div>
-          <div class="panel-sub">Click a marker to view cruise details and access data.</div>
+          <div class="panel-sub">${measuredCount ? 'Click a track or its marker for cruise details and depth-coverage statistics.' : 'Click a marker to view cruise details and access data.'}</div>
         </div>
         <div class="map-legend">
           <div class="leg-item"><div class="leg-dot" style="background:${p.color}"></div> Cruise track</div>
@@ -669,7 +785,7 @@ function buildProjectHTML(p) {
       </div>
       <div id="map-${p.id}" class="leaflet-map"></div>
       ${(() => {
-        const withTracks = p.cruises.filter(c => c.track && c.track.length > 1);
+        const withTracks = p.cruises.filter(hasTrack);
         if (!withTracks.length) return '';
         const chips = withTracks.map(c => {
           const map = mapsInitialized[p.id];
@@ -760,7 +876,7 @@ function buildProjectHTML(p) {
           <thead>
             <tr>
               <th>Cruise ID</th><th>Dates</th><th>Ship</th><th>Region</th>
-              <th>Depth Range</th><th>Instrument</th><th>Status</th><th>Data Access</th>
+              <th>Sonar</th>${measuredCount ? '<th>Coverage (50%)</th>' : '<th>Instrument</th>'}<th>Status</th><th>Data Access</th>
             </tr>
           </thead>
           <tbody>`;
@@ -773,20 +889,34 @@ function buildProjectHTML(p) {
   };
 
   p.cruises.forEach(c => {
+    const t = trackFor(c);
+    const rowAttrs = t
+      ? ` data-track="1" onclick="focusCruise('${p.id}','${c.id}')"`
+        + ` onmouseenter="highlightTrack('${p.id}','${c.id}',true)"`
+        + ` onmouseleave="highlightTrack('${p.id}','${c.id}',false)"`
+      : '';
+    const covCell = measuredCount ? `
+              <td class="cov-cell">${t
+                ? t.instruments.map(i => `${SONAR_NAMES[i.sonar] || i.sonar}&nbsp;${i.max_depth_50pct ? Math.round(i.max_depth_50pct) + '&nbsp;m' : '—'}`).join('<br>')
+                : '<span class="dash">not loaded</span>'}</td>`
+      : `
+              <td style="font-size:12px;color:var(--muted)">${c.instrument}</td>`;
     html += `
-            <tr data-search="${c.id} ${c.region} ${c.status} ${c.dates}">
+            <tr id="row-${p.id}-${c.id}" data-search="${c.id} ${c.region} ${c.status} ${c.dates}"${rowAttrs}>
               <td><span class="cid">${c.id}</span></td>
               <td>${c.dates}</td>
               <td>${c.ship}</td>
               <td>${c.region}</td>
-              <td>${c.depths_m[0]}–${c.depths_m[1]} m</td>
-              <td style="font-size:12px;color:var(--muted)">${c.instrument}</td>
+              <td>${c.sonar}</td>${covCell}
               <td>${statusBadge[c.status] || c.status}</td>
-              <td class="cell-acts">
-                <a class="lnk-ncei" href="${c.ncei_url}" target="_blank">
+              <td class="cell-acts" onclick="event.stopPropagation()">
+                ${t ? `<span class="lnk-track" onclick="focusCruise('${p.id}','${c.id}')">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 9l3.5-6 3 4 3.5-5"/></svg>Coverage
+                </span>` : ''}
+                ${c.ncei_url ? `<a class="lnk-ncei" href="${c.ncei_url}" target="_blank">
                   <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 6h8M6 2l4 4-4 4"/></svg>NCEI
-                </a>
-                <a class="lnk-plots" href="${c.plots_url}" target="_blank">Plots</a>
+                </a>` : ''}
+                ${c.plots_url ? `<a class="lnk-plots" href="${c.plots_url}" target="_blank">Plots</a>` : ''}
                 ${c.jasadcp_url ? `<a class="lnk-jasadcp" href="${c.jasadcp_url}" target="_blank">JASADCP</a>` : ''}
               </td>
             </tr>`;
@@ -863,16 +993,35 @@ function initProjectMap(p) {
 
   // Draw cruise tracks and markers — one LayerGroup per cruise for toggling
   if (!mapCruiseLayers[p.id]) mapCruiseLayers[p.id] = {};
+  if (!mapCruiseLines[p.id])  mapCruiseLines[p.id]  = {};
 
   p.cruises.forEach(cruise => {
-    if (!cruise.track || cruise.track.length < 2) return;
+    const meas = trackFor(cruise);
+    // measured segments when the CODAS load has been processed, otherwise the
+    // illustrative track listed in site_data.json
+    const segments = meas && meas.segments && meas.segments.length
+      ? meas.segments
+      : (cruise.track && cruise.track.length > 1 ? [cruise.track] : []);
+    if (!segments.length) return;
 
     const lg = L.layerGroup();
+    const lines = [];
 
-    // Track polyline
-    L.polyline(cruise.track, {
-      color: p.color, weight: 2.5, opacity: 0.8, dashArray: '5 4'
-    }).addTo(lg);
+    segments.forEach(seg => {
+      if (seg.length < 2) return;
+      const line = L.polyline(seg, {
+        color: p.color, weight: meas ? 2 : 2.5, opacity: 0.85,
+        dashArray: meas ? null : '5 4'   // dashed = illustrative, solid = measured
+      }).addTo(lg);
+      lines.push(line);
+      if (!meas) return;
+      // wide invisible line so the track is easy to hit with the cursor
+      const hit = L.polyline(seg, {color: p.color, weight: 14, opacity: 0}).addTo(lg);
+      hit.on('mouseover', () => highlightTrack(p.id, cruise.id, true, true));
+      hit.on('mouseout',  () => highlightTrack(p.id, cruise.id, false, true));
+      hit.on('click',     () => focusCruise(p.id, cruise.id, false));
+      hit.bindTooltip(`${cruise.id} · ${cruise.dates}`, {sticky: true, className: 'lbl-tip'});
+    });
 
     // Station markers (small blue dots)
     if (cruise.stations) {
@@ -884,29 +1033,300 @@ function initProjectMap(p) {
       });
     }
 
-    // Main cruise marker (larger, coloured) with popup
-    const midIdx = Math.floor(cruise.track.length / 2);
-    const midPt = cruise.track[midIdx];
-    const pop = `
-      <div class="pop-id">${cruise.id}</div>
-      <div class="pop-title">${cruise.ship}</div>
-      <div class="pop-row"><strong>Dates:</strong> ${cruise.dates}</div>
-      <div class="pop-row"><strong>Region:</strong> ${cruise.region}</div>
-      <div class="pop-row"><strong>Depth range:</strong> ${cruise.depths_m[0]}–${cruise.depths_m[1]} m</div>
-      <div class="pop-row"><strong>Instrument:</strong> ${cruise.instrument}</div>
-      ${cruise.notes ? `<div class="pop-row" style="margin-top:5px;font-style:italic">${cruise.notes}</div>` : ''}
-      <a class="pop-link" href="${cruise.ncei_url}" target="_blank">View on NCEI →</a>
-    `;
+    // Main cruise marker (larger, coloured) with popup, at mid-track
+    const longest = segments.reduce((a, b) => (b.length > a.length ? b : a), segments[0]);
+    const midPt = longest[Math.floor(longest.length / 2)];
     L.circleMarker(midPt, {
       radius: 9, fillColor: p.color, color: '#fff', weight: 2.5,
       opacity: 1, fillOpacity: 0.95
-    }).addTo(lg).bindPopup(pop);
+    }).addTo(lg).bindPopup(cruisePopupHTML(p, cruise, meas));
 
     mapCruiseLayers[p.id][cruise.id] = lg;
+    mapCruiseLines[p.id][cruise.id]  = lines;
     lg.addTo(map); // visible by default
   });
 
   mapsInitialized[p.id] = map;
+}
+
+function cruisePopupHTML(p, cruise, meas) {
+  const rows = meas ? `
+      <div class="pop-row"><strong>Measured:</strong> ${fmtInt(meas.n_ens_valid)} profiles · ${fmtInt(meas.track_length_km)} km · ${meas.duration_days} d</div>
+      <div class="pop-row"><strong>50% coverage to:</strong> ${meas.instruments.map(i =>
+        `${SONAR_NAMES[i.sonar] || i.sonar} ${i.max_depth_50pct ? Math.round(i.max_depth_50pct) + ' m' : '—'}`).join(' · ')}</div>`
+    : `<div class="pop-row"><strong>Instrument:</strong> ${cruise.instrument}</div>`;
+  return `
+      <div class="pop-id">${cruise.id}</div>
+      <div class="pop-title">${cruise.ship}</div>
+      <div class="pop-row"><strong>Dates:</strong> ${cruise.dates}</div>
+      <div class="pop-row"><strong>Region:</strong> ${cruise.region}</div>
+      <div class="pop-row"><strong>Sonar:</strong> ${cruise.sonar}</div>
+      ${rows}
+      ${cruise.notes ? `<div class="pop-row" style="margin-top:5px;font-style:italic">${cruise.notes}</div>` : ''}
+      ${meas ? `<a class="pop-link" onclick="focusCruise('${p.id}','${cruise.id}',false)">Data coverage by depth →</a><br>` : ''}
+      ${cruise.ncei_url ? `<a class="pop-link" href="${cruise.ncei_url}" target="_blank">View on NCEI →</a>` : ''}
+  `;
+}
+
+/* ════════════════════════════════════════════════════════
+   TRACK ↔ TABLE LINKING
+   ════════════════════════════════════════════════════════ */
+function highlightTrack(projId, cruiseId, on, fromMap) {
+  (mapCruiseLines[projId]?.[cruiseId] || []).forEach(l =>
+    l.setStyle({weight: on ? 5 : 2, opacity: on ? 1 : 0.85}));
+  const row = document.getElementById(`row-${projId}-${cruiseId}`);
+  if (row) {
+    row.classList.toggle('row-hl', !!on);
+    if (on && fromMap) row.scrollIntoView({block: 'nearest', behavior: 'smooth'});
+  }
+}
+
+/* Zoom the map to a cruise and open its coverage drawer. */
+function focusCruise(projId, cruiseId, scroll = true) {
+  const p = SITE.projects.find(x => x.id === projId);
+  const cruise = p && p.cruises.find(c => c.id === cruiseId);
+  if (!cruise) return;
+  const meas = trackFor(cruise);
+  const map  = mapsInitialized[projId];
+
+  if (map && meas && meas.bbox) {
+    if (!map.hasLayer(mapCruiseLayers[projId][cruiseId])) {
+      toggleCruiseLayer(projId, cruiseId, true);
+      const cb = document.querySelector(`#chip-${projId}-${cruiseId} input`);
+      if (cb) cb.checked = true;
+    }
+    map.fitBounds([[meas.bbox[0], meas.bbox[1]], [meas.bbox[2], meas.bbox[3]]], {padding: [30, 30]});
+    if (scroll) document.getElementById(`map-${projId}`)
+      .scrollIntoView({block: 'center', behavior: 'smooth'});
+  }
+  if (meas) openCoverage(projId, cruiseId);
+}
+
+/* ════════════════════════════════════════════════════════
+   COVERAGE DRAWER
+   Cruise-aggregate data coverage per depth bin: the share of
+   ensembles with non-masked u and v in each bin, plus the
+   error-velocity profile, straight from the CODAS load.
+   ════════════════════════════════════════════════════════ */
+const COV_CHARTS = {};   // chart id → state used by the hover readout
+
+function fmtInt(n) {
+  return (n === null || n === undefined) ? '—'
+    : Math.round(n).toLocaleString('en-US');
+}
+
+function openCoverage(projId, cruiseId) {
+  const p = SITE.projects.find(x => x.id === projId);
+  const cruise = p && p.cruises.find(c => c.id === cruiseId);
+  const t = cruise && trackFor(cruise);
+  if (!t) return;
+
+  const drawer = document.getElementById('cov-drawer');
+  const inst = t.instruments;
+
+  const covSeries = inst.map(i => ({
+    label: SONAR_NAMES[i.sonar] || i.sonar,
+    color: SONAR_COLORS[i.sonar] || p.color,
+    depth: i.coverage.depth_m, value: i.coverage.coverage_pct
+  }));
+  const errSeries = inst.map(i => ({
+    label: SONAR_NAMES[i.sonar] || i.sonar,
+    color: SONAR_COLORS[i.sonar] || p.color,
+    depth: i.coverage.depth_m,
+    value: i.coverage.err_rms_ms.map(v => v === null ? null : v * 100)
+  }));
+  const maxDepth = Math.max(...inst.map(i => i.coverage.depth_m.slice(-1)[0] || 0));
+
+  drawer.innerHTML = `
+    <div class="cov-hdr">
+      <div>
+        <h3>${cruise.id} · data coverage</h3>
+        <div class="cov-sub">${cruise.ship} · ${cruise.dates} · ${cruise.region}</div>
+      </div>
+      <button class="cov-close" onclick="closeCoverage()" aria-label="Close">×</button>
+    </div>
+    <div class="cov-body">
+      <div class="cov-stats">
+        <div class="cov-stat"><div class="k">Track</div><div class="v">${fmtInt(t.track_length_km)}</div><div class="u">km measured</div></div>
+        <div class="cov-stat"><div class="k">Duration</div><div class="v">${Math.round(t.duration_days)}</div><div class="u">days</div></div>
+        <div class="cov-stat"><div class="k">Profiles</div><div class="v">${fmtInt(t.n_ens_valid)}</div><div class="u">valid u, v${inst.length > 1 ? ' (both sonars)' : ''}</div></div>
+        <div class="cov-stat"><div class="k">60°S</div><div class="v">${t.n_drake_crossings}</div><div class="u">crossing${t.n_drake_crossings === 1 ? '' : 's'}</div></div>
+      </div>
+
+      <div class="cov-sec-title">Sonars in this load</div>
+      <div class="cov-sec-sub">Coverage depths are the deepest bin still holding valid velocity in at least half (50%) or four fifths (80%) of the cruise's ensembles.</div>
+      <div class="cov-inst">
+        ${inst.map(i => `
+          <div class="cov-inst-card" style="border-left-color:${SONAR_COLORS[i.sonar] || p.color}">
+            <div class="nm">${SONAR_NAMES[i.sonar] || i.sonar} · ${i.db_dir}</div>
+            <div class="dl">
+              <span>Ensembles</span><b>${fmtInt(i.n_ens_valid)} of ${fmtInt(i.n_ens_total)}</b>
+              <span>Averaging</span><b>${i.ens_len_s ? i.ens_len_s + ' s' : '—'} · ${i.bin_size_m ? i.bin_size_m + ' m bins' : '—'}</b>
+              <span>50% to</span><b>${i.max_depth_50pct ? Math.round(i.max_depth_50pct) + ' m' : '—'}</b>
+              <span>80% to</span><b>${i.max_depth_80pct ? Math.round(i.max_depth_80pct) + ' m' : '—'}</b>
+            </div>
+          </div>`).join('')}
+      </div>
+
+      <div class="cov-legend">
+        ${inst.map(i => `<span><i style="background:${SONAR_COLORS[i.sonar] || p.color}"></i>${SONAR_NAMES[i.sonar] || i.sonar}</span>`).join('')}
+      </div>
+      <div class="cov-charts">
+        <div class="cov-chart-box">
+          <div class="cov-chart-ttl">Ensembles with valid u, v</div>
+          ${profileChart('cov-c1', covSeries, {maxDepth, xMax: 100, xTicks: [0,25,50,75,100], refX: 50, xLabel: 'percent of ensembles', unit: '%', dec: 0})}
+          <div class="cov-readout" id="cov-c1-readout">Hover the profile for values by depth</div>
+        </div>
+        <div class="cov-chart-box">
+          <div class="cov-chart-ttl">Error velocity (RMS)</div>
+          ${profileChart('cov-c2', errSeries, {maxDepth, xLabel: 'cm s⁻¹', unit: ' cm/s', dec: 1})}
+          <div class="cov-readout" id="cov-c2-readout">A rising error velocity marks the loss of range</div>
+        </div>
+      </div>
+
+      <button class="cov-tbl-btn" onclick="document.getElementById('cov-numbers').classList.toggle('open')">Show the numbers</button>
+      <div class="cov-numbers" id="cov-numbers">
+        <table>
+          <thead><tr><th>Sonar</th><th>Depth (m)</th><th>Valid ens.</th><th>Coverage</th><th>Err. RMS</th><th>Pct good</th></tr></thead>
+          <tbody>
+            ${inst.map(i => i.coverage.depth_m.map((z, k) => `
+              <tr><td>${SONAR_NAMES[i.sonar] || i.sonar}</td><td>${Math.round(z)}</td>
+                  <td>${fmtInt(i.coverage.n_good[k])}</td><td>${i.coverage.coverage_pct[k].toFixed(1)}%</td>
+                  <td>${i.coverage.err_rms_ms[k] === null ? '—' : (i.coverage.err_rms_ms[k] * 100).toFixed(1)}</td>
+                  <td>${i.coverage.pg_mean[k] === null ? '—' : i.coverage.pg_mean[k].toFixed(0)}</td></tr>`).join('')).join('')}
+          </tbody>
+        </table>
+      </div>
+
+      ${cruise.notes ? `<div class="cov-note">${cruise.notes}</div>` : ''}
+      <div class="cov-note">Extracted from the CODAS database${inst.length > 1 ? 's' : ''} with pysadcp on ${(TRACK_META?.generated || '').slice(0, 10)}. Coverage counts non-masked <em>u</em> and <em>v</em> against every ensemble in the load, editing and calibration included.</div>
+      <div class="cov-links">
+        ${cruise.ncei_url ? `<a class="lnk-ncei" href="${cruise.ncei_url}" target="_blank">NCEI accession</a>` : ''}
+        ${cruise.jasadcp_url ? `<a class="lnk-jasadcp" href="${cruise.jasadcp_url}" target="_blank">JASADCP</a>` : ''}
+        ${cruise.plots_url ? `<a class="lnk-plots" href="${cruise.plots_url}" target="_blank">Plots</a>` : ''}
+      </div>
+    </div>`;
+
+  drawer.classList.add('open');
+  drawer.setAttribute('aria-hidden', 'false');
+  document.getElementById('cov-backdrop').classList.add('open');
+}
+
+function closeCoverage() {
+  const d = document.getElementById('cov-drawer');
+  d.classList.remove('open');
+  d.setAttribute('aria-hidden', 'true');
+  document.getElementById('cov-backdrop').classList.remove('open');
+}
+
+/* Depth profile: value on x, depth increasing downwards on y. */
+function profileChart(id, series, o) {
+  const W = 250, H = 200, ml = 34, mr = 14, mt = 8, mb = 30;
+  const x0 = ml, x1 = W - mr, y0 = mt, y1 = H - mb;
+  const vals = series.flatMap(s => s.value.filter(v => v !== null && isFinite(v)));
+  const xMax = o.xMax || (Math.max(0.001, ...vals) * 1.15);
+  const xTicks = o.xTicks || niceTicks(xMax);
+  const zTicks = niceTicks(o.maxDepth);
+
+  const X = v => x0 + (v / xMax) * (x1 - x0);
+  const Y = z => y0 + (z / o.maxDepth) * (y1 - y0);
+
+  const grid = zTicks.map(z => `<line class="cov-grid" x1="${x0}" x2="${x1}" y1="${Y(z).toFixed(1)}" y2="${Y(z).toFixed(1)}"/>`).join('')
+    + xTicks.map(v => `<line class="cov-grid" y1="${y0}" y2="${y1}" x1="${X(v).toFixed(1)}" x2="${X(v).toFixed(1)}"/>`).join('');
+
+  const zLabels = zTicks.map(z => `<text class="cov-tick" x="${x0 - 5}" y="${(Y(z) + 3).toFixed(1)}" text-anchor="end">${Math.round(z)}</text>`).join('');
+  const xLabels = xTicks.map(v => `<text class="cov-tick" x="${X(v).toFixed(1)}" y="${y1 + 13}" text-anchor="middle">${o.dec ? v.toFixed(o.dec) : Math.round(v)}</text>`).join('');
+
+  // reference line for the 50% coverage depth quoted in the stat cards
+  const ref = o.refX === undefined ? '' :
+    `<line x1="${X(o.refX).toFixed(1)}" x2="${X(o.refX).toFixed(1)}" y1="${y0}" y2="${y1}"
+           stroke="#b9c6d4" stroke-width="1" stroke-dasharray="2 3"/>`;
+
+  let paths = '', ends = '', placed = [];
+  series.forEach(s => {
+    let d = '', open = false, last = null;
+    s.depth.forEach((z, k) => {
+      const v = s.value[k];
+      if (v === null || !isFinite(v) || z > o.maxDepth) { open = false; return; }
+      d += (open ? 'L' : 'M') + X(v).toFixed(1) + ' ' + Y(z).toFixed(1) + ' ';
+      open = true;
+      last = {v: v, z: z};
+    });
+    if (!d) return;
+    paths += `<path d="${d.trim()}" fill="none" stroke="${s.color}" stroke-width="2"
+                vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/>`;
+    // label at the deep end of each line, nudged clear of any label already there
+    let lx = Math.max(x0 + 2, Math.min(X(last.v) + 6, x1 - 34));
+    let ly = Math.min(Y(last.z) + 4, y1 - 2);
+    while (placed.some(q => Math.abs(q.y - ly) < 10 && Math.abs(q.x - lx) < 44)) ly -= 11;
+    placed.push({x: lx, y: ly});
+    // halo underneath so the label survives crossing another line
+    ends += `<text class="cov-endlbl" x="${lx.toFixed(1)}" y="${ly.toFixed(1)}"
+               fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round">${s.label}</text>`
+          + `<text class="cov-endlbl" x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" fill="${s.color}">${s.label}</text>`;
+  });
+
+  COV_CHARTS[id] = {series, y0, y1, maxDepth: o.maxDepth, unit: o.unit, dec: o.dec};
+
+  return `<div class="cov-chart"><svg viewBox="0 0 ${W} ${H}" role="img"
+      aria-label="${o.xLabel} against depth, one line per sonar">
+    ${grid}${ref}
+    <line class="cov-axis" x1="${x0}" x2="${x1}" y1="${y1}" y2="${y1}"/>
+    <line class="cov-axis" x1="${x0}" x2="${x0}" y1="${y0}" y2="${y1}"/>
+    ${zLabels}${xLabels}
+    <text class="cov-axlbl" x="${(x0 + x1) / 2}" y="${H - 2}" text-anchor="middle">${o.xLabel}</text>
+    <text class="cov-axlbl" x="${-(y0 + y1) / 2}" y="9" text-anchor="middle" transform="rotate(-90)">depth (m)</text>
+    ${paths}${ends}
+    <line class="cov-cross" id="${id}-cross" x1="${x0}" x2="${x1}" y1="0" y2="0"/>
+    <rect x="${x0}" y="${y0}" width="${x1 - x0}" height="${y1 - y0}" fill="transparent"
+          onmousemove="covHover(event,'${id}')" onmouseleave="covHoverOut('${id}')"/>
+  </svg></div>`;
+}
+
+/* Tick values that land on 1/2/2.5/5 × 10ⁿ, five or six of them. */
+function niceTicks(max) {
+  if (!isFinite(max) || max <= 0) return [0];
+  const raw = max / 5, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const step = [1, 2, 2.5, 5, 10].find(m => m * mag >= raw) * mag;
+  const out = [];
+  for (let v = 0; v <= max + 1e-9; v += step) out.push(+v.toFixed(6));
+  return out;
+}
+
+function covHover(evt, id) {
+  const st = COV_CHARTS[id];
+  if (!st) return;
+  const svg = evt.target.ownerSVGElement;
+  const pt = svg.createSVGPoint();
+  pt.x = evt.clientX; pt.y = evt.clientY;
+  const loc = pt.matrixTransform(svg.getScreenCTM().inverse());
+  const depth = (loc.y - st.y0) / (st.y1 - st.y0) * st.maxDepth;
+
+  const cross = document.getElementById(id + '-cross');
+  if (cross) { cross.setAttribute('y1', loc.y); cross.setAttribute('y2', loc.y); cross.style.opacity = 0.55; }
+
+  const parts = st.series.map(s => {
+    let best = -1, bd = Infinity;
+    s.depth.forEach((z, k) => {
+      const v = s.value[k];
+      if (v === null || !isFinite(v)) return;
+      if (Math.abs(z - depth) < bd) { bd = Math.abs(z - depth); best = k; }
+    });
+    if (best < 0 || bd > 40) return null;
+    return `${s.label} ${s.value[best].toFixed(st.dec)}${st.unit}`;
+  }).filter(Boolean);
+
+  const out = document.getElementById(id + '-readout');
+  if (out) out.textContent = `${Math.round(depth)} m — ` + (parts.length ? parts.join('   ') : 'no data');
+}
+
+function covHoverOut(id) {
+  const cross = document.getElementById(id + '-cross');
+  if (cross) cross.style.opacity = 0;
+  const out = document.getElementById(id + '-readout');
+  if (out) out.textContent = id === 'cov-c1'
+    ? 'Hover the profile for values by depth'
+    : 'A rising error velocity marks the loss of range';
 }
 
 /* ════════════════════════════════════════════════════════
@@ -962,7 +1382,9 @@ function openLB(src, cap) {
 function closeLB() {
   document.getElementById('lightbox').classList.remove('open');
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLB(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeLB(); closeCoverage(); }
+});
 
 /* ════════════════════════════════════════════════════════
    BOOT

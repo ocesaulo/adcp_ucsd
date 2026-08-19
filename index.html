@@ -351,6 +351,8 @@ footer a:hover { color: #fff; }
 .cov-inst { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem; }
 .cov-inst-card { flex: 1 1 240px; border: 1px solid var(--border); border-left-width: 4px; border-radius: 10px; padding: .7rem .9rem; }
 .cov-inst-card .nm { font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--navy); }
+.cov-inst-card .nm .sac { color: #6d4bb5; text-decoration: none; border-bottom: 1px dotted currentColor; }
+.cov-inst-card .nm .sac:hover { color: var(--navy); }
 .cov-inst-card .dl { display: grid; grid-template-columns: auto 1fr; gap: 1px 10px; font-size: 11.5px; color: var(--muted); margin-top: 5px; }
 .cov-inst-card .dl b { color: var(--text); font-weight: 500; }
 .cov-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; margin-bottom: 1rem; }
@@ -551,8 +553,18 @@ const TRACK_FILES = ['data/drake_passage_tracks.json'];
 const WEBPY_GALLERY_FILE = 'data/antarctic_webpy_gallery.json';
 
 /* Series colours for the coverage charts, one per sonar. */
-const SONAR_COLORS = { nb150: '#0e8c7a', os38nb: '#c9832e' };
-const SONAR_NAMES  = { nb150: 'NB150', os38nb: 'OS38NB' };
+const SONAR_COLORS = { nb150: '#0e8c7a', os38nb: '#c9832e', os38bb: '#7c5cbf' };
+const SONAR_NAMES  = { nb150: 'NB150', os38nb: 'OS38NB', os38bb: 'OS38BB' };
+
+/* JASADCP page for a database's SAC id. 'unsubmitted' marks the 2019-onwards
+   loads that have not been sent to the archive, and gets no link. */
+const JASADCP_DB = 'https://uhslc.soest.hawaii.edu/sadcp/DATABASE/';
+function sacLink(sac) {
+  return /^\d{5}$/.test(sac || '')
+    ? `<a class="sac" href="${JASADCP_DB}${sac}.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">SAC ${sac}</a>`
+    : '';
+}
+
 async function loadData() {
   if (location.protocol !== 'file:') {
     try {
@@ -1262,7 +1274,7 @@ function openCoverage(projId, cruiseId) {
       <div class="cov-inst">
         ${inst.map(i => `
           <div class="cov-inst-card" style="border-left-color:${SONAR_COLORS[i.sonar] || p.color}">
-            <div class="nm">${SONAR_NAMES[i.sonar] || i.sonar} · ${i.db_dir}</div>
+            <div class="nm">${SONAR_NAMES[i.sonar] || i.sonar} · ${i.db_dir}${sacLink(i.sac_id) ? ' · ' + sacLink(i.sac_id) : ''}</div>
             <div class="dl">
               <span>Ensembles</span><b>${fmtInt(i.n_ens_valid)} of ${fmtInt(i.n_ens_total)}</b>
               <span>Averaging</span><b>${i.ens_len_s ? i.ens_len_s + ' s' : '—'} · ${i.bin_size_m ? i.bin_size_m + ' m bins' : '—'}</b>

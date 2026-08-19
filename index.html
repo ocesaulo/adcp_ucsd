@@ -178,6 +178,19 @@ nav a.active { background: var(--teal); color: #fff; }
   padding: 10px 16px; border-top: 1px solid var(--border); background: var(--sand);
   display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
 }
+/* The Drake Passage series runs to a few hundred cruises, so the chips get
+   their own scroll area and the All/None/year controls stay put above it. */
+.cruise-chips {
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  width: 100%; max-height: 116px; overflow-y: auto;
+  padding-top: 8px; margin-top: 2px; border-top: 1px dashed var(--border);
+}
+.cruise-sel-yr {
+  font-size: 11px; font-weight: 500; padding: 3px 7px; border-radius: 100px;
+  border: 1px solid var(--border); background: var(--white); color: var(--muted);
+  cursor: pointer; font-family: var(--mono); transition: .12s;
+}
+.cruise-sel-yr:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
 .cruise-sel-label { font-size: 11px; font-weight: 600; color: var(--muted); margin-right: 2px; white-space: nowrap; }
 .cruise-sel-all {
   font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 100px;
@@ -886,13 +899,20 @@ function buildProjectHTML(p) {
           const on  = !map || !lg || map.hasLayer(lg);
           return `<label class="cruise-chip${on ? ' active' : ''}" id="chip-${p.id}-${c.id}">`
             + `<input type="checkbox" ${on ? 'checked' : ''} data-cruise="${c.id}"`
+            + ` data-year="${cruiseYear(c)}"`
             + ` onchange="toggleCruiseLayer('${p.id}','${c.id}',this.checked)">${c.id}</label>`;
         }).join('');
+        const years = [...new Set(withTracks.map(cruiseYear))].filter(Boolean).sort();
+        const yrBtns = years.length > 1
+          ? years.map(y => `<button class="cruise-sel-yr" title="Show only ${y}"`
+              + ` onclick="setCruisesYear('${p.id}','${y}')">${y}</button>`).join('')
+          : '';
         return `<div class="cruise-sel-bar" id="cruise-sel-${p.id}">`
           + `<span class="cruise-sel-label">Show:</span>`
           + `<button class="cruise-sel-all" onclick="setCruisesAll('${p.id}',true)">All</button>`
           + `<button class="cruise-sel-all" onclick="setCruisesAll('${p.id}',false)">None</button>`
-          + chips + `</div>`;
+          + yrBtns
+          + `<div class="cruise-chips">` + chips + `</div></div>`;
       })()}
     </div>
 
@@ -1465,6 +1485,25 @@ function setCruisesAll(projId, show) {
   bar.querySelectorAll('input[type=checkbox]').forEach(cb => {
     cb.checked = show;
     toggleCruiseLayer(projId, cb.dataset.cruise, show);
+  });
+}
+
+/* Calendar year a cruise started in, used to group the map's cruise chips. */
+function cruiseYear(cruise) {
+  const t = trackFor(cruise);
+  const iso = (t && t.start) || (cruise.dates_iso && cruise.dates_iso[0]) || '';
+  return iso.slice(0, 4);
+}
+
+/* Show one season only — with two decades of crossings on the map, stepping
+   year by year is the way to read the series. */
+function setCruisesYear(projId, year) {
+  const bar = document.getElementById(`cruise-sel-${projId}`);
+  if (!bar) return;
+  bar.querySelectorAll('input[type=checkbox]').forEach(cb => {
+    const on = cb.dataset.year === String(year);
+    cb.checked = on;
+    toggleCruiseLayer(projId, cb.dataset.cruise, on);
   });
 }
 

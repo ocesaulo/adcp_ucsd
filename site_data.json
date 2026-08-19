@@ -2,6 +2,7 @@
  "_README": {
   "description": "Master data file for the Chereskin Lab ADCP Data Portal. Edit this file to update all site content. Then run 'python3 -m http.server 8000' and open localhost:8000 to preview changes.",
   "image_paths": "All image filenames in cruise.images[] are relative to the images/ folder. Example: 'nh9310_100_oa.jpg' → place file at images/nh9310_100_oa.jpg",
+    "branding_note": "project.logo, project.header_image and project.illustration_image are relative to the images/ folder (harvested from the original adcp.ucsd.edu under images/branding/). logo appears on the overview project card and the project page hero; header_image is the project hero banner photo (paired with header_credit); illustration_image sits beside the project page's Acknowledgments panel (paired with illustration_credit). All are optional — omit them to fall back to the plain card/hero layout.",
   "track_format": "cruise.track is an optional array of [latitude, longitude] pairs used only when no measured track exists in data/drake_passage_tracks.json.",
   "station_format": "cruise.stations is an array of {lat, lon, label} objects for individual station markers on the map.",
   "status_values": [
@@ -21,6 +22,7 @@
   "last_updated": "2026-08-19",
   "contact": "Chereskin Lab, Scripps Institution of Oceanography, UCSD",
   "tracks_file": "data/drake_passage_tracks.json holds the measured ship tracks (ensembles with valid u and v) and the per-depth-bin data-coverage statistics extracted from the CODAS databases with pysadcp. A cruise is linked to its track through cruise.track_key. Regenerate it with make_drake_passage_web_tracks.py (kept outside this repository, it needs pycurrents/CODAS and the raw loads): the 2019-onwards cruises come from the UHDAS loads under drake_passage_2019_onwards/, and the 1999–2018 cruises from the JAS-ADCP repository, selected with select_drake_passage_jas_dbs.py and merged in with --db-list / --merge-into.",
+  "antarctic_webpy_gallery_file": "data/antarctic_webpy_gallery.json is the generated manifest for standard pycurrents/CODAS PNG figures selected with an Antarctic cruise's Plots button. It is deliberately separate from cruise.images[]; make_drake_passage_web_gallery.py (kept beside the CODAS science tools) copies existing recent webpy output or renders source databases offline into scratch, then publishes only static PNGs and thumbnails under images/antarctic-webpy/.",
   "jasadcp_note": "cruise.sac_id is the JASADCP (NODC/UH SAC) cruise id of the cruise's primary database, and cruise.jasadcp_url is its page at https://uhslc.soest.hawaii.edu/sadcp/DATABASE/<sac_id>.html . A cruise that submitted more than one sonar has one SAC id per database; they are all listed in cruise.sac_ids[] as {sac_id, sonar}, and the same ids appear per instrument in data/drake_passage_tracks.json."
  },
  "site": {
@@ -43,9 +45,15 @@
    "color": "#0e8c7a",
    "color_light": "#e0f4f1",
    "vessel": "ARSV Laurence M. Gould & RVIB Nathaniel B. Palmer",
-   "years": "1999–2023",
+   "years": "1999–2024",
+   "logo": "branding/lmgould_logo.png",
+   "header_image": "branding/lmgould_header.jpg",
+   "header_credit": "Neumayer Channel, Antarctic Peninsula",
+   "illustration_image": "branding/lmgould_sticker.png",
+   "illustration_credit": "LMG ADCP program sticker, Chereskin Lab",
    "description": "Shipboard ADCP data from the Drake Passage time series, run by the Chereskin group since the hull-mounted 150 kHz narrowband RDI instrument was installed on the ARSV Laurence M. Gould in September 1999. Almost every Gould crossing of Drake Passage and transit along the western Antarctic Peninsula has been measured since; a 38 kHz Ocean Surveyor was added in November 2004, roughly tripling the profiling range. Five cDrake cruises aboard the RVIB Nathaniel B. Palmer (2007–2011) are included. The 1999–2018 cruises are the science-ready sets submitted to the Joint Archive for Shipboard ADCP (JASADCP) and archived at NCEI; 2019 onwards are processed in house.",
    "methods_text": "Data processed using CODAS3 with standard heading calibration procedures. Bottom tracking was available for shallow transits near the Peninsula. Navigation corrections applied via differential GPS.",
+   "acknowledgments": "The collection, processing and dissemination of these data was carried out by the Chereskin Lab at Scripps Institution of Oceanography, UCSD with support from the National Science Foundation Office of Polar Programs grant nos. OPP-9816226, ANT-0338103, ANT-0838750, PLR-1341431 and PLR-1542902. Eric Firing and Jules Hummon at the University of Hawaii provide critical support for the data acquisition and processing of these ADCP data through the development and maintenance of the UHDAS and CODAS software.",
    "map_center": [
     -61,
     -61
@@ -54,6 +62,20 @@
    "references": [
     "Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619–22629.",
     "Lenn, Y.-D., Chereskin, T.K., Sprintall, J. and McClean, J.L. (2011). Near-surface eddy heat and momentum fluxes in the Antarctic Circumpolar Current in Drake Passage. J. Phys. Oceanogr., 41, 1385–1407."
+   ],
+   "publications": [
+    "Lenn, Y.-D., T. K. Chereskin, J. Sprintall, and E. Firing, 2007. Mean Jets, Mesoscale Variability and Eddy Momentum Fluxes in the Surface Layer of the Antarctic Circumpolar Current in Drake Passage, J. Mar. Res., 65, 27-58. DOI: 10.1357/002224007780388694",
+    "Chereskin, T. K., and G. A. Tarling, 2007. Interannual to diurnal variability in the near-surface scattering layer in Drake Passage, ICES J. Mar. Sci. DOI: 10.1093/icesjms/fsm138",
+    "Lenn, Y.-D., T. K. Chereskin, and J. Sprintall, 2008. Improving estimates of the Antarctic Circumpolar Current streamlines in Drake Passage, J. Phys. Oceanogr., 38, 1000-1010. DOI: 10.1175/2007jpo3834.1",
+    "Lenn, Y.-D. and T. K. Chereskin, 2009. Observations of Ekman Currents in the Southern Ocean, J. Phys. Oceanogr., 39, 768-779. DOI: 10.1175/2008jpo3943.1",
+    "Lenn, Y.-D., T. K. Chereskin, J. Sprintall and J. McLean, 2011. Near-surface eddy heat and momentum fluxes in the Antarctic Circumpolar Current in Drake Passage, J. Phys. Oceanogr., 41, 1385-1407. DOI: 10.1175/jpo-d-10-05017.1",
+    "Firing, Y. L., Chereskin, T. K., and M. R. Mazloff, 2011. Vertical structure and transport of the Antarctic Circumpolar Current in Drake Passage from direct velocity observations, J. Geophys. Res., 116, C08015. DOI: 10.1029/2011jc006999",
+    "Sprintall, J., Chereskin, T. K., and C. Sweeney, 2012. High-Resolution Underway Upper Ocean and Surface Atmospheric Observations in Drake Passage: Synergistic Measurements for Climate Science, Oceanography, 25(3):70-81. DOI: 10.5670/oceanog.2012.77",
+    "Firing, E., Hummon, J. M., and Chereskin, T. K., 2012. Improving the quality and accessibility of current profile measurements in the Southern Ocean, Oceanography, 25(3):164-165. DOI: 10.5670/oceanog.2012.91",
+    "Polton, J. A., Y.-D. Lenn, S. Elipot, T. K. Chereskin and J. Sprintall, 2013. Can Drake Passage Observations Match Ekman's Classic Theory?, J. Phys. Oceanogr., 43, 1733-1740. DOI: 10.1175/jpo-d-13-034.1",
+    "Brannigan, L., Y.-D. Lenn, S. Elipot, T. P. Rippeth, E. McDonagh, T. K. Chereskin and J. Sprintall, 2013. Shear at the Base of the Oceanic Mixed Layer Generated by Wind Shear Alignment, J. Phys. Oceanogr., 43, 1798-1810. DOI: 10.1175/JPO-D-12-0104.1",
+    "Rocha, C. B., T. K. Chereskin, S. T. Gille, and D. Menemenlis, 2016. Mesoscale to submesoscale wavenumber spectra in Drake Passage, J. Phys. Oceanogr., 46, 601-620. DOI: 10.1175/JPO-D-15-0087.1",
+    "Gutierrez-Villanueva, M. O., Chereskin, T. K., and Sprintall, J. 2020. Upper-ocean eddy heat flux across the Antarctic Circumpolar Current in Drake Passage from observations: time-mean and seasonal variability, J. Phys. Oceanogr., 50(9), 2507-2527. DOI: 10.1175/JPO-D-19-0266.1"
    ],
    "cruises": [
     {
@@ -9444,6 +9466,228 @@
      "stations": [],
      "images": [],
      "ncei_accession": "0301730"
+    },
+    {
+     "id": "LMG2305",
+     "dates": "May–Jun 2023",
+     "dates_iso": [
+      "2023-05-07",
+      "2023-06-26"
+     ],
+     "ship": "ARSV Laurence M. Gould",
+     "region": "Drake Passage & W. Antarctic Peninsula",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      22,
+      246
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0314050",
+     "ncei_accession": "0314050",
+     "plots_url": "https://adcp.ucsd.edu/lmgould/",
+     "jasadcp_url": null,
+     "sac_id": "02819",
+     "sac_ids": [
+      {
+       "sac_id": "02819",
+       "sonar": "nb150"
+      }
+     ],
+     "notes": "1 crossing of 60°S; 9,340 km of track over 50 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 02819 (NB150), assigned in the NCEI accession but not yet published on the JASADCP site.",
+     "codas_dbs": [
+      "0314050/1.1/data/0-data/2023-05-07_LG2305/02819"
+     ],
+     "track_key": "LMG2305",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "LMG2309",
+     "dates": "Oct 2023",
+     "dates_iso": [
+      "2023-10-07",
+      "2023-10-23"
+     ],
+     "ship": "ARSV Laurence M. Gould",
+     "region": "Drake Passage & W. Antarctic Peninsula",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      22,
+      246
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0314050",
+     "ncei_accession": "0314050",
+     "plots_url": "https://adcp.ucsd.edu/lmgould/",
+     "jasadcp_url": null,
+     "sac_id": "02820",
+     "sac_ids": [
+      {
+       "sac_id": "02820",
+       "sonar": "nb150"
+      }
+     ],
+     "notes": "2 crossings of 60°S; 2,861 km of track over 16 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 02820 (NB150), assigned in the NCEI accession but not yet published on the JASADCP site.",
+     "codas_dbs": [
+      "0314050/1.1/data/0-data/2023-10-07_LG2309/02820"
+     ],
+     "track_key": "LMG2309",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "LMG2310",
+     "dates": "Oct–Nov 2023",
+     "dates_iso": [
+      "2023-10-31",
+      "2023-11-13"
+     ],
+     "ship": "ARSV Laurence M. Gould",
+     "region": "Drake Passage & W. Antarctic Peninsula",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      22,
+      270
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0314050",
+     "ncei_accession": "0314050",
+     "plots_url": "https://adcp.ucsd.edu/lmgould/",
+     "jasadcp_url": null,
+     "sac_id": "02821",
+     "sac_ids": [
+      {
+       "sac_id": "02821",
+       "sonar": "nb150"
+      }
+     ],
+     "notes": "2 crossings of 60°S; 3,178 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 02821 (NB150), assigned in the NCEI accession but not yet published on the JASADCP site.",
+     "codas_dbs": [
+      "0314050/1.1/data/0-data/2023-10-31_LG2310/02821"
+     ],
+     "track_key": "LMG2310",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "LMG2312",
+     "dates": "Nov–Dec 2023",
+     "dates_iso": [
+      "2023-11-25",
+      "2023-12-09"
+     ],
+     "ship": "ARSV Laurence M. Gould",
+     "region": "Drake Passage & W. Antarctic Peninsula",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      22,
+      254
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0314050",
+     "ncei_accession": "0314050",
+     "plots_url": "https://adcp.ucsd.edu/lmgould/",
+     "jasadcp_url": null,
+     "sac_id": "02822",
+     "sac_ids": [
+      {
+       "sac_id": "02822",
+       "sonar": "nb150"
+      }
+     ],
+     "notes": "2 crossings of 60°S; 3,330 km of track over 15 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 02822 (NB150), assigned in the NCEI accession but not yet published on the JASADCP site.",
+     "codas_dbs": [
+      "0314050/1.1/data/0-data/2023-11-25_LG2312/02822"
+     ],
+     "track_key": "LMG2312",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "LMG2401",
+     "dates": "Dec 2023–Jan 2024",
+     "dates_iso": [
+      "2023-12-21",
+      "2024-01-30"
+     ],
+     "ship": "ARSV Laurence M. Gould",
+     "region": "Drake Passage & W. Antarctic Peninsula",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      22,
+      230
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0314050",
+     "ncei_accession": "0314050",
+     "plots_url": "https://adcp.ucsd.edu/lmgould/",
+     "jasadcp_url": null,
+     "sac_id": "02823",
+     "sac_ids": [
+      {
+       "sac_id": "02823",
+       "sonar": "nb150"
+      }
+     ],
+     "notes": "2 crossings of 60°S; 9,752 km of track over 41 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 02823 (NB150), assigned in the NCEI accession but not yet published on the JASADCP site.",
+     "codas_dbs": [
+      "0314050/1.1/data/0-data/2023-12-21_LG2401/02823"
+     ],
+     "track_key": "LMG2401",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "LMG2404",
+     "dates": "Apr 2024",
+     "dates_iso": [
+      "2024-04-01",
+      "2024-04-15"
+     ],
+     "ship": "ARSV Laurence M. Gould",
+     "region": "Drake Passage & W. Antarctic Peninsula",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      22,
+      238
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0314050",
+     "ncei_accession": "0314050",
+     "plots_url": "https://adcp.ucsd.edu/lmgould/",
+     "jasadcp_url": null,
+     "sac_id": "02824",
+     "sac_ids": [
+      {
+       "sac_id": "02824",
+       "sonar": "nb150"
+      }
+     ],
+     "notes": "2 crossings of 60°S; 3,065 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 02824 (NB150), assigned in the NCEI accession but not yet published on the JASADCP site.",
+     "codas_dbs": [
+      "0314050/1.1/data/0-data/2024-04-01_LG2404/02824"
+     ],
+     "track_key": "LMG2404",
+     "track": [],
+     "stations": [],
+     "images": []
     }
    ]
   },
@@ -9456,8 +9700,14 @@
    "color_light": "#fdf0e0",
    "vessel": "R/V New Horizon",
    "years": "1993–2003",
+   "logo": "branding/calcofi_logo.png",
+   "header_image": "branding/calcofi_header.jpg",
+   "header_credit": "Channel Islands, California — photo by Jamie Holte",
+   "illustration_image": "branding/calcofi_illustration.jpg",
+   "illustration_credit": "Objectively mapped 100 m velocity, cruise NH9310",
    "description": "A decade of shipboard ADCP measurements of upper ocean currents off Southern and Central California as part of the quarterly California Cooperative Oceanic Fisheries Investigations (CalCOFI) cruises.",
    "methods_text": "Data collected with RDI 150 kHz narrowband instrument, hull-mounted aboard R/V New Horizon. Processed with CODAS3. Objective mapping applied to produce velocity streamfunctions consistent with geostrophy.",
+   "acknowledgments": "The CalCOFI ADCP data were collected aboard R/V New Horizon as part of the California Cooperative Oceanic Fisheries Investigations program. The collection, processing and dissemination of these data was carried out by the Chereskin Lab at Scripps Institution of Oceanography, UCSD. The data are archived and distributed through the Joint Archive for Shipboard ADCP at the University of Hawaii and NOAA/NCEI.",
    "map_center": [
     33.5,
     -121.5
@@ -9466,6 +9716,9 @@
    "references": [
     "Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619–22629.",
     "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography."
+   ],
+   "publications": [
+    "Chereskin, T. K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography. http://adcp.ucsd.edu/calcofi"
    ],
    "cruises": [
     {

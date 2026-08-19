@@ -366,6 +366,7 @@ footer a:hover { color: #fff; }
 .cov-inst-card .nm { font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--navy); }
 .cov-inst-card .nm .sac { color: #6d4bb5; text-decoration: none; border-bottom: 1px dotted currentColor; }
 .cov-inst-card .nm .sac:hover { color: var(--navy); }
+.cov-inst-card .nm .sac-pending { color: var(--muted); border-bottom-style: dotted; cursor: help; }
 .cov-inst-card .dl { display: grid; grid-template-columns: auto 1fr; gap: 1px 10px; font-size: 11.5px; color: var(--muted); margin-top: 5px; }
 .cov-inst-card .dl b { color: var(--text); font-weight: 500; }
 .cov-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; margin-bottom: 1rem; }
@@ -572,10 +573,24 @@ const SONAR_NAMES  = { nb150: 'NB150', os38nb: 'OS38NB', os38bb: 'OS38BB' };
 /* JASADCP page for a database's SAC id. 'unsubmitted' marks the 2019-onwards
    loads that have not been sent to the archive, and gets no link. */
 const JASADCP_DB = 'https://uhslc.soest.hawaii.edu/sadcp/DATABASE/';
-function sacLink(sac) {
-  return /^\d{5}$/.test(sac || '')
+/* Readable name for the load a database came from. UHDAS and JAS-ADCP loads
+   are a single directory ('lg1901_nb150', '00613'); an NCEI accession is a deep
+   path whose first element is the 7-digit accession, which is the part worth
+   showing. */
+function loadLabel(dbDir) {
+  const parts = String(dbDir || '').split('/').filter(Boolean);
+  if (parts.length < 2) return dbDir || '';
+  return /^\d{7}$/.test(parts[0]) ? 'NCEI ' + parts[0] : parts[parts.length - 1];
+}
+
+function sacLink(sac, published) {
+  if (!/^\d{5}$/.test(sac || '')) return '';   // 'unsubmitted' loads have no id
+  // Ids are assigned when a cruise is accepted into the archive, but UH
+  // publishes the JASADCP pages later; the most recent cruises have an id and
+  // no page yet, so show the id without linking it into a 404.
+  return published
     ? `<a class="sac" href="${JASADCP_DB}${sac}.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">SAC ${sac}</a>`
-    : '';
+    : `<span class="sac sac-pending" title="Assigned in the NCEI accession; not yet published on the JASADCP site">SAC ${sac}</span>`;
 }
 
 async function loadData() {
@@ -1294,7 +1309,11 @@ function openCoverage(projId, cruiseId) {
       <div class="cov-inst">
         ${inst.map(i => `
           <div class="cov-inst-card" style="border-left-color:${SONAR_COLORS[i.sonar] || p.color}">
-            <div class="nm">${SONAR_NAMES[i.sonar] || i.sonar} · ${i.db_dir}${sacLink(i.sac_id) ? ' · ' + sacLink(i.sac_id) : ''}</div>
+            <div class="nm">${[SONAR_NAMES[i.sonar] || i.sonar,
+                 // in the JAS-ADCP repository the load directory *is* the SAC id,
+                 // so naming it twice adds nothing
+                 loadLabel(i.db_dir) === i.sac_id ? '' : loadLabel(i.db_dir),
+                 sacLink(i.sac_id, !!cruise.jasadcp_url)].filter(Boolean).join(' · ')}</div>
             <div class="dl">
               <span>Ensembles</span><b>${fmtInt(i.n_ens_valid)} of ${fmtInt(i.n_ens_total)}</b>
               <span>Averaging</span><b>${i.ens_len_s ? i.ens_len_s + ' s' : '—'} · ${i.bin_size_m ? i.bin_size_m + ' m bins' : '—'}</b>

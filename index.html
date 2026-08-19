@@ -1548,7 +1548,7 @@ function clearWebpyGallery() {
   const gallery = document.getElementById('gallery-antarctic');
   const count = document.getElementById('gallery-count-antarctic');
   if (!selection || !gallery || !count) return;
-  selection.textContent = 'Use a cruise\'s Plots button to view its complete standard CODAS plot set.';
+  selection.textContent = 'Use a cruise\'s Plots button to view its standard CODAS plots.';
   gallery.innerHTML = '<div class="no-images" style="grid-column:1/-1">No cruise is selected.</div>';
   count.textContent = 'Select a track';
 }
@@ -1574,7 +1574,13 @@ function renderWebpyGallery(cruiseId) {
     return;
   }
 
-  selection.innerHTML = `<span><strong>${cruiseId}</strong><br>${plots.length} standard CODAS figure${plots.length === 1 ? '' : 's'} from the selected measured track.</span>${clear}`;
+  // The 1999-2018 archive is published as cruise overviews only: the full
+  // per-section set for every submitted database runs to well over a gigabyte.
+  const overviewOnly = plots.every(pl => pl.family === 'overview' || pl.family === 'vector_overview');
+  const scope = overviewOnly
+    ? 'cruise overview only — the per-section figures are not published for the archived cruises'
+    : 'from the selected measured track';
+  selection.innerHTML = `<span><strong>${cruiseId}</strong><br>${plots.length} standard CODAS figure${plots.length === 1 ? '' : 's'}, ${scope}.</span>${clear}`;
   count.textContent = `${plots.length} figures`;
   gallery.innerHTML = plots.map((plot, index) => `
     <div class="gal-item" onclick="openWebpyPlot('${cruiseId}',${index})">

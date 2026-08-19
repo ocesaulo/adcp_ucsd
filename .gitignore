@@ -1,5 +1,8 @@
-# Image files referenced by site_data.json — not committed
-images/
+# Manually curated image files are not committed. The generated Antarctic
+# CODAS gallery is a reproducible static portal asset and is versioned.
+images/*
+!images/antarctic-webpy/
+!images/antarctic-webpy/**
 
 # Raw material for the site (tarballs, scraped copies of the old portal)
 input_info/

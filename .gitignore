@@ -1,8 +1,12 @@
-# Manually curated image files are not committed. The generated Antarctic
-# CODAS gallery is a reproducible static portal asset and is versioned.
+# Manually curated per-cruise image files are not committed (uploaded
+# separately per admin.html). Site-wide chrome — the generated Antarctic
+# CODAS gallery and the harvested branding assets (logos, hero photos) used
+# on every page load — are reproducible static portal assets and are versioned.
 images/*
 !images/antarctic-webpy/
 !images/antarctic-webpy/**
+!images/branding/
+!images/branding/**
 
 # Raw material for the site (tarballs, scraped copies of the old portal)
 input_info/

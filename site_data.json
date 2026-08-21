@@ -107,7 +107,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,338 km of track over 13 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00611 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00611"
      ],
      "track_key": "LMG9908",
@@ -144,7 +144,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,309 km of track over 11 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00612 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00612"
      ],
      "track_key": "LMG9908B",
@@ -181,7 +181,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,697 km of track over 20 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00613 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00613"
      ],
      "track_key": "LMG9909",
@@ -218,7 +218,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,132 km of track over 19 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00614 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00614"
      ],
      "track_key": "LMG9910",
@@ -255,7 +255,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,227 km of track over 9 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00615 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00615"
      ],
      "track_key": "LMG9911",
@@ -292,7 +292,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,008 km of track over 28 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00619 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00619"
      ],
      "track_key": "LMG0001",
@@ -329,7 +329,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,441 km of track over 19 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00620 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00620"
      ],
      "track_key": "LMG0002",
@@ -366,7 +366,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,989 km of track over 19 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00621 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00621"
      ],
      "track_key": "LMG0003",
@@ -403,7 +403,7 @@
       }
      ],
      "notes": "1 crossing of 60°S; 6,317 km of track over 21 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00622 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00622"
      ],
      "track_key": "LMG0003A",
@@ -440,7 +440,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,529 km of track over 13 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00623 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00623"
      ],
      "track_key": "LMG0004",
@@ -477,7 +477,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,062 km of track over 28 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00624 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00624"
      ],
      "track_key": "LMG0005",
@@ -514,7 +514,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 2,936 km of track over 9 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00625 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00625"
      ],
      "track_key": "LMG0006A",
@@ -551,7 +551,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 2,885 km of track over 8 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00626 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00626"
      ],
      "track_key": "LMG0006B",
@@ -588,7 +588,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 2,934 km of track over 9 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00627 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00627"
      ],
      "track_key": "LMG0006C",
@@ -625,7 +625,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 2,969 km of track over 9 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00628 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00628"
      ],
      "track_key": "LMG0006D",
@@ -662,7 +662,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,045 km of track over 11 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00629 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00629"
      ],
      "track_key": "LMG0008",
@@ -699,7 +699,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,630 km of track over 11 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00630 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00630"
      ],
      "track_key": "LMG0008A",
@@ -736,7 +736,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,634 km of track over 21 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00631 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00631"
      ],
      "track_key": "LMG0009",
@@ -773,7 +773,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,243 km of track over 20 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00632 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00632"
      ],
      "track_key": "LMG0010",
@@ -810,7 +810,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,713 km of track over 17 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00633 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00633"
      ],
      "track_key": "LMG0011",
@@ -847,7 +847,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,277 km of track over 25 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00646 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00646"
      ],
      "track_key": "LMG0101",
@@ -884,7 +884,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,027 km of track over 13 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00647 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00647"
      ],
      "track_key": "LMG0101A",
@@ -921,7 +921,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,398 km of track over 21 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00648 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00648"
      ],
      "track_key": "LMG0102",
@@ -958,7 +958,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 7,013 km of track over 25 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00649 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00649"
      ],
      "track_key": "LMG0103",
@@ -995,7 +995,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 9,801 km of track over 44 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00650 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00650"
      ],
      "track_key": "LMG0104",
@@ -1032,7 +1032,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 5,718 km of track over 32 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00783 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00783"
      ],
      "track_key": "LMG0105",
@@ -1069,7 +1069,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,576 km of track over 39 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00651 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00651"
      ],
      "track_key": "LMG0106",
@@ -1106,7 +1106,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,103 km of track over 11 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00784 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00784"
      ],
      "track_key": "LMG0108",
@@ -1143,7 +1143,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,697 km of track over 12 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00785 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00785"
      ],
      "track_key": "LMG0108A",
@@ -1180,7 +1180,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,154 km of track over 15 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00786 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00786"
      ],
      "track_key": "LMG0108B",
@@ -1217,7 +1217,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,621 km of track over 23 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00787 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00787"
      ],
      "track_key": "LMG0109",
@@ -1254,7 +1254,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 7,201 km of track over 29 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00807 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00807"
      ],
      "track_key": "LMG0201",
@@ -1291,7 +1291,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 7,501 km of track over 24 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00808 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00808"
      ],
      "track_key": "LMG0201A",
@@ -1328,7 +1328,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,290 km of track over 10 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00809 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00809"
      ],
      "track_key": "LMG0201B",
@@ -1365,7 +1365,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 2,989 km of track over 10 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00810 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00810"
      ],
      "track_key": "LMG0202",
@@ -1402,7 +1402,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 9,027 km of track over 41 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00811 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00811"
      ],
      "track_key": "LMG0203",
@@ -1439,7 +1439,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 2,958 km of track over 17 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00812 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00812"
      ],
      "track_key": "LMG0204A",
@@ -1476,7 +1476,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 5,144 km of track over 49 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00813 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00813"
      ],
      "track_key": "LMG0205",
@@ -1513,7 +1513,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,113 km of track over 13 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00814 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00814"
      ],
      "track_key": "LMG0206",
@@ -1550,7 +1550,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,345 km of track over 11 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00815 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00815"
      ],
      "track_key": "LMG0207",
@@ -1587,7 +1587,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,653 km of track over 13 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00816 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00816"
      ],
      "track_key": "LMG0208",
@@ -1624,7 +1624,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 7,536 km of track over 29 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00817 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00817"
      ],
      "track_key": "LMG0209",
@@ -1661,7 +1661,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 8,634 km of track over 38 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00818 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00818"
      ],
      "track_key": "LMG0301",
@@ -1698,7 +1698,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 5,792 km of track over 21 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00819 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00819"
      ],
      "track_key": "LMG0302",
@@ -1735,7 +1735,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,713 km of track over 16 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00820 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00820"
      ],
      "track_key": "LMG0303",
@@ -1772,7 +1772,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 7,278 km of track over 31 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00821 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00821"
      ],
      "track_key": "LMG0304",
@@ -1809,7 +1809,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,736 km of track over 25 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00822 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00822"
      ],
      "track_key": "LMG0304A",
@@ -1846,7 +1846,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,040 km of track over 11 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00823 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00823"
      ],
      "track_key": "LMG0305",
@@ -1883,7 +1883,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,103 km of track over 17 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 01567 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01567"
      ],
      "track_key": "LMG0305A",
@@ -1920,7 +1920,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,018 km of track over 11 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00824 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00824"
      ],
      "track_key": "LMG0306",
@@ -1957,7 +1957,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,496 km of track over 11 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00825 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00825"
      ],
      "track_key": "LMG0307",
@@ -1994,7 +1994,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,530 km of track over 10 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00826 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00826"
      ],
      "track_key": "LMG0308",
@@ -2031,7 +2031,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 8,545 km of track over 34 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 00827 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/00827"
      ],
      "track_key": "LMG0309",
@@ -2068,7 +2068,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 7,527 km of track over 35 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 01023 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01023"
      ],
      "track_key": "LMG0401",
@@ -2105,7 +2105,7 @@
       }
      ],
      "notes": "4 crossings of 60°S; 5,894 km of track over 39 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 01024 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01024"
      ],
      "track_key": "LMG0402",
@@ -2160,7 +2160,7 @@
       }
      ],
      "notes": "1 crossing of 60°S; 3,815 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 01025 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01025"
      ],
      "track_key": "LMG0403",
@@ -2197,7 +2197,7 @@
       }
      ],
      "notes": "1 crossing of 60°S; 5,915 km of track over 22 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 01026 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01026"
      ],
      "track_key": "LMG0404",
@@ -2234,7 +2234,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,019 km of track over 12 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 01027 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01027"
      ],
      "track_key": "LMG0405",
@@ -2271,7 +2271,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,074 km of track over 9 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 01028 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01028"
      ],
      "track_key": "LMG0406",
@@ -2308,7 +2308,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,037 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 01029 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01029"
      ],
      "track_key": "LMG0407",
@@ -2345,7 +2345,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,133 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 01030 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01030"
      ],
      "track_key": "LMG0411",
@@ -2382,7 +2382,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,530 km of track over 12 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 01031 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01031"
      ],
      "track_key": "LMG0412",
@@ -2427,7 +2427,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,607 km of track over 11 days. Punta Arenas, Cape Shirreff, Palmer Station, Petermann Island, COPA, Jubany/Frei, Punta Arenas. JASADCP SAC IDs 01087 (NB150), 01088 (OS38BB), 01089 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01087",
       "jas_repo_complete/01088",
       "jas_repo_complete/01089"
@@ -2474,7 +2474,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 7,229 km of track over 27 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01090 (NB150), 01091 (OS38BB), 01092 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01090",
       "jas_repo_complete/01091",
       "jas_repo_complete/01092"
@@ -2521,7 +2521,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 7,922 km of track over 37 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01093 (NB150), 01094 (OS38BB), 01095 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01093",
       "jas_repo_complete/01094",
       "jas_repo_complete/01095"
@@ -2575,7 +2575,7 @@
       }
      ],
      "notes": "1 crossing of 60°S; 6,679 km of track over 27 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01096 (NB150), 01097 (OS38BB), 01098 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01096",
       "jas_repo_complete/01097",
       "jas_repo_complete/01098"
@@ -2622,7 +2622,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,116 km of track over 12 days. Punta Arenas to Palmer Station, to Petermann Island, to Punta Arenas. JASADCP SAC IDs 01325 (NB150), 01326 (OS38BB), 01327 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01325",
       "jas_repo_complete/01326",
       "jas_repo_complete/01327"
@@ -2669,7 +2669,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,086 km of track over 12 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01328 (NB150), 01329 (OS38BB), 01330 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01328",
       "jas_repo_complete/01329",
       "jas_repo_complete/01330"
@@ -2716,7 +2716,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,188 km of track over 20 days. Punta Arenas to Palmer Station*4, to Punta Arenas. JASADCP SAC IDs 01331 (NB150), 01332 (OS38BB), 01333 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01331",
       "jas_repo_complete/01332",
       "jas_repo_complete/01333"
@@ -2763,7 +2763,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,154 km of track over 21 days. Punta Arenas, Palmer Station*4, Punta Arenas. JASADCP SAC IDs 01334 (NB150), 01335 (OS38BB), 01336 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01334",
       "jas_repo_complete/01335",
       "jas_repo_complete/01336"
@@ -2810,7 +2810,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,282 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01337 (NB150), 01338 (OS38BB), 01339 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01337",
       "jas_repo_complete/01338",
       "jas_repo_complete/01339"
@@ -2853,7 +2853,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,100 km of track over 11 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01340 (NB150), 01341 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01340",
       "jas_repo_complete/01341"
      ],
@@ -2895,7 +2895,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,293 km of track over 10 days. Punta Arenas, COPA, Palmer Station, Punta Arenas. JASADCP SAC IDs 01342 (NB150), 01343 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01342",
       "jas_repo_complete/01343"
      ],
@@ -2937,7 +2937,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,675 km of track over 12 days. Punta Arenas, Cape Shirreff, Petermann Island, Palmer Station, Punta Arenas. JASADCP SAC IDs 01346 (NB150), 01347 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01346",
       "jas_repo_complete/01347"
      ],
@@ -2979,7 +2979,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 7,773 km of track over 28 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01344 (NB150), 01345 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01344",
       "jas_repo_complete/01345"
      ],
@@ -3021,7 +3021,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 8,109 km of track over 37 days. Punta Arenas to Palmer Station, to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01388 (NB150), 01389 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01388",
       "jas_repo_complete/01389"
      ],
@@ -3075,7 +3075,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,727 km of track over 29 days. Punta Arenas to Palmer Station, Peterman Island, Palmer, to Punta Arenas. JASADCP SAC IDs 01390 (NB150), 01391 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01390",
       "jas_repo_complete/01391"
      ],
@@ -3117,7 +3117,7 @@
       }
      ],
      "notes": "1 crossing of 60°S; 3,324 km of track over 13 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01394 (NB150), 01395 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01394",
       "jas_repo_complete/01395"
      ],
@@ -3159,7 +3159,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,841 km of track over 12 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01392 (NB150), 01393 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01392",
       "jas_repo_complete/01393"
      ],
@@ -3201,7 +3201,7 @@
       }
      ],
      "notes": "1 crossing of 60°S; 3,142 km of track over 11 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01396 (NB150), 01397 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01396",
       "jas_repo_complete/01397"
      ],
@@ -3243,7 +3243,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 7,858 km of track over 31 days. Punta Arenas to Palmer Station, to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01398 (NB150), 01399 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01398",
       "jas_repo_complete/01399"
      ],
@@ -3285,7 +3285,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,451 km of track over 12 days. Punta Arenas to Palmer Station, Vernadsky, Palmer Station, to Punta Arenas. JASADCP SAC IDs 01400 (NB150), 01401 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01400",
       "jas_repo_complete/01401"
      ],
@@ -3327,7 +3327,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,407 km of track over 10 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01402 (NB150), 01403 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01402",
       "jas_repo_complete/01403"
      ],
@@ -3369,7 +3369,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,146 km of track over 13 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01404 (NB150), 01405 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01404",
       "jas_repo_complete/01405"
      ],
@@ -3411,7 +3411,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,644 km of track over 10 days. Punta Arenas to COPA, Palmer Station, to Punta Arenas. JASADCP SAC IDs 01408 (NB150), 01409 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01408",
       "jas_repo_complete/01409"
      ],
@@ -3453,7 +3453,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,764 km of track over 10 days. Punta Arenas to Cape Sherfiff, Palmer Station, Peterman Island, COPA, to Punta Arenas. JASADCP SAC IDs 01406 (NB150), 01407 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01406",
       "jas_repo_complete/01407"
      ],
@@ -3495,7 +3495,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,527 km of track over 18 days. Punta Arenas to Palmer Station, Peterman Island, Rothera Base, O'Higgins Base, Deception Island, Esperanza Base, King George Island, to Punta Arenas. JASADCP SAC IDs 01410 (NB150), 01411 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01410",
       "jas_repo_complete/01411"
      ],
@@ -3537,7 +3537,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 2,649 km of track over 8 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01412 (NB150), 01413 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01412",
       "jas_repo_complete/01413"
      ],
@@ -3579,7 +3579,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,116 km of track over 8 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01574 (NB150), 01575 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01574",
       "jas_repo_complete/01575"
      ],
@@ -3621,7 +3621,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 9,035 km of track over 40 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01414 (NB150), 01415 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01414",
       "jas_repo_complete/01415"
      ],
@@ -3663,7 +3663,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,844 km of track over 12 days. Punta Arenas to COPA, Palmer Station, Peterman Island, Cape Sherriff, COPA, to Punta Arenas. JASADCP SAC IDs 01416 (NB150), 01417 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01416",
       "jas_repo_complete/01417"
      ],
@@ -3705,7 +3705,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,071 km of track over 10 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01418 (NB150), 01419 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01418",
       "jas_repo_complete/01419"
      ],
@@ -3747,7 +3747,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,126 km of track over 12 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01420 (NB150), 01421 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01420",
       "jas_repo_complete/01421"
      ],
@@ -3789,7 +3789,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,910 km of track over 26 days. Punta Arenas to Palmer Station 4x, to Punta Arenas. JASADCP SAC IDs 01422 (NB150), 01423 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01422",
       "jas_repo_complete/01423"
      ],
@@ -3831,7 +3831,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,942 km of track over 21 days. Punta Arenas to Palmer Station, Vernadsky, Palmer Station, to Punta Arenas. JASADCP SAC IDs 01424 (NB150), 01425 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01424",
       "jas_repo_complete/01425"
      ],
@@ -3873,7 +3873,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,124 km of track over 15 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01426 (NB150), 01427 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01426",
       "jas_repo_complete/01427"
      ],
@@ -3915,7 +3915,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,216 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01428 (NB150), 01429 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01428",
       "jas_repo_complete/01429"
      ],
@@ -3961,7 +3961,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,194 km of track over 10 days. Punta Arenas to COPA, Palmer Station, to Punta Arenas. JASADCP SAC IDs 01430 (NB150), 01431 (OS38BB), 01432 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01430",
       "jas_repo_complete/01431",
       "jas_repo_complete/01432"
@@ -4004,7 +4004,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,463 km of track over 11 days. Punta Arenas to Cape Sherriff, Palmer Station, Peterman Island, Palmer Station, to Punta Arenas. JASADCP SAC IDs 01433 (NB150), 01434 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01433",
       "jas_repo_complete/01434"
      ],
@@ -4042,7 +4042,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 5,162 km of track over 22 days. Punta Arenas to Punta Arenas. cDrake programme cruise. JASADCP SAC ID 01711 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01711"
      ],
      "track_key": "NBP0710",
@@ -4083,7 +4083,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,698 km of track over 28 days. Punta Arenas to Livingston Island, Vernadsky Station, Palmer Station, Livingston Station, Seymour Island, Esperanza Base, to Punta Arenas. JASADCP SAC IDs 01435 (NB150), 01436 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01435",
       "jas_repo_complete/01436"
      ],
@@ -4125,7 +4125,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 8,152 km of track over 39 days. Punta Arenas to Palmer Station 2 times, to Punta Arenas. JASADCP SAC IDs 01576 (NB150), 01577 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01576",
       "jas_repo_complete/01577"
      ],
@@ -4167,7 +4167,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,518 km of track over 30 days. Punta Arenas to Palmer Station 2x, to Punta Arenas. JASADCP SAC IDs 01578 (NB150), 01579 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01578",
       "jas_repo_complete/01579"
      ],
@@ -4209,7 +4209,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,004 km of track over 12 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01580 (NB150), 01581 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01580",
       "jas_repo_complete/01581"
      ],
@@ -4251,7 +4251,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,641 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01582 (NB150), 01583 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01582",
       "jas_repo_complete/01583"
      ],
@@ -4293,7 +4293,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 5,536 km of track over 27 days. Punta Arenas to Palmer Station 5x, to Punta Arenas. JASADCP SAC IDs 01584 (NB150), 01585 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01584",
       "jas_repo_complete/01585"
      ],
@@ -4335,7 +4335,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,091 km of track over 21 days. Punta Arenas to Palmer Station 3x, to Punta Arenas. JASADCP SAC IDs 01586 (NB150), 01587 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01586",
       "jas_repo_complete/01587"
      ],
@@ -4377,7 +4377,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,419 km of track over 13 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01588 (NB150), 01589 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01588",
       "jas_repo_complete/01589"
      ],
@@ -4419,7 +4419,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 5,425 km of track over 26 days. Punta Arenas to Palmer Station 4x, to Punta Arenas. JASADCP SAC IDs 01590 (NB150), 01591 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01590",
       "jas_repo_complete/01591"
      ],
@@ -4461,7 +4461,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 5,564 km of track over 26 days. Punta Arenas to Palmer Station 2x, King Geroge Island, Palmer Station 2x, to Punta Arenas. JASADCP SAC IDs 01592 (NB150), 01593 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01592",
       "jas_repo_complete/01593"
      ],
@@ -4503,7 +4503,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,045 km of track over 13 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01594 (NB150), 01595 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01594",
       "jas_repo_complete/01595"
      ],
@@ -4545,7 +4545,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,728 km of track over 11 days. Punta Arenas to COPA, Cape Sherriff, Palmer Station, Cape Sherriff, to Punta Arenas. JASADCP SAC IDs 01596 (NB150), 01597 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01596",
       "jas_repo_complete/01597"
      ],
@@ -4583,7 +4583,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,698 km of track over 22 days. Punta Arenas, Chile - Palmer Station, Antarctica - Punta Arenas, Chile. cDrake programme cruise. JASADCP SAC ID 01712 (NB150).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01712"
      ],
      "track_key": "NBP0812",
@@ -4624,7 +4624,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 8,520 km of track over 36 days. Punta Arenas to Palmer Station 2x, to Punta Arenas. JASADCP SAC IDs 01686 (NB150), 01687 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01686",
       "jas_repo_complete/01687"
      ],
@@ -4670,7 +4670,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 7,423 km of track over 32 days. Punta Arenas to Livingston Island, James Ross Island, Livingston Island, Palmer Station 2x, James Ross Island, Cockburn Island, King George Island, to Punta Arenas. JASADCP SAC IDs 01688 (NB150), 01689 (OS38BB), 01690 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01688",
       "jas_repo_complete/01689",
       "jas_repo_complete/01690"
@@ -4713,7 +4713,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,975 km of track over 18 days. Punta Arenas to Deception Island, Palmer Station, Vernadsky Station, Palmer Station to Punta Arenas. JASADCP SAC IDs 01691 (NB150), 01692 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01691",
       "jas_repo_complete/01692"
      ],
@@ -4755,7 +4755,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 8,041 km of track over 49 days. Punta Arenas to Palmer Station 7x, to Punta Arenas. JASADCP SAC IDs 01693 (NB150), 01694 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01693",
       "jas_repo_complete/01694"
      ],
@@ -4797,7 +4797,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,238 km of track over 15 days. Punta Arenas to Palmer Station 2x, to Punta Arenas. JASADCP SAC IDs 01695 (NB150),  (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01695",
       "jas_repo_complete/"
      ],
@@ -4839,7 +4839,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,438 km of track over 21 days. Punta Arenas to 2x Palmer Station, to Punta Arenas. JASADCP SAC IDs 01697 (NB150), 01698 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01697",
       "jas_repo_complete/01698"
      ],
@@ -4881,7 +4881,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,627 km of track over 13 days. Punta Arenas to Palmer Station, COPA, Cape Shirreff, to Punta Arenas. JASADCP SAC IDs 01699 (NB150), 01700 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01699",
       "jas_repo_complete/01700"
      ],
@@ -4923,7 +4923,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,544 km of track over 28 days. Punta Arenas, Chile - Palmer Station, Rothera, Antarctica - Punta Arenas, Chile. cDrake programme cruise. JASADCP SAC IDs 01740 (NB150), 01741 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01740",
       "jas_repo_complete/01741"
      ],
@@ -4965,7 +4965,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 5,704 km of track over 28 days. Punta Arenas, Chile - Palmer Station, James Ross Island, Livingston Island, Snow Island, King George Island, Antarctica - Punta Arenas, Chile. JASADCP SAC IDs 01701 (NB150), 01702 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01701",
       "jas_repo_complete/01702"
      ],
@@ -5007,7 +5007,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 7,486 km of track over 36 days. Punta Arenas to Palmer Station x2, to Punta Arenas. JASADCP SAC IDs 01703 (NB150), 01704 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01703",
       "jas_repo_complete/01704"
      ],
@@ -5049,7 +5049,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,034 km of track over 39 days. Punta Arenas, Chile - Palmer Station, Antarctica 3x - Punta Arenas, Chile. JASADCP SAC IDs 01705 (NB150), 01706 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01705",
       "jas_repo_complete/01706"
      ],
@@ -5091,7 +5091,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,742 km of track over 17 days. Punta Arenas, Chile - Palmer Station, Antarctica 3x - Punta Arenas, Chile. JASADCP SAC IDs 01707 (NB150), 01708 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01707",
       "jas_repo_complete/01708"
      ],
@@ -5133,7 +5133,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 7,335 km of track over 34 days. Punta Arenas, Chile - Palmer Station, Antarctica 4x - Punta Arenas, Chile. JASADCP SAC IDs 01709 (NB150), 01710 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01709",
       "jas_repo_complete/01710"
      ],
@@ -5175,7 +5175,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,495 km of track over 17 days. Punta Arenas to Palmer Station 2x, to Punta Arenas. JASADCP SAC IDs 01731 (NB150), 01732 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01731",
       "jas_repo_complete/01732"
      ],
@@ -5217,7 +5217,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,325 km of track over 13 days. Punta Arenas, Chile - COPA, Palmer Station, Antarctica - Punta Arenas, Chile. JASADCP SAC IDs 01733 (NB150), 01734 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01733",
       "jas_repo_complete/01734"
      ],
@@ -5259,7 +5259,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,890 km of track over 22 days. Punta Arenas, Chile - Palmer Station, Antarctica - Punta Arenas, Chile. cDrake programme cruise. JASADCP SAC IDs 01742 (NB150), 01743 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01742",
       "jas_repo_complete/01743"
      ],
@@ -5301,7 +5301,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,056 km of track over 16 days. Punta Arenas, Chile - Cape Sherriff, Palmer Station, Antarctica - Punta Arenas, Chile. JASADCP SAC IDs 01735 (NB150), 01736 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01735",
       "jas_repo_complete/01736"
      ],
@@ -5347,7 +5347,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,714 km of track over 24 days. Punta Arenas to Palmer Station 2x, to Punta Arenas. JASADCP SAC IDs 01737 (NB150), 01738 (OS38BB), 01739 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01737",
       "jas_repo_complete/01738",
       "jas_repo_complete/01739"
@@ -5390,7 +5390,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 8,235 km of track over 37 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01746 (NB150), 01747 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01746",
       "jas_repo_complete/01747"
      ],
@@ -5432,7 +5432,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,402 km of track over 26 days. Punta Arenas to Palmer Station 2x, to Punta Arenas. JASADCP SAC IDs 01748 (NB150), 01749 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01748",
       "jas_repo_complete/01749"
      ],
@@ -5474,7 +5474,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,068 km of track over 15 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01750 (NB150), 01751 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01750",
       "jas_repo_complete/01751"
      ],
@@ -5516,7 +5516,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,015 km of track over 12 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01752 (NB150), 01753 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01752",
       "jas_repo_complete/01753"
      ],
@@ -5558,7 +5558,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,262 km of track over 38 days. Punta Arenas, Chile, to Palmer Station, Antarctica 5x, to Punta Arenas, Chile. JASADCP SAC IDs 01754 (NB150), 01755 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01754",
       "jas_repo_complete/01755"
      ],
@@ -5600,7 +5600,7 @@
       }
      ],
      "notes": "1 crossing of 60°S; 2,878 km of track over 17 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01756 (NB150), 01757 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01756",
       "jas_repo_complete/01757"
      ],
@@ -5642,7 +5642,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,186 km of track over 17 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01758 (NB150), 01759 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01758",
       "jas_repo_complete/01759"
      ],
@@ -5684,7 +5684,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,256 km of track over 16 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01760 (NB150), 01761 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01760",
       "jas_repo_complete/01761"
      ],
@@ -5726,7 +5726,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,922 km of track over 28 days. Punta Arenas to Palmer Station 2x, to Punta Arenas. JASADCP SAC IDs 01987 (NB150), 01988 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01987",
       "jas_repo_complete/01988"
      ],
@@ -5768,7 +5768,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,613 km of track over 22 days. Punta Arenas, Chile - Punta Arenas, Chile. cDrake programme cruise. JASADCP SAC IDs 01744 (NB150), 01745 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01744",
       "jas_repo_complete/01745"
      ],
@@ -5810,7 +5810,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,830 km of track over 13 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 01989 (NB150), 01990 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01989",
       "jas_repo_complete/01990"
      ],
@@ -5852,7 +5852,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 9,088 km of track over 38 days. Punta Arenas to Palmer Station 2x, to Punta Arenas. JASADCP SAC IDs 01991 (NB150), 01992 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01991",
       "jas_repo_complete/01992"
      ],
@@ -5894,7 +5894,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 5,697 km of track over 26 days. Punta Arenas to Palmer Station 3x, to Punta Arenas. JASADCP SAC IDs 01993 (NB150), 01994 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01993",
       "jas_repo_complete/01994"
      ],
@@ -5936,7 +5936,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,148 km of track over 15 days. Punta Arenas to Palmer Station 2x, to Punta Arenas. JASADCP SAC IDs 01995 (NB150), 01996 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01995",
       "jas_repo_complete/01996"
      ],
@@ -5978,7 +5978,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,761 km of track over 18 days. Punta Arenas, Chile; Palmer Station, Antarctica 3x; Punta Arenas, Chile. JASADCP SAC IDs 01997 (NB150), 01998 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01997",
       "jas_repo_complete/01998"
      ],
@@ -6020,7 +6020,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,747 km of track over 27 days. Punta Arenas to Palmer Station 4x, to Punta Arenas. JASADCP SAC IDs 01999 (NB150), 02000 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/01999",
       "jas_repo_complete/02000"
      ],
@@ -6062,7 +6062,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,548 km of track over 18 days. Punta Arenas, Chile to Palmer Station, Antarctica 2x, to Punta Arenas, Chile. JASADCP SAC IDs 02001 (NB150), 02002 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02001",
       "jas_repo_complete/02002"
      ],
@@ -6104,7 +6104,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 2,594 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02003 (NB150), 02004 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02003",
       "jas_repo_complete/02004"
      ],
@@ -6146,7 +6146,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,794 km of track over 18 days. Punta Arenas, Chile, to COPA, Palmer Station, Antarctica, to Punta Arenas, Chile. JASADCP SAC IDs 02005 (NB150), 02006 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02005",
       "jas_repo_complete/02006"
      ],
@@ -6188,7 +6188,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,429 km of track over 18 days. Punta Arenas, Chile, to Cape Shirreff, Palmer Station, Antarctica, to Punta Arenas, Chile. JASADCP SAC IDs 02007 (NB150), 02008 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02007",
       "jas_repo_complete/02008"
      ],
@@ -6230,7 +6230,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 2,983 km of track over 8 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02009 (NB150), 02010 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02009",
       "jas_repo_complete/02010"
      ],
@@ -6272,7 +6272,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,065 km of track over 12 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02011 (NB150), 02012 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02011",
       "jas_repo_complete/02012"
      ],
@@ -6314,7 +6314,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 9,146 km of track over 38 days. Punta Arenas, Chile to Palmer Station, Rothera, Palmer Station, Antarctica, to Punta Arenas, Chile. JASADCP SAC IDs 02021 (NB150), 02022 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02021",
       "jas_repo_complete/02022"
      ],
@@ -6356,7 +6356,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,008 km of track over 18 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02023 (NB150), 02024 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02023",
       "jas_repo_complete/02024"
      ],
@@ -6398,7 +6398,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,004 km of track over 26 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02025 (NB150), 02026 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02025",
       "jas_repo_complete/02026"
      ],
@@ -6440,7 +6440,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 5,674 km of track over 23 days. Punta Arenas, Chile, to Carlini Base, Cierva Point, Palmer Station 2x, Maxwell Bay, Antarctica, to Punta Arenas, Chile. JASADCP SAC IDs 02027 (NB150), 02028 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02027",
       "jas_repo_complete/02028"
      ],
@@ -6482,7 +6482,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,761 km of track over 13 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02102 (NB150), 02103 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02102",
       "jas_repo_complete/02103"
      ],
@@ -6524,7 +6524,7 @@
       }
      ],
      "notes": "1 crossing of 60°S; 4,209 km of track over 34 days. Punta Arenas to Palmer Station 2x, to Punta Arenas. JASADCP SAC IDs 02104 (NB150), 02105 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02104",
       "jas_repo_complete/02105"
      ],
@@ -6570,7 +6570,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,253 km of track over 13 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02106 (NB150), 02107 (OS38BB), 02108 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02106",
       "jas_repo_complete/02107",
       "jas_repo_complete/02108"
@@ -6613,7 +6613,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,057 km of track over 16 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02109 (NB150), 02110 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02109",
       "jas_repo_complete/02110"
      ],
@@ -6655,7 +6655,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,100 km of track over 18 days. Punta Arenas, Chile to Cape Shirreff, Palmer Station 2x, Antarctica, to Punta Arenas, Chile. JASADCP SAC IDs 02111 (NB150), 02112 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02111",
       "jas_repo_complete/02112"
      ],
@@ -6697,7 +6697,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,337 km of track over 26 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02113 (NB150), 02114 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02113",
       "jas_repo_complete/02114"
      ],
@@ -6739,7 +6739,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 9,162 km of track over 38 days. Punta Arenas, Chile to Palmer Station, Rothera, Antarctica, to Punta Arenas, Chile. JASADCP SAC IDs 02153 (NB150), 02154 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02153",
       "jas_repo_complete/02154"
      ],
@@ -6781,7 +6781,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,068 km of track over 30 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02155 (NB150), 02156 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02155",
       "jas_repo_complete/02156"
      ],
@@ -6823,7 +6823,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,065 km of track over 12 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02157 (NB150), 02158 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02157",
       "jas_repo_complete/02158"
      ],
@@ -6865,7 +6865,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,800 km of track over 40 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02159 (NB150), 02160 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02159",
       "jas_repo_complete/02160"
      ],
@@ -6907,7 +6907,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,879 km of track over 58 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02172 (NB150), 02173 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02172",
       "jas_repo_complete/02173"
      ],
@@ -6949,7 +6949,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,043 km of track over 13 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02174 (NB150), 02175 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02174",
       "jas_repo_complete/02175"
      ],
@@ -6991,7 +6991,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 2,302 km of track over 13 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02176 (NB150), 02177 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02176",
       "jas_repo_complete/02177"
      ],
@@ -7033,7 +7033,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,434 km of track over 25 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02178 (NB150), 02179 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02178",
       "jas_repo_complete/02179"
      ],
@@ -7079,7 +7079,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 5,576 km of track over 22 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02180 (NB150), 02182 (OS38BB), 02181 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02180",
       "jas_repo_complete/02182",
       "jas_repo_complete/02181"
@@ -7122,7 +7122,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 8,656 km of track over 40 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02029 (NB150), 02030 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02029",
       "jas_repo_complete/02030"
      ],
@@ -7164,7 +7164,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 5,376 km of track over 30 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs  (NB150), 02229 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/",
       "jas_repo_complete/02229"
      ],
@@ -7206,7 +7206,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,152 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02230 (NB150), 02231 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02230",
       "jas_repo_complete/02231"
      ],
@@ -7248,7 +7248,7 @@
       }
      ],
      "notes": "4 crossings of 60°S; 6,892 km of track over 33 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02232 (NB150), 02233 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02232",
       "jas_repo_complete/02233"
      ],
@@ -7290,7 +7290,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,463 km of track over 32 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02236 (NB150), 02237 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02236",
       "jas_repo_complete/02237"
      ],
@@ -7332,7 +7332,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,091 km of track over 9 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02234 (NB150), 02235 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02234",
       "jas_repo_complete/02235"
      ],
@@ -7374,7 +7374,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,354 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02238 (NB150), 02239 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02238",
       "jas_repo_complete/02239"
      ],
@@ -7416,7 +7416,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,729 km of track over 21 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02240 (NB150), 02241 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02240",
       "jas_repo_complete/02241"
      ],
@@ -7458,7 +7458,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 5,278 km of track over 37 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02242 (NB150), 02243 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02242",
       "jas_repo_complete/02243"
      ],
@@ -7500,7 +7500,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 9,181 km of track over 43 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02245 (NB150), 02246 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02245",
       "jas_repo_complete/02246"
      ],
@@ -7542,7 +7542,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,883 km of track over 29 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02247 (NB150), 02248 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02247",
       "jas_repo_complete/02248"
      ],
@@ -7584,7 +7584,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,046 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02249 (NB150), 02250 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02249",
       "jas_repo_complete/02250"
      ],
@@ -7626,7 +7626,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 5,268 km of track over 28 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02251 (NB150), 02252 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02251",
       "jas_repo_complete/02252"
      ],
@@ -7668,7 +7668,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,610 km of track over 30 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02253 (NB150), 02254 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02253",
       "jas_repo_complete/02254"
      ],
@@ -7710,7 +7710,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,286 km of track over 38 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02404 (NB150), 02405 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02404",
       "jas_repo_complete/02405"
      ],
@@ -7752,7 +7752,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,030 km of track over 12 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02406 (NB150), 02407 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02406",
       "jas_repo_complete/02407"
      ],
@@ -7794,7 +7794,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,346 km of track over 13 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02408 (NB150), 02409 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02408",
       "jas_repo_complete/02409"
      ],
@@ -7836,7 +7836,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 2,979 km of track over 18 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02410 (NB150), 02411 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02410",
       "jas_repo_complete/02411"
      ],
@@ -7878,7 +7878,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,584 km of track over 16 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02412 (NB150), 02413 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02412",
       "jas_repo_complete/02413"
      ],
@@ -7920,7 +7920,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 8,428 km of track over 40 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02438 (NB150), 02439 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02438",
       "jas_repo_complete/02439"
      ],
@@ -7962,7 +7962,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 7,403 km of track over 34 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02440 (NB150), 02441 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02440",
       "jas_repo_complete/02441"
      ],
@@ -8004,7 +8004,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,128 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02442 (NB150), 02443 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02442",
       "jas_repo_complete/02443"
      ],
@@ -8046,7 +8046,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 7,296 km of track over 44 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02444 (NB150), 02445 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02444",
       "jas_repo_complete/02445"
      ],
@@ -8088,7 +8088,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,272 km of track over 26 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02446 (NB150), 02447 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02446",
       "jas_repo_complete/02447"
      ],
@@ -8130,7 +8130,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,558 km of track over 21 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02448 (NB150), 02449 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02448",
       "jas_repo_complete/02449"
      ],
@@ -8172,7 +8172,7 @@
       }
      ],
      "notes": "1,234 km of track over 5 days. Punta Arenas to Punta Arenas. JASADCP SAC IDs 02450 (NB150), 02451 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02450",
       "jas_repo_complete/02451"
      ],
@@ -8214,7 +8214,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 2,778 km of track over 12 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02452 (NB150), 02453 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02452",
       "jas_repo_complete/02453"
      ],
@@ -8256,7 +8256,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,244 km of track over 13 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02454 (NB150), 02455 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02454",
       "jas_repo_complete/02455"
      ],
@@ -8298,7 +8298,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,778 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02456 (NB150), 02457 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02456",
       "jas_repo_complete/02457"
      ],
@@ -8340,7 +8340,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,297 km of track over 10 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02458 (NB150), 02459 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02458",
       "jas_repo_complete/02459"
      ],
@@ -8382,7 +8382,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 10,282 km of track over 42 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02460 (NB150), 02461 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02460",
       "jas_repo_complete/02461"
      ],
@@ -8424,7 +8424,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,919 km of track over 31 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02462 (NB150), 02463 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02462",
       "jas_repo_complete/02463"
      ],
@@ -8466,7 +8466,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,101 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02464 (NB150), 02465 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02464",
       "jas_repo_complete/02465"
      ],
@@ -8508,7 +8508,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,956 km of track over 30 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02466 (NB150), 02467 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02466",
       "jas_repo_complete/02467"
      ],
@@ -8550,7 +8550,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 6,148 km of track over 30 days. Punta Arenas to Palmer Station, to Punta Arenas, with stops at Vernadsky Station and Frei Base. JASADCP SAC IDs 02468 (NB150), 02469 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02468",
       "jas_repo_complete/02469"
      ],
@@ -8592,7 +8592,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,053 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02470 (NB150), 02471 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02470",
       "jas_repo_complete/02471"
      ],
@@ -8634,7 +8634,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 2,916 km of track over 12 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02472 (NB150), 02473 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02472",
       "jas_repo_complete/02473"
      ],
@@ -8676,7 +8676,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 4,790 km of track over 24 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02474 (NB150), 02475 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02474",
       "jas_repo_complete/02475"
      ],
@@ -8718,7 +8718,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,367 km of track over 12 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC IDs 02476 (NB150), 02477 (OS38NB).",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "jas_repo_complete/02476",
       "jas_repo_complete/02477"
      ],
@@ -8747,8 +8747,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0287398",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 9,589 km of track over 42 days. CODAS loads: lg1901_nb150, lg1901_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 9,589 km of track over 42 days. CODAS databases: lg1901_nb150, lg1901_os38nb.",
+     "CODAS_dbs": [
       "lg1901_nb150",
       "lg1901_os38nb"
      ],
@@ -8778,8 +8778,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0287398",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 6,008 km of track over 31 days. CODAS loads: lg1902_nb150, lg1902_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 6,008 km of track over 31 days. CODAS databases: lg1902_nb150, lg1902_os38nb.",
+     "CODAS_dbs": [
       "lg1902_nb150",
       "lg1902_os38nb"
      ],
@@ -8809,8 +8809,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0287398",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 2,982 km of track over 14 days. CODAS loads: lg1903_nb150, lg1903_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 2,982 km of track over 14 days. CODAS databases: lg1903_nb150, lg1903_os38nb.",
+     "CODAS_dbs": [
       "lg1903_nb150",
       "lg1903_os38nb"
      ],
@@ -8840,8 +8840,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0287398",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 8,226 km of track over 43 days. CODAS loads: lg1904_nb150, lg1904_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 8,226 km of track over 43 days. CODAS databases: lg1904_nb150, lg1904_os38nb.",
+     "CODAS_dbs": [
       "lg1904_nb150",
       "lg1904_os38nb"
      ],
@@ -8871,8 +8871,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0287398",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 3,000 km of track over 14 days. CODAS loads: lg1908_nb150, lg1908_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 3,000 km of track over 14 days. CODAS databases: lg1908_nb150, lg1908_os38nb.",
+     "CODAS_dbs": [
       "lg1908_nb150",
       "lg1908_os38nb"
      ],
@@ -8902,8 +8902,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0287398",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 3,195 km of track over 12 days. CODAS loads: lg1909_nb150, lg1909_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 3,195 km of track over 12 days. CODAS databases: lg1909_nb150, lg1909_os38nb.",
+     "CODAS_dbs": [
       "lg1909_nb150",
       "lg1909_os38nb"
      ],
@@ -8933,8 +8933,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0287398",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 3,003 km of track over 16 days. CODAS loads: lg1910_nb150, lg1910_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 3,003 km of track over 16 days. CODAS databases: lg1910_nb150, lg1910_os38nb.",
+     "CODAS_dbs": [
       "lg1910_nb150",
       "lg1910_os38nb"
      ],
@@ -8964,8 +8964,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0287398",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 3,538 km of track over 16 days. CODAS loads: lg1911_nb150, lg1911_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 3,538 km of track over 16 days. CODAS databases: lg1911_nb150, lg1911_os38nb.",
+     "CODAS_dbs": [
       "lg1911_nb150",
       "lg1911_os38nb"
      ],
@@ -8995,8 +8995,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0289467",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 10,113 km of track over 42 days. CODAS loads: lg2001_nb150, lg2001_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 10,113 km of track over 42 days. CODAS databases: lg2001_nb150, lg2001_os38nb.",
+     "CODAS_dbs": [
       "lg2001_nb150",
       "lg2001_os38nb"
      ],
@@ -9026,8 +9026,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0289467",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 6,035 km of track over 32 days. CODAS loads: lg2002_nb150, lg2002_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 6,035 km of track over 32 days. CODAS databases: lg2002_nb150, lg2002_os38nb.",
+     "CODAS_dbs": [
       "lg2002_nb150",
       "lg2002_os38nb"
      ],
@@ -9057,8 +9057,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0289467",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 2,587 km of track over 13 days. CODAS loads: lg2003_nb150, lg2003_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 2,587 km of track over 13 days. CODAS databases: lg2003_nb150, lg2003_os38nb.",
+     "CODAS_dbs": [
       "lg2003_nb150",
       "lg2003_os38nb"
      ],
@@ -9088,8 +9088,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0289465",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 1,968 km of track over 22 days. CODAS loads: lg2104_nb150, lg2104_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 1,968 km of track over 22 days. CODAS databases: lg2104_nb150, lg2104_os38nb.",
+     "CODAS_dbs": [
       "lg2104_nb150",
       "lg2104_os38nb"
      ],
@@ -9119,8 +9119,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0289465",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 1,956 km of track over 15 days. CODAS loads: lg2110_nb150, lg2110_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 1,956 km of track over 15 days. CODAS databases: lg2110_nb150, lg2110_os38nb.",
+     "CODAS_dbs": [
       "lg2110_nb150",
       "lg2110_os38nb"
      ],
@@ -9150,8 +9150,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0289465",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "1 crossing of 60°S; 2,011 km of track over 9 days. CODAS loads: lg2111_nb150, lg2111_os38nb.",
-     "codas_dbs": [
+     "notes": "1 crossing of 60°S; 2,011 km of track over 9 days. CODAS databases: lg2111_nb150, lg2111_os38nb.",
+     "CODAS_dbs": [
       "lg2111_nb150",
       "lg2111_os38nb"
      ],
@@ -9181,8 +9181,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0289586",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "No crossings of 60°S; 1,680 km of track over 8 days. CODAS loads: lg2112_nb150, lg2112_os38nb.",
-     "codas_dbs": [
+     "notes": "No crossings of 60°S; 1,680 km of track over 8 days. CODAS databases: lg2112_nb150, lg2112_os38nb.",
+     "CODAS_dbs": [
       "lg2112_nb150",
       "lg2112_os38nb"
      ],
@@ -9212,8 +9212,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0289586",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "1 crossing of 60°S; 3,015 km of track over 10 days. CODAS loads: lg2202_nb150, lg2202_os38nb.",
-     "codas_dbs": [
+     "notes": "1 crossing of 60°S; 3,015 km of track over 10 days. CODAS databases: lg2202_nb150, lg2202_os38nb.",
+     "CODAS_dbs": [
       "lg2202_nb150",
       "lg2202_os38nb"
      ],
@@ -9243,8 +9243,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0289586",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 1,709 km of track over 11 days. CODAS loads: lg2204_nb150, lg2204_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 1,709 km of track over 11 days. CODAS databases: lg2204_nb150, lg2204_os38nb.",
+     "CODAS_dbs": [
       "lg2204_nb150",
       "lg2204_os38nb"
      ],
@@ -9274,8 +9274,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0289586",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 1,932 km of track over 10 days. CODAS loads: lg2206_nb150, lg2206_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 1,932 km of track over 10 days. CODAS databases: lg2206_nb150, lg2206_os38nb.",
+     "CODAS_dbs": [
       "lg2206_nb150",
       "lg2206_os38nb"
      ],
@@ -9305,8 +9305,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0301730",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 3,267 km of track over 16 days. CODAS loads: lg2211_nb150, lg2211_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 3,267 km of track over 16 days. CODAS databases: lg2211_nb150, lg2211_os38nb.",
+     "CODAS_dbs": [
       "lg2211_nb150",
       "lg2211_os38nb"
      ],
@@ -9336,8 +9336,8 @@
      "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0301730",
      "plots_url": null,
      "jasadcp_url": null,
-     "notes": "2 crossings of 60°S; 4,291 km of track over 17 days. CODAS loads: lg2213_nb150, lg2213_os38nb.",
-     "codas_dbs": [
+     "notes": "2 crossings of 60°S; 4,291 km of track over 17 days. CODAS databases: lg2213_nb150, lg2213_os38nb.",
+     "CODAS_dbs": [
       "lg2213_nb150",
       "lg2213_os38nb"
      ],
@@ -9368,7 +9368,7 @@
      "plots_url": null,
      "jasadcp_url": null,
      "notes": "1 crossing of 60°S; 8,030 km of track over 33 days. CODAS load: lg2301_nb150.",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "lg2301_nb150"
      ],
      "track_key": "LMG2301",
@@ -9398,7 +9398,7 @@
      "plots_url": null,
      "jasadcp_url": null,
      "notes": "2 crossings of 60°S; 7,303 km of track over 37 days. CODAS load: lg2302_nb150.",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "lg2302_nb150"
      ],
      "track_key": "LMG2302",
@@ -9428,7 +9428,7 @@
      "plots_url": null,
      "jasadcp_url": null,
      "notes": "2 crossings of 60°S; 3,139 km of track over 15 days. CODAS load: lg2303_nb150.",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "lg2303_nb150"
      ],
      "track_key": "LMG2303",
@@ -9458,7 +9458,7 @@
      "plots_url": null,
      "jasadcp_url": null,
      "notes": "2 crossings of 60°S; 4,006 km of track over 16 days. CODAS load: lg2304_nb150.",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "lg2304_nb150"
      ],
      "track_key": "LMG2304",
@@ -9496,7 +9496,7 @@
       }
      ],
      "notes": "1 crossing of 60°S; 9,340 km of track over 50 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 02819 (NB150), assigned in the NCEI accession but not yet published on the JASADCP site.",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "0314050/1.1/data/0-data/2023-05-07_LG2305/02819"
      ],
      "track_key": "LMG2305",
@@ -9533,7 +9533,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 2,861 km of track over 16 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 02820 (NB150), assigned in the NCEI accession but not yet published on the JASADCP site.",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "0314050/1.1/data/0-data/2023-10-07_LG2309/02820"
      ],
      "track_key": "LMG2309",
@@ -9570,7 +9570,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,178 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 02821 (NB150), assigned in the NCEI accession but not yet published on the JASADCP site.",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "0314050/1.1/data/0-data/2023-10-31_LG2310/02821"
      ],
      "track_key": "LMG2310",
@@ -9607,7 +9607,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,330 km of track over 15 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 02822 (NB150), assigned in the NCEI accession but not yet published on the JASADCP site.",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "0314050/1.1/data/0-data/2023-11-25_LG2312/02822"
      ],
      "track_key": "LMG2312",
@@ -9644,7 +9644,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 9,752 km of track over 41 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 02823 (NB150), assigned in the NCEI accession but not yet published on the JASADCP site.",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "0314050/1.1/data/0-data/2023-12-21_LG2401/02823"
      ],
      "track_key": "LMG2401",
@@ -9681,7 +9681,7 @@
       }
      ],
      "notes": "2 crossings of 60°S; 3,065 km of track over 14 days. Punta Arenas to Palmer Station, to Punta Arenas. JASADCP SAC ID 02824 (NB150), assigned in the NCEI accession but not yet published on the JASADCP site.",
-     "codas_dbs": [
+     "CODAS_dbs": [
       "0314050/1.1/data/0-data/2024-04-01_LG2404/02824"
      ],
      "track_key": "LMG2404",

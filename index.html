@@ -793,7 +793,7 @@ function initSite() {
   const measured = Object.values(TRACKS);
   const trackKm  = measured.reduce((n, t) => n + (t.track_length_km || 0), 0);
   const lastTile = measured.length
-    ? `<div class="stat"><div class="stat-lbl">Measured Track</div><div class="stat-val">${fmtInt(trackKm)}</div><div class="stat-note">km from ${measured.length} CODAS loads</div></div>`
+    ? `<div class="stat"><div class="stat-lbl">Measured Track</div><div class="stat-val">${fmtInt(trackKm)}</div><div class="stat-note">km from ${measured.length} CODAS databases</div></div>`
     : `<div class="stat"><div class="stat-lbl">NCEI Accessions</div><div class="stat-val">${archived}</div><div class="stat-note">of ${totalCruises} cruises archived</div></div>`;
   document.getElementById('home-stats').innerHTML = `
     <div class="stat"><div class="stat-lbl">Total Cruises</div><div class="stat-val">${totalCruises}</div><div class="stat-note">Across ${s.projects.length} programs</div></div>
@@ -1114,10 +1114,19 @@ function buildProjectHTML(p) {
    ════════════════════════════════════════════════════════ */
 function initProjectMap(p) {
   const mapId = `map-${p.id}`;
-  if (mapsInitialized[p.id]) {
-    // Map already exists — Leaflet keeps it, just invalidate size
-    setTimeout(() => mapsInitialized[p.id].invalidateSize(), 50);
-    return;
+  const container = document.getElementById(mapId);
+  const existing = mapsInitialized[p.id];
+  if (existing) {
+    if (existing.getContainer() === container) {
+      // Same container still in the document — just invalidate size
+      setTimeout(() => existing.invalidateSize(), 50);
+      return;
+    }
+    // buildProjectHTML rebuilt #proj-content (e.g. navigating away and back),
+    // detaching the old container from the document — dispose of the stale
+    // map before rebuilding, or the new container is left blank
+    existing.remove();
+    delete mapsInitialized[p.id];
   }
 
   const map = L.map(mapId, {

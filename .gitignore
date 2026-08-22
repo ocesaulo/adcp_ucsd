@@ -8,5 +8,16 @@ images/*
 !images/branding/
 !images/branding/**
 
-# Raw material for the site (tarballs, scraped copies of the old portal)
-input_info/
+# Raw material for the site (tarballs, scraped copies of the old portal).
+# The three calibration pages are the exception: they are the source
+# data/calibrations.json is derived from, they are small, and adcp.ucsd.edu
+# will not outlive this site.
+input_info/*
+!input_info/harvest/
+
+# Local tooling. harvest_calibrations.py produces data/calibrations.json, which
+# is committed; the script itself is kept out, like the CODAS builders in
+# ../../science/technical_sadcp/scripts/.
+tools/
+
+__pycache__/

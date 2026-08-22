@@ -217,14 +217,18 @@ nav a.active { background: var(--teal); color: #fff; }
 }
 .gal-btn.active, .gal-btn:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
 .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+/* Two sonars over the same window belong side by side, so a paired cruise
+   gets exactly two columns: one section per row, deeper sonar on the left. */
+.gallery-grid.paired { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 700px) { .gallery-grid.paired { grid-template-columns: 1fr; } }
 .gal-item {
   border-radius: 10px; overflow: hidden; border: 1px solid var(--border);
   cursor: pointer; transition: .15s; background: var(--sand);
 }
 .gal-item:hover { border-color: var(--teal); box-shadow: 0 4px 14px rgba(14,140,122,.12); }
 .gal-img {
-  width: 100%; aspect-ratio: 4/3; object-fit: cover;
-  display: block; background: #e8f0f8;
+  width: 100%; aspect-ratio: 4/3; object-fit: contain;
+  display: block; background: var(--white);
 }
 .gal-img-placeholder {
   width: 100%; aspect-ratio: 4/3; display: flex; flex-direction: column;
@@ -348,6 +352,82 @@ footer { background: var(--navy); color: rgba(255,255,255,.45); text-align: cent
 footer a { color: rgba(255,255,255,.65); text-decoration: none; }
 footer a:hover { color: #fff; }
 
+/* ─── CALIBRATION TABLES ─── */
+.cal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; margin-bottom: 2rem; }
+.cal-card {
+  display: flex; flex-direction: column; text-align: left; gap: 6px;
+  border: 1px solid var(--border); border-left: 4px solid var(--teal); border-radius: 12px;
+  background: var(--white); padding: 1.1rem 1.2rem; cursor: pointer;
+  font: inherit; color: inherit; transition: .15s;
+}
+.cal-card:hover { border-color: var(--teal); box-shadow: 0 6px 20px rgba(11,34,64,.09); transform: translateY(-1px); }
+.cal-card .prog { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; }
+.cal-card h4 { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; color: var(--navy); line-height: 1.25; }
+.cal-card p { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.cal-card .meta { margin-top: auto; padding-top: .7rem; display: flex; justify-content: space-between;
+  align-items: baseline; gap: 10px; font-family: var(--mono); font-size: 11px; color: var(--light); }
+.cal-card .go { color: var(--teal); font-weight: 500; font-family: var(--sans); }
+
+.cal-back { display: inline-flex; align-items: center; gap: 6px; background: none; border: none;
+  font: 500 12.5px var(--sans); color: var(--teal); cursor: pointer; padding: 0; margin-bottom: 1rem; }
+.cal-back:hover { text-decoration: underline; }
+.cal-hdr { margin-bottom: 1.1rem; }
+.cal-hdr h2 { font-family: var(--serif); font-size: 1.65rem; font-weight: 400; color: var(--navy); line-height: 1.2; }
+.cal-hdr p { font-size: 13px; color: var(--muted); line-height: 1.6; margin-top: .35rem; max-width: 70ch; }
+.cal-src { font-size: 11.5px; color: var(--light); margin-top: .5rem; }
+.cal-src a { color: var(--muted); }
+
+.cal-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: .9rem; }
+.cal-search {
+  flex: 1 1 220px; max-width: 320px; padding: 7px 12px; border: 1px solid var(--border);
+  border-radius: 8px; font: 12.5px var(--sans); background: var(--white); color: var(--text);
+}
+.cal-search:focus { outline: none; border-color: var(--teal); }
+.cal-count { font-family: var(--mono); font-size: 11.5px; color: var(--light); }
+.cal-years { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 1rem; }
+.cal-year {
+  border: 1px solid var(--border); background: var(--white); color: var(--muted);
+  border-radius: 100px; padding: 3px 10px; font: 500 11px var(--mono); cursor: pointer; transition: .12s;
+}
+.cal-year:hover { border-color: var(--teal); color: var(--teal); }
+.cal-year.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+.cal-tbl-wrap { overflow: auto; max-height: 68vh; border: 1px solid var(--border); border-radius: 10px; background: var(--white); }
+.cal-tbl { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 12px; }
+.cal-tbl th {
+  position: sticky; top: 0; z-index: 2; background: var(--sand); text-align: left; vertical-align: bottom;
+  padding: 9px 10px; font-size: 10px; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+.cal-tbl td { padding: 6px 10px; border-bottom: 1px solid #eef2f6; font-family: var(--mono);
+  color: var(--text); white-space: nowrap; vertical-align: top; }
+.cal-tbl tbody tr:hover td { background: rgba(14,140,122,.055); }
+.cal-tbl td.cid { font-weight: 500; color: var(--navy); position: sticky; left: 0; background: var(--white); }
+.cal-tbl tbody tr:hover td.cid { background: #eef7f5; }
+.cal-tbl td.cid a { color: var(--teal); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.cal-tbl td.dates { font-size: 11.5px; color: var(--muted); white-space: normal; min-width: 165px; }
+.cal-tbl td .none { color: #cbd5e0; }
+.cal-tbl td .alt { display: block; color: var(--muted); font-size: 11px; }
+/* a milestone rather than a cruise: "SOFTWARE UPGRADE", "shipyard" */
+.cal-tbl tr.cal-note td { background: #fbf7ec; color: var(--muted); font-style: italic; }
+.cal-tbl tr.cal-note td.cid { background: #f7f1e3; }
+
+.cal-legend { margin-top: 1.5rem; }
+.cal-legend h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; color: var(--navy); margin-bottom: .6rem; }
+.cal-legend dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; font-size: 12.5px; }
+.cal-legend dt { font-family: var(--mono); font-weight: 500; color: var(--navy); }
+.cal-legend dd { color: var(--muted); line-height: 1.5; }
+.cal-legend .lg-note { font-size: 12.5px; color: var(--muted); line-height: 1.6; margin-top: .6rem; }
+.cal-sn { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+.cal-sn-card { border: 1px solid var(--border); border-radius: 10px; padding: .9rem 1rem; background: var(--white); }
+.cal-sn-card h4 { font-family: var(--mono); font-size: 13px; color: var(--navy); margin-bottom: .5rem; }
+.cal-sn-card table { width: 100%; border-collapse: collapse; font-size: 12px; font-family: var(--mono); }
+.cal-sn-card th { text-align: right; font-size: 10px; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--light); font-weight: 600; padding: 2px 0 4px; font-family: var(--sans); }
+.cal-sn-card th:first-child, .cal-sn-card td:first-child { text-align: left; color: var(--muted); }
+.cal-sn-card td { text-align: right; padding: 2px 0; color: var(--text); }
+.cal-sn-card .sn-note { font-family: var(--sans); font-size: 11.5px; color: var(--muted); line-height: 1.5; margin-top: .6rem; }
+
 /* ─── COVERAGE DRAWER ─── */
 .cov-backdrop { display: none; position: fixed; inset: 0; background: rgba(11,34,64,.45); z-index: 1200; }
 .cov-backdrop.open { display: block; }
@@ -369,6 +449,12 @@ footer a:hover { color: #fff; }
 .cov-stat .k { font-size: 9.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--light); font-weight: 600; }
 .cov-stat .v { font-family: var(--serif); font-size: 1.35rem; color: var(--navy); line-height: 1.25; }
 .cov-stat .u { font-size: 11px; color: var(--muted); }
+.cov-extent {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px 18px;
+  border: 1px solid var(--border); border-radius: 10px; padding: .7rem .9rem; margin-bottom: 1.5rem;
+}
+.cov-extent .k { font-size: 9.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--light); font-weight: 600; }
+.cov-extent b { display: block; font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--text); }
 .cov-sec-title { font-size: 12.5px; font-weight: 600; color: var(--navy); margin: 0 0 .15rem; }
 .cov-sec-sub { font-size: 12px; color: var(--muted); margin-bottom: .9rem; line-height: 1.5; }
 .cov-inst { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem; }
@@ -459,7 +545,7 @@ footer a:hover { color: #fff; }
       <a href="#" class="active" onclick="navTo('home',this)">Overview</a>
       <a href="#" onclick="navTo('antarctic',this)">Antarctic</a>
       <a href="#" onclick="navTo('calcofi',this)">CalCOFI</a>
-      <a href="#" onclick="navTo('about',this)">About</a>
+      <a href="#" onclick="navTo('docs',this)">Documentation</a>
     </nav>
   </div>
 </header>
@@ -508,7 +594,7 @@ footer a:hover { color: #fff; }
     <div class="info-panel">
       <h3>About This Portal</h3>
       <p>This site presents processed ADCP data from cruises led by the Chereskin Lab. Data are available for public download from NCEI (NOAA) and from JASADCP at the University of Hawaii. Graphical images (.jpg, .pdf) may be used in publications with the credit line: <em>"From the Chereskin Lab ADCP Data Portal, Scripps Institution of Oceanography."</em></p>
-      <p>For data format documentation, calibration history, and processing software, see the <a href="#" onclick="navTo('about',null)">About</a> page.</p>
+      <p>For data format documentation, the calibration histories, and processing software, see the <a href="#" onclick="navTo('docs',null)">Documentation</a> page.</p>
     </div>
 
   </section>
@@ -518,10 +604,10 @@ footer a:hover { color: #fff; }
     <div id="proj-content"><!-- filled by JS --></div>
   </section>
 
-  <!-- ══ ABOUT ════════════════════════════════════════════ -->
-  <section id="section-about" class="section">
-    <div class="sec-title">About This Portal</div>
-    <div class="sec-sub">Data collection, processing methodology, and citation information.</div>
+  <!-- ══ DOCUMENTATION ════════════════════════════════════ -->
+  <section id="section-docs" class="section">
+    <div class="sec-title">Documentation</div>
+    <div class="sec-sub">Calibration histories, data collection, processing methodology, and citation information.</div>
 
     <div class="info-panel">
       <h3>Instrumentation</h3>
@@ -536,6 +622,11 @@ footer a:hover { color: #fff; }
       <p>Calibration constants (amplitude A and phase φ) were determined from dedicated calibration runs and applied to correct for transducer misalignment.</p>
     </div>
 
+    <div class="sec-title" style="font-size:1.3rem;margin-top:1.75rem">Calibrations</div>
+    <div class="sec-sub">The amplitude and phase corrections applied when each cruise was processed, carried over
+      from the original portal. Choose a program to open its table.</div>
+    <div class="cal-grid" id="calibration-cards"><!-- filled by JS --></div>
+
     <div class="info-panel">
       <h3>Available File Formats</h3>
       <p><strong>CODAS3 binary</strong> — native format, readable with the <code>pycurrents</code> Python package (UH Currents Group). <strong>NetCDF (.nc)</strong> — CF-convention compliant, one file per cruise. <strong>ASCII/CSV</strong> — tabular text of ensemble-averaged profiles. <strong>MATLAB (.mat)</strong> — available on request.</p>
@@ -544,7 +635,7 @@ footer a:hover { color: #fff; }
 
     <div class="info-panel">
       <h3>Citation</h3>
-      <ul class="ref-list" id="about-refs"><!-- filled by JS --></ul>
+      <ul class="ref-list" id="docs-refs"><!-- filled by JS --></ul>
     </div>
 
     <div class="info-panel">
@@ -552,6 +643,11 @@ footer a:hover { color: #fff; }
       <p>For data access questions or to report processing issues, contact the <a href="http://tryfan.ucsd.edu" target="_blank">Chereskin Lab</a> at Scripps Institution of Oceanography, University of California San Diego.</p>
       <p>For software support, see the <a href="https://currents.soest.hawaii.edu/home/" target="_blank">UH Currents Group</a> — maintainers of CODAS and JASADCP.</p>
     </div>
+  </section>
+
+  <!-- ══ ONE CALIBRATION TABLE ════════════════════════════ -->
+  <section id="section-calibration" class="section">
+    <div id="cal-content"><!-- filled by JS --></div>
   </section>
 
 </div><!-- .page -->
@@ -568,6 +664,7 @@ let SITE = null;          // populated after load
 let TRACKS = {};          // measured ship tracks, keyed by cruise id
 let TRACK_META = null;    // header of the tracks file (provenance)
 let WEBPY_GALLERY = {};   // Antarctic CODAS figures, keyed by cruise id
+let CALIBRATIONS = null;  // calibration tables harvested from the original portal
 let webpyGalleryLoaded = false; // true once the manifest fetch has succeeded
 let selectedGalleryCruise = null;
 let mapsInitialized = {}; // track which Leaflet maps are built
@@ -578,6 +675,7 @@ let mapCruiseLines  = {}; // per-project, per-cruise track polylines (for highli
    CODAS databases by make_drake_passage_web_tracks.py (see _README). */
 const TRACK_FILES = ['data/drake_passage_tracks.json'];
 const WEBPY_GALLERY_FILE = 'data/antarctic_webpy_gallery.json';
+const CALIBRATION_FILE = 'data/calibrations.json';
 
 /* Series colours for the coverage charts, one per sonar. */
 const SONAR_COLORS = { nb150: '#0e8c7a', os38nb: '#c9832e', os38bb: '#7c5cbf' };
@@ -615,7 +713,7 @@ async function loadData() {
       console.warn('Could not load site_data.json, using embedded data:', e);
       SITE = EMBEDDED_DATA;
     }
-    await Promise.all([loadTracks(), loadWebpyGallery()]);
+    await Promise.all([loadTracks(), loadWebpyGallery(), loadCalibrations()]);
   } else {
     // file:// — fetch is blocked, use embedded stub
     SITE = EMBEDDED_DATA;
@@ -634,6 +732,19 @@ async function loadTracks() {
     } catch(e) {
       console.warn('Could not load ' + f + ' — falling back to listed tracks:', e);
     }
+  }
+}
+
+/* Calibration histories carried over from the original adcp.ucsd.edu pages
+   by tools/harvest_calibrations.py. Absent, the Documentation page simply
+   says so; nothing else depends on them. */
+async function loadCalibrations() {
+  try {
+    const r = await fetch(CALIBRATION_FILE, {cache: 'no-store'});
+    if (!r.ok) throw new Error(r.status + ' ' + r.statusText);
+    CALIBRATIONS = await r.json();
+  } catch(e) {
+    console.warn('Could not load ' + CALIBRATION_FILE + ':', e);
   }
 }
 
@@ -828,10 +939,175 @@ function initSite() {
   });
 
   // About refs
-  const ar = document.getElementById('about-refs');
+  const ar = document.getElementById('docs-refs');
   s.projects.forEach(p => p.references && p.references.forEach(r => {
     ar.innerHTML += `<li>${r}</li>`;
   }));
+
+  buildCalibrationCards();
+}
+
+/* ════════════════════════════════════════════════════════
+   CALIBRATIONS
+   The amplitude and phase corrections applied when each cruise
+   was processed, carried over from the original adcp.ucsd.edu
+   pages by tools/harvest_calibrations.py. Cell values are the
+   originals, shorthand and all — the legend under each table
+   is what explains them.
+   ════════════════════════════════════════════════════════ */
+function calibrationTable(id) {
+  return (CALIBRATIONS?.tables || []).find(t => t.id === id) || null;
+}
+
+function calibrationSpan(table) {
+  const years = (table.rows || []).map(r => r.year).filter(Boolean);
+  if (!years.length) return '';
+  const lo = Math.min(...years), hi = Math.max(...years);
+  return lo === hi ? String(lo) : `${lo}–${hi}`;
+}
+
+function buildCalibrationCards() {
+  const host = document.getElementById('calibration-cards');
+  if (!host) return;
+  const tables = CALIBRATIONS?.tables || [];
+  if (!tables.length) {
+    host.innerHTML = `<div class="no-images" style="grid-column:1/-1">The calibration tables
+      could not be loaded. They are served from <code>${CALIBRATION_FILE}</code>, which needs the
+      site to be opened over HTTP rather than as a local file.</div>`;
+    return;
+  }
+  host.innerHTML = tables.map(t => {
+    const project = SITE.projects.find(p => p.id === t.project);
+    const colour = project ? project.color : 'var(--teal)';
+    // note rows record a refit or a cancelled cruise; they are not cruises
+    const count = t.kind === 'cruise'
+      ? `${t.rows.filter(r => r.kind === 'cruise').length} cruises`
+      : `${t.groups.length} transducers`;
+    return `
+      <button class="cal-card" style="border-left-color:${colour}"
+              onclick="showCalibration('${t.id}')">
+        <span class="prog" style="color:${colour}">${project ? project.short_name : t.project}</span>
+        <h4>${t.title}</h4>
+        <p>${t.subtitle}</p>
+        <span class="meta"><span>${count}${calibrationSpan(t) ? ' · ' + calibrationSpan(t) : ''}</span><span class="go">Open table →</span></span>
+      </button>`;
+  }).join('');
+}
+
+/* Empty cells and the original's bare hyphen both mean "nothing recorded";
+   showing them the same way keeps the eye on the values that are there. */
+function calCell(value) {
+  if (!value || value === '-') return '<span class="none">—</span>';
+  const [first, ...rest] = value.split(' / ');
+  return first + rest.map(part => `<span class="alt">${part}</span>`).join('');
+}
+
+function showCalibration(id) {
+  const t = calibrationTable(id);
+  const host = document.getElementById('cal-content');
+  if (!t || !host) return;
+  const project = SITE.projects.find(p => p.id === t.project);
+  const back = `<button class="cal-back" onclick="showSection('docs')">← Documentation</button>`;
+  const head = `
+    ${back}
+    <div class="cal-hdr">
+      <h2>${t.title}</h2>
+      <p>${t.subtitle}</p>
+      <div class="cal-src">Carried over from the original portal page
+        <a href="${t.source_url}" target="_blank" rel="noopener">${t.source_url.replace('https://', '')} ↗</a>.
+        Values are reproduced as recorded${t.legend?.length ? '; the key below explains the shorthand' : ''}.</div>
+    </div>`;
+
+  host.innerHTML = head + (t.kind === 'cruise' ? cruiseCalibration(t, project) : transducerCalibration(t))
+    + calibrationLegend(t);
+  showSection('calibration');
+  calFilter(id);
+}
+
+function cruiseCalibration(t, project) {
+  const years = [...new Set(t.rows.map(r => r.year).filter(Boolean))].sort();
+
+  const body = t.rows.map(row => {
+    const cells = row.cells;
+    // where the portal publishes the cruise, the id opens its track
+    const linked = row.cruise
+      ? `<a href="#" onclick="event.preventDefault();focusCruiseFromCalibration('${t.project}','${row.cruise}')">${cells[0]}</a>`
+      : (cells[0] || '<span class="none">—</span>');
+    return `<tr class="${row.kind === 'note' ? 'cal-note' : ''}" data-year="${row.year || ''}"
+        data-search="${cells.join(' ').toLowerCase().replace(/"/g, '')}">
+      <td class="cid">${linked}</td>
+      <td class="dates">${calCell(cells[1])}</td>
+      ${cells.slice(2).map(v => `<td>${calCell(v)}</td>`).join('')}
+    </tr>`;
+  }).join('');
+
+  return `
+    <div class="cal-toolbar">
+      <input class="cal-search" id="cal-search" type="search" placeholder="Filter by cruise, date or value…"
+             oninput="calFilter('${t.id}')">
+      <span class="cal-count" id="cal-count"></span>
+    </div>
+    <div class="cal-years" id="cal-years">
+      <button class="cal-year active" data-year="" onclick="calYear('${t.id}','',this)">All years</button>
+      ${years.map(y => `<button class="cal-year" data-year="${y}" onclick="calYear('${t.id}','${y}',this)">${y}</button>`).join('')}
+    </div>
+    <div class="cal-tbl-wrap">
+      <table class="cal-tbl" id="cal-table">
+        <thead><tr>${t.columns.map(c => `<th>${c}</th>`).join('')}</tr></thead>
+        <tbody>${body}</tbody>
+      </table>
+    </div>`;
+}
+
+function transducerCalibration(t) {
+  return `<div class="cal-sn">${t.groups.map(g => `
+    <div class="cal-sn-card">
+      <h4>${g.serial}</h4>
+      <table>
+        <thead><tr><th>Beam</th>${g.columns.map(c => `<th>${c}</th>`).join('')}</tr></thead>
+        <tbody>${g.rows.map(r => `<tr>${r.map(v => `<td>${v || '—'}</td>`).join('')}</tr>`).join('')}</tbody>
+      </table>
+      ${g.note ? `<div class="sn-note">${g.note.split(' / ').join('<br>')}</div>` : ''}
+    </div>`).join('')}</div>`;
+}
+
+function calibrationLegend(t) {
+  if (!t.legend?.length) return '';
+  return `<div class="cal-legend">${t.legend.map(section => `
+    <h3>${section.title}</h3>
+    <dl>${section.entries.map(e => `<dt>${e.code}</dt><dd>${e.meaning}</dd>`).join('')}</dl>
+    ${section.notes.map(n => `<div class="lg-note">${n}</div>`).join('')}`).join('')}</div>`;
+}
+
+let calYearFilter = '';
+
+function calYear(id, year, btn) {
+  calYearFilter = year;
+  document.querySelectorAll('#cal-years .cal-year').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  calFilter(id);
+}
+
+function calFilter(id) {
+  const table = document.getElementById('cal-table');
+  if (!table) return;
+  const q = (document.getElementById('cal-search')?.value || '').toLowerCase();
+  let shown = 0;
+  table.querySelectorAll('tbody tr').forEach(tr => {
+    const ok = (!calYearFilter || tr.dataset.year === calYearFilter)
+      && (!q || (tr.dataset.search || '').includes(q));
+    tr.style.display = ok ? '' : 'none';
+    if (ok) shown++;
+  });
+  const count = document.getElementById('cal-count');
+  if (count) count.textContent = `${shown} of ${table.querySelectorAll('tbody tr').length} rows`;
+}
+
+/* A calibration row names a cruise the portal already maps, so it can hand
+   the reader straight to that cruise's track and coverage. */
+function focusCruiseFromCalibration(projId, cruiseId) {
+  showProject(projId);
+  setTimeout(() => focusCruise(projId, cruiseId), 350);
 }
 
 /* ════════════════════════════════════════════════════════
@@ -949,13 +1225,14 @@ function buildProjectHTML(p) {
       <div class="panel-hdr">
         <div>
           <div class="panel-title">${p.id === 'antarctic' ? 'CODAS Plot Gallery' : 'Image Gallery'}</div>
-          <div class="panel-sub">${p.id === 'antarctic' ? 'Standard pycurrents CODAS figures for the cruise selected with its Plots button.' : 'Velocity plots, cruise photos, and station maps. Click to enlarge.'}</div>
+          <div class="panel-sub">${p.id === 'antarctic' ? 'Three to six section figures per sonar — u, v, signal amplitude and percent good — '
+              + 'rendered from the CODAS database with pycurrents.' : 'Velocity plots, cruise photos, and station maps. Click to enlarge.'}</div>
         </div>
         <span class="panel-count" id="gallery-count-${p.id}">${p.id === 'antarctic' ? 'Select a track' : totalImgs + ' images'}</span>
       </div>
       <div class="gallery-outer">
         ${p.id === 'antarctic'
-          ? `<div id="gallery-selection-${p.id}" class="gallery-selection">Use a cruise's Plots button to view its complete standard CODAS plot set.</div>`
+          ? `<div id="gallery-selection-${p.id}" class="gallery-selection">Use a cruise's Plots button to view its CODAS section figures.</div>`
           : `<div class="gallery-controls">
           <button class="gal-btn active" onclick="filterGallery('${p.id}', 'all', this)">All</button>
           <button class="gal-btn" onclick="filterGallery('${p.id}', 'velocity_plot', this)">Velocity Plots</button>
@@ -1288,6 +1565,31 @@ function fmtInt(n) {
     : Math.round(n).toLocaleString('en-US');
 }
 
+const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+/* The measured track carries the real first and last ensemble, so the drawer
+   can say which days the ship was out rather than only which month. */
+function fmtDay(iso, withYear = true) {
+  const d = new Date(iso);
+  if (isNaN(d)) return '—';
+  const day = `${d.getUTCDate()} ${MONTH_ABBR[d.getUTCMonth()]}`;
+  return withYear ? `${day} ${d.getUTCFullYear()}` : day;
+}
+function fmtDateRange(startIso, endIso) {
+  const a = new Date(startIso), b = new Date(endIso);
+  if (isNaN(a) || isNaN(b)) return '—';
+  const sameYear = a.getUTCFullYear() === b.getUTCFullYear();
+  return `${fmtDay(startIso, !sameYear)} to ${fmtDay(endIso)}`;
+}
+function fmtLat(v, dec = 2) {
+  return (v === null || v === undefined) ? '—'
+    : `${Math.abs(v).toFixed(dec)}°${v < 0 ? 'S' : 'N'}`;
+}
+function fmtLon(v, dec = 2) {
+  return (v === null || v === undefined) ? '—'
+    : `${Math.abs(v).toFixed(dec)}°${v < 0 ? 'W' : 'E'}`;
+}
+
 function openCoverage(projId, cruiseId) {
   const p = SITE.projects.find(x => x.id === projId);
   const cruise = p && p.cruises.find(c => c.id === cruiseId);
@@ -1324,6 +1626,12 @@ function openCoverage(projId, cruiseId) {
         <div class="cov-stat"><div class="k">Duration</div><div class="v">${Math.round(t.duration_days)}</div><div class="u">days</div></div>
         <div class="cov-stat"><div class="k">Profiles</div><div class="v">${fmtInt(t.n_ens_valid)}</div><div class="u">valid u, v${inst.length > 1 ? ' (both sonars)' : ''}</div></div>
         <div class="cov-stat"><div class="k">60°S</div><div class="v">${t.n_drake_crossings}</div><div class="u">crossing${t.n_drake_crossings === 1 ? '' : 's'}</div></div>
+      </div>
+
+      <div class="cov-extent">
+        <div><span class="k">Dates (UTC)</span><b>${fmtDateRange(t.start, t.end)}</b></div>
+        <div><span class="k">Latitude</span><b>${fmtLat(t.bbox?.[0])} to ${fmtLat(t.bbox?.[2])}</b></div>
+        <div><span class="k">Longitude</span><b>${fmtLon(t.bbox?.[1])} to ${fmtLon(t.bbox?.[3])}</b></div>
       </div>
 
       <div class="cov-sec-title">Sonars in this load</div>
@@ -1570,9 +1878,43 @@ function clearWebpyGallery() {
   const gallery = document.getElementById('gallery-antarctic');
   const count = document.getElementById('gallery-count-antarctic');
   if (!selection || !gallery || !count) return;
-  selection.textContent = 'Use a cruise\'s Plots button to view its standard CODAS plots.';
+  selection.textContent = 'Use a cruise\'s Plots button to view its CODAS section figures.';
+  gallery.classList.remove('paired');
   gallery.innerHTML = '<div class="no-images" style="grid-column:1/-1">No cruise is selected.</div>';
   count.textContent = 'Select a track';
+}
+
+/* What each published CODAS figure family is called in the gallery. The
+   per-section quick_web families are kept here because manifests written
+   before the section figures still name them. */
+const WEBPY_FAMILY_LABELS = {
+  vector_overview: 'Cruise overview',
+  overview: 'Cruise overview',
+  section: 'Section',
+  txy: 'Time-position',
+  vect: 'Velocity vectors',
+  ddaycont: 'Contours by time',
+  loncont: 'Contours by longitude',
+  latcont: 'Contours by latitude'
+};
+
+function webpyBadge(plot, sectionCount) {
+  const label = WEBPY_FAMILY_LABELS[plot.family] || plot.family;
+  const total = plot.section_count || sectionCount;
+  return (plot.family === 'section' && plot.section !== null && total)
+    ? `${plot.sonar.toUpperCase()} · ${label} ${plot.section + 1} of ${total}`
+    : `${plot.sonar.toUpperCase()} · ${label}`;
+}
+
+/* A section tile says when and where, which is what picks one section out of
+   the three to six a cruise carries. */
+function webpyTileText(plot) {
+  if (plot.family !== 'section') return loadLabel(plot.database) || plot.caption;
+  const parts = [];
+  if (plot.section_start && plot.section_end) parts.push(fmtDateRange(plot.section_start, plot.section_end));
+  if (plot.section_days) parts.push(`${plot.section_days.toFixed(1)} days`);
+  if (plot.section_bbox) parts.push(`${fmtLat(plot.section_bbox[2], 1)}–${fmtLat(plot.section_bbox[0], 1)}`);
+  return parts.join(' · ') || plot.caption;
 }
 
 function renderWebpyGallery(cruiseId) {
@@ -1591,26 +1933,41 @@ function renderWebpyGallery(cruiseId) {
         ? entry.reason
         : 'Standard CODAS figures have not been published for this cruise yet.');
     selection.innerHTML = `<span><strong>${cruiseId}</strong><br>${reason}</span>${clear}`;
+    gallery.classList.remove('paired');
     gallery.innerHTML = '<div class="no-images" style="grid-column:1/-1">No published CODAS figures for this cruise.</div>';
     count.textContent = 'No figures';
     return;
   }
 
-  // The 1999-2018 archive is published as cruise overviews only: the full
-  // per-section set for every submitted database runs to well over a gigabyte.
-  const overviewOnly = plots.every(pl => pl.family === 'overview' || pl.family === 'vector_overview');
-  const scope = overviewOnly
-    ? 'cruise overview only — the per-section figures are not published for the archived cruises'
-    : 'from the selected measured track';
-  selection.innerHTML = `<span><strong>${cruiseId}</strong><br>${plots.length} standard CODAS figure${plots.length === 1 ? '' : 's'}, ${scope}.</span>${clear}`;
+  // Sections are numbered within their own CODAS database.
+  const sectionCounts = {};
+  plots.forEach(pl => {
+    if (pl.family === 'section') sectionCounts[pl.database] = (sectionCounts[pl.database] || 0) + 1;
+  });
+  const sonars = [...new Set(plots.filter(pl => pl.family === 'section').map(pl => pl.sonar))];
+  const windows = entry.section_count || sectionCounts[plots[0].database] || plots.length;
+  const paired = sonars.length > 1;
+  // The two sonars run the same windows, so say it once and let the badges
+  // carry which is which.
+  const over = paired
+    ? `${windows} window${windows === 1 ? '' : 's'} shared by the ${sonars.map(s => s.toUpperCase()).join(' and ')}`
+    : `${windows} window${windows === 1 ? '' : 's'} of the ${(sonars[0] || '').toUpperCase()}`;
+  // A sonar left out is worth saying: a reader who knows the cruise carried
+  // two would otherwise wonder where the second went.
+  const left = (entry.omitted || []).filter(item => !/better database/.test(item.reason || ''));
+  const dropped = left.length
+    ? ` The ${left.map(item => (item.sonar || '').toUpperCase()).join(' and ')} ${left.length === 1 ? 'is' : 'are'} not shown — ${left.map(item => item.reason).join('; ')}.`
+    : '';
+  selection.innerHTML = `<span><strong>${cruiseId}</strong><br>${plots.length} section figure${plots.length === 1 ? '' : 's'} over ${over} — <em>u</em>, <em>v</em>, signal amplitude and percent good, with ship speed over the velocity panels.${dropped}</span>${clear}`;
   count.textContent = `${plots.length} figures`;
+  gallery.classList.toggle('paired', paired);
   gallery.innerHTML = plots.map((plot, index) => `
     <div class="gal-item" onclick="openWebpyPlot('${cruiseId}',${index})">
       <img class="gal-img" src="${plot.thumbnail || plot.image}" alt="${plot.caption}"
            onerror="this.src='${plot.image}'">
       <div class="gal-cap">
-        <span class="gal-type-badge" style="background:#0e8c7a22;color:#0e8c7a">${plot.sonar.toUpperCase()} · ${plot.family}</span><br>
-        ${plot.caption}
+        <span class="gal-type-badge" style="background:#0e8c7a22;color:#0e8c7a">${webpyBadge(plot, sectionCounts[plot.database])}</span><br>
+        ${webpyTileText(plot)}
       </div>
     </div>`).join('');
 }

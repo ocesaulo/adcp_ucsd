@@ -567,10 +567,10 @@ footer a:hover { color: #fff; }
       </div>
     </div>
     <nav id="main-nav">
-      <a href="#" class="active" onclick="navTo('home',this)">Overview</a>
-      <a href="#" onclick="navTo('antarctic',this)">Antarctic</a>
-      <a href="#" onclick="navTo('calcofi',this)">CalCOFI</a>
-      <a href="#" onclick="navTo('docs',this)">Documentation</a>
+      <a href="#" class="active" onclick="navTo('home',this); return false;">Overview</a>
+      <a href="#" onclick="navTo('antarctic',this); return false;">Antarctic</a>
+      <a href="#" onclick="navTo('calcofi',this); return false;">CalCOFI</a>
+      <a href="#" onclick="navTo('docs',this); return false;">Documentation</a>
     </nav>
   </div>
 </header>
@@ -619,7 +619,7 @@ footer a:hover { color: #fff; }
     <div class="info-panel">
       <h3>About This Portal</h3>
       <p>This site presents processed ADCP data from cruises led by the Chereskin Lab. Data are available for public download from NCEI (NOAA) and from JASADCP at the University of Hawaii. Graphical images (.jpg, .pdf) may be used in publications with the credit line: <em>"From the Chereskin Lab ADCP Data Portal, Scripps Institution of Oceanography."</em></p>
-      <p>For data format documentation, the calibration histories, and processing software, see the <a href="#" onclick="navTo('docs',null)">Documentation</a> page.</p>
+      <p>For data format documentation, the calibration histories, and processing software, see the <a href="#" onclick="navTo('docs',null); return false;">Documentation</a> page.</p>
     </div>
 
   </section>
@@ -921,7 +921,7 @@ function initSite() {
   const hb = document.getElementById('hero-btns');
   s.projects.forEach(p => {
     const btnStyle = p.color === '#c9832e' ? 'btn-amber' : 'btn-teal';
-    hb.innerHTML += `<a class="btn ${btnStyle}" href="#" onclick="showProject('${p.id}')">${p.short_name}</a>`;
+    hb.innerHTML += `<a class="btn ${btnStyle}" href="#" onclick="showProject('${p.id}'); return false;">${p.short_name}</a>`;
   });
   hb.innerHTML += `<a class="btn btn-ghost" href="https://doi.org/10.25921/g961-ya97" target="_blank">NCEI Archive ↗</a>`;
 
@@ -945,7 +945,7 @@ function initSite() {
   s.projects.forEach(p => {
     const totalImgs = p.cruises.reduce((n,c) => n + c.images.length, 0);
     pc.innerHTML += `
-      <a class="proj-card" href="#" onclick="showProject('${p.id}')">
+      <a class="proj-card" href="#" onclick="showProject('${p.id}'); return false;">
         ${p.header_image ? `
         <div class="proj-card-media">
           <img src="images/${p.header_image}" alt="${p.name}" loading="lazy">

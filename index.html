@@ -645,6 +645,7 @@ footer a:hover { color: #fff; }
       <p>All data were processed using <strong>CODAS3</strong> (Common Ocean Data Access System version 3), developed by E. Firing at the University of Hawaii. Standard processing steps:</p>
       <p><strong>1.</strong> Navigation smoothing and heading calibration via GPS ship velocity. <strong>2.</strong> Water-tracking mode; bottom-tracking correction when available. <strong>3.</strong> Outlier editing and ensemble averaging. <strong>4.</strong> Absolute velocity referencing via GPS. <strong>5.</strong> Echo intensity profiling for bin quality assessment.</p>
       <p>Calibration constants (amplitude A and phase φ) were determined from dedicated calibration runs and applied to correct for transducer misalignment.</p>
+      <div id="docs-methods-by-project"><!-- filled by JS: per-project processing methods --></div>
     </div>
 
     <div class="sec-title" style="font-size:1.3rem;margin-top:1.75rem">Calibrations</div>
@@ -814,6 +815,7 @@ const EMBEDDED_DATA = {
       logo: "branding/lmgould_logo.png", header_image: "branding/lmgould_header.jpg", header_credit: "Neumayer Channel, Antarctic Peninsula",
       illustration_image: "branding/lmgould_sticker.png", illustration_credit: "LMG ADCP program sticker, Chereskin Lab",
       description: "Shipboard ADCP data from the ARSV Laurence M. Gould in Drake Passage and the Antarctic Peninsula region.",
+      project_description: "Shipboard ADCP data from the ARSV Laurence M. Gould in Drake Passage and the Antarctic Peninsula region.",
       methods_text: "Processed with CODAS3. RDI 150 kHz NB instrument, hull-mounted.",
       map_center: [-61, -61], map_zoom: 5,
       references: ["Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619–22629."],
@@ -855,6 +857,7 @@ const EMBEDDED_DATA = {
       logo: "branding/calcofi_logo.png", header_image: "branding/calcofi_header.jpg", header_credit: "Channel Islands, California — photo by Jamie Holte",
       illustration_image: "branding/calcofi_illustration.jpg", illustration_credit: "Objectively mapped 100 m velocity, cruise NH9310",
       description: "A decade of quarterly ADCP measurements off Southern and Central California as part of the CalCOFI program.",
+      project_description: "A decade of quarterly ADCP measurements off Southern and Central California as part of the CalCOFI program.",
       methods_text: "RDI 150 kHz NB instrument. CODAS3 processing. Objective mapping to produce velocity streamfunctions.",
       map_center: [33.5, -121.5], map_zoom: 6,
       references: [
@@ -967,6 +970,14 @@ function initSite() {
   s.projects.forEach(p => p.references && p.references.forEach(r => {
     ar.innerHTML += `<li>${r}</li>`;
   }));
+
+  // Per-project processing methods, moved here from each project page
+  const dm = document.getElementById('docs-methods-by-project');
+  if (dm) {
+    s.projects.forEach(p => {
+      dm.innerHTML += `<h4 style="margin-top:1rem">${p.short_name}</h4><p>${p.methods_text}</p>`;
+    });
+  }
 
   buildCalibrationCards();
 }
@@ -1393,10 +1404,10 @@ function buildProjectHTML(p) {
       </div>
     </div>
 
-    <!-- ── METHODS ── -->
+    <!-- ── DESCRIPTION ── -->
     <div class="info-panel">
-      <h3>Processing Methods</h3>
-      <p>${p.methods_text}</p>
+      <h3>Project Description</h3>
+      <p>${p.project_description}</p>
     </div>
     <div class="info-panel">
       <h3>Acknowledgments</h3>

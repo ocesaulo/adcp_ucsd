@@ -1411,10 +1411,16 @@ function buildProjectHTML(p) {
       <h3>Publications</h3>
       <ul class="ref-list">${(p.publications || []).map(pub => `<li>${pub}</li>`).join('')}</ul>
     </div>
+    ${(p.other_group_publications || []).length ? `
     <div class="info-panel">
-      <h3>References</h3>
-      <ul class="ref-list">${p.references.map(r => `<li>${r}</li>`).join('')}</ul>
-    </div>`;
+      <h3>Publications by Other Groups Using These Data</h3>
+      <ul class="ref-list">${p.other_group_publications.map(pub => `<li>${pub}</li>`).join('')}</ul>
+    </div>` : ''}
+    ${(p.other_links || []).length ? `
+    <div class="info-panel">
+      <h3>Other Links</h3>
+      <ul class="ref-list">${p.other_links.map(link => `<li><a href="${link.url}" target="_blank">${link.label} ↗</a></li>`).join('')}</ul>
+    </div>` : ''}`;
 
   document.getElementById('proj-content').innerHTML = html;
   if (p.id === 'antarctic' && selectedGalleryCruise) {

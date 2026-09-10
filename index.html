@@ -320,6 +320,27 @@ button.lnk-plots { background: var(--white); cursor: pointer; font-family: var(-
 }
 .lnk-jasadcp:hover { background: #f3f0fd; }
 
+/* ─── YEAR-GROUPED TABLE ─── */
+.year-header {
+  background: #3a5379; color: #fff; cursor: pointer; user-select: none;
+  font-weight: 700; font-size: 13.5px; letter-spacing: .06em; text-transform: uppercase;
+  padding: 8px 1.5rem; border-bottom: 1px solid var(--border);
+}
+.data-tbl .year-header td,
+.data-tbl .year-header .year-header-toggle { color: #fff; }
+.year-header:hover { background: #4a6a8e; }
+.year-header-toggle {
+  display: inline-flex; align-items: center; gap: 8px; width: 100%;
+}
+.year-header-toggle::before {
+  content: '▸'; display: inline-flex; flex-shrink: 0; width: 16px; transition: transform 0.2s; color: var(--teal-lt);
+}
+.year-header.expanded::before { transform: rotate(90deg); }
+.year-header-toggle .year-count { margin-left: auto; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.95); }
+.year-rows { display: none; }
+.year-rows.expanded { display: table-row-group; }
+.year-rows tr:hover td { background: rgba(14,140,122,.03); }
+
 /* ─── INFO / METHODS ─── */
 .info-panel { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem 2rem; margin-bottom: 2rem; }
 .info-panel h3 { font-family: var(--serif); font-size: 1.2rem; color: var(--navy); margin-bottom: .75rem; }
@@ -1304,8 +1325,7 @@ function buildProjectHTML(p) {
               <th>Cruise ID</th><th>Dates</th><th>Ship</th><th>Region</th>
               <th>Sonar / Coverage (50%)</th><th>Status</th><th>Data Access</th>
             </tr>
-          </thead>
-          <tbody>`;
+          </thead>`;
 
   const statusBadge = {
     processed: '<span class="badge b-teal">Processed</span>',
@@ -1314,18 +1334,34 @@ function buildProjectHTML(p) {
     pending:   '<span class="badge b-gray">Pending</span>'
   };
 
+  // Group cruises by year
+  const cruisesByYear = {};
   p.cruises.forEach(c => {
-    const t = trackFor(c);
-    const rowAttrs = t
-      ? ` data-track="1" onclick="focusCruise('${p.id}','${c.id}')"`
-        + ` onmouseenter="highlightTrack('${p.id}','${c.id}',true)"`
-        + ` onmouseleave="highlightTrack('${p.id}','${c.id}',false)"`
-      : '';
-    const covCell = `
+    const year = cruiseYear(c);
+    if (!cruisesByYear[year]) cruisesByYear[year] = [];
+    cruisesByYear[year].push(c);
+  });
+
+  const years = Object.keys(cruisesByYear).sort();
+
+  // Build year-grouped table
+  years.forEach(year => {
+    const crCount = cruisesByYear[year].length;
+    html += `<tr class="year-header" id="yr-hdr-${p.id}-${year}" onclick="toggleYearGroup('${p.id}','${year}')"><td colspan="7"><span class="year-header-toggle">Year ${year}<span class="year-count">${crCount} cruise${crCount === 1 ? '' : 's'}</span></span></td></tr>`;
+    html += `<tbody class="year-rows" id="yr-rows-${p.id}-${year}">`;
+
+    cruisesByYear[year].forEach(c => {
+      const t = trackFor(c);
+      const rowAttrs = t
+        ? ` data-track="1" onclick="focusCruise('${p.id}','${c.id}')"`
+          + ` onmouseenter="highlightTrack('${p.id}','${c.id}',true)"`
+          + ` onmouseleave="highlightTrack('${p.id}','${c.id}',false)"`
+        : '';
+      const covCell = `
               <td class="cov-cell">${measuredCount && t
                 ? t.instruments.map(i => `${SONAR_NAMES[i.sonar] || i.sonar}&nbsp;${i.max_depth_50pct ? Math.round(i.max_depth_50pct) + '&nbsp;m' : '—'}`).join('<br>')
                 : `${c.sonar}${measuredCount ? '<br><span class="dash">coverage not loaded</span>' : ''}`}</td>`;
-    html += `
+      html += `
             <tr id="row-${p.id}-${c.id}" data-search="${c.id} ${c.region} ${c.status} ${c.dates}"${rowAttrs}>
               <td><span class="cid">${c.id}</span></td>
               <td>${c.dates}</td>
@@ -1346,10 +1382,12 @@ function buildProjectHTML(p) {
                 ${c.jasadcp_url ? `<a class="lnk-jasadcp" href="${c.jasadcp_url}" target="_blank">JASADCP</a>` : ''}
               </td>
             </tr>`;
+    });
+
+    html += `</tbody>`;
   });
 
   html += `
-          </tbody>
         </table>
       </div>
     </div>
@@ -1989,12 +2027,58 @@ function filterGallery(projId, type, btn) {
 }
 
 /* ════════════════════════════════════════════════════════
-   TABLE FILTER
+   TABLE FILTER & YEAR GROUPING
    ════════════════════════════════════════════════════════ */
+function toggleYearGroup(projId, year) {
+  const header = document.getElementById(`yr-hdr-${projId}-${year}`);
+  const rows = document.getElementById(`yr-rows-${projId}-${year}`);
+  if (!header || !rows) return;
+
+  const expanded = rows.classList.toggle('expanded');
+  header.classList.toggle('expanded', expanded);
+
+  // Store expansion state in sessionStorage
+  const key = `year-expanded-${projId}-${year}`;
+  sessionStorage.setItem(key, expanded);
+}
+
 function filterTbl(projId, val) {
   const q = val.toLowerCase();
-  document.querySelectorAll(`#tbl-${projId} tbody tr`).forEach(tr => {
-    tr.style.display = (tr.dataset.search || '').toLowerCase().includes(q) ? '' : 'none';
+  const table = document.getElementById(`tbl-${projId}`);
+  if (!table) return;
+
+  const yearGroups = {};
+
+  // First pass: check which cruises match
+  table.querySelectorAll('.year-rows').forEach(tbody => {
+    const yearMatch = tbody.id.match(/yr-rows-[^-]+-(.+)$/);
+    const year = yearMatch ? yearMatch[1] : '';
+    let hasMatch = false;
+
+    tbody.querySelectorAll('tr').forEach(tr => {
+      const search = tr.dataset.search || '';
+      const matches = search.toLowerCase().includes(q);
+      tr.style.display = matches ? '' : 'none';
+      if (matches) hasMatch = true;
+    });
+
+    yearGroups[year] = hasMatch;
+  });
+
+  // Second pass: show/hide year headers based on matches
+  table.querySelectorAll('.year-header').forEach(header => {
+    const headerMatch = header.id.match(/yr-hdr-[^-]+-(.+)$/);
+    const year = headerMatch ? headerMatch[1] : '';
+    header.style.display = yearGroups[year] ? '' : 'none';
+
+    // Auto-expand year if it has matches
+    if (yearGroups[year]) {
+      const rows = document.getElementById(`yr-rows-${projId}-${year}`);
+      if (rows) {
+        rows.classList.add('expanded');
+        header.classList.add('expanded');
+      }
+    }
   });
 }
 

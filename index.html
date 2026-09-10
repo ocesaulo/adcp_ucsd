@@ -745,6 +745,7 @@ async function loadData() {
     SITE = EMBEDDED_DATA;
   }
   initSite();
+  history.replaceState({navId: 'home'}, '', location.pathname + location.search);
 }
 
 async function loadTracks() {
@@ -1148,25 +1149,32 @@ function focusCruiseFromCalibration(projId, cruiseId) {
 /* ════════════════════════════════════════════════════════
    NAVIGATION
    ════════════════════════════════════════════════════════ */
-function showSection(id) {
+function showSection(id, push = true) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
   document.getElementById('section-' + id).classList.add('visible');
   window.scrollTo({top: 0, behavior: 'smooth'});
+  if (push) history.pushState({navId: id}, '', '#' + id);
 }
 
-function navTo(id, el) {
+function navTo(id, el, push = true) {
   if (el) {
     document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
     el.classList.add('active');
+  } else {
+    // Popstate has no clicked element to derive the active tab from.
+    const idx = {home: 0, antarctic: 1, calcofi: 2, docs: 3}[id];
+    const links = document.querySelectorAll('#main-nav a');
+    links.forEach(a => a.classList.remove('active'));
+    if (idx !== undefined && links[idx]) links[idx].classList.add('active');
   }
   if (id === 'antarctic' || id === 'calcofi') {
-    showProject(id);
+    showProject(id, push);
   } else {
-    showSection(id);
+    showSection(id, push);
   }
 }
 
-function showProject(projId) {
+function showProject(projId, push = true) {
   const p = SITE.projects.find(x => x.id === projId);
   if (!p) return;
 
@@ -1176,11 +1184,18 @@ function showProject(projId) {
   });
 
   buildProjectHTML(p);
-  showSection('project');
+  showSection('project', false);
+  if (push) history.pushState({navId: projId}, '', '#' + projId);
 
   // Defer map init until DOM is painted
   setTimeout(() => initProjectMap(p), 100);
 }
+
+/* Back/forward retraces the same tab navigation instead of leaving the page. */
+window.addEventListener('popstate', (e) => {
+  const navId = e.state && e.state.navId ? e.state.navId : 'home';
+  navTo(navId, null, false);
+});
 
 /* ════════════════════════════════════════════════════════
    PROJECT PAGE BUILDER

@@ -1224,7 +1224,7 @@ function buildProjectHTML(p) {
         const chips = withTracks.map(c => {
           const map = mapsInitialized[p.id];
           const lg  = mapCruiseLayers[p.id]?.[c.id];
-          const on  = !map || !lg || map.hasLayer(lg);
+          const on  = map && lg ? map.hasLayer(lg) : cruiseYear(c) === '2000';
           return `<label class="cruise-chip${on ? ' active' : ''}" id="chip-${p.id}-${c.id}">`
             + `<input type="checkbox" ${on ? 'checked' : ''} data-cruise="${c.id}"`
             + ` data-year="${cruiseYear(c)}"`
@@ -1232,7 +1232,7 @@ function buildProjectHTML(p) {
         }).join('');
         const years = [...new Set(withTracks.map(cruiseYear))].filter(Boolean).sort();
         const yrBtns = years.length > 1
-          ? years.map(y => `<button class="cruise-sel-yr" title="Show only ${y}"`
+          ? years.map(y => `<button class="cruise-sel-yr" data-year="${y}" title="Show only ${y}"`
               + ` onclick="setCruisesYear('${p.id}','${y}')">${y}</button>`).join('')
           : '';
         return `<div class="cruise-sel-bar" id="cruise-sel-${p.id}">`
@@ -1541,10 +1541,19 @@ function initProjectMap(p) {
 
     mapCruiseLayers[p.id][cruise.id] = lg;
     mapCruiseLines[p.id][cruise.id]  = lines;
-    lg.addTo(map); // visible by default
+    if (cruiseYear(cruise) === '2000') lg.addTo(map);
   });
 
   mapsInitialized[p.id] = map;
+
+  // Start with the 2000 season visible rather than drawing the full series.
+  if (document.querySelector(`#cruise-sel-${p.id} .cruise-sel-yr[data-year="2000"]`)) {
+    setCruisesYear(p.id, '2000');
+  }
+  if (p.id === 'antarctic' && !selectedGalleryCruise) {
+    const first2000Gallery = p.cruises.find(c => cruiseYear(c) === '2000' && WEBPY_GALLERY[c.id]);
+    if (first2000Gallery) selectWebpyGallery(first2000Gallery.id);
+  }
 }
 
 function cruisePopupHTML(p, cruise, meas) {
@@ -1919,6 +1928,7 @@ function toggleCruiseLayer(projId, cruiseId, show) {
 function setCruisesAll(projId, show) {
   const bar = document.getElementById(`cruise-sel-${projId}`);
   if (!bar) return;
+  bar.querySelectorAll('.cruise-sel-yr').forEach(btn => btn.classList.remove('active'));
   bar.querySelectorAll('input[type=checkbox]').forEach(cb => {
     cb.checked = show;
     toggleCruiseLayer(projId, cb.dataset.cruise, show);
@@ -1937,6 +1947,8 @@ function cruiseYear(cruise) {
 function setCruisesYear(projId, year) {
   const bar = document.getElementById(`cruise-sel-${projId}`);
   if (!bar) return;
+  bar.querySelectorAll('.cruise-sel-yr').forEach(btn =>
+    btn.classList.toggle('active', btn.dataset.year === String(year)));
   bar.querySelectorAll('input[type=checkbox]').forEach(cb => {
     const on = cb.dataset.year === String(year);
     cb.checked = on;

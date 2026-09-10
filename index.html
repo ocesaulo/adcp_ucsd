@@ -922,18 +922,17 @@ function initSite() {
   // Stats
   const totalCruises = s.projects.reduce((n, p) => n + p.cruises.length, 0);
   const allYears = s.projects.map(p => p.years).join(', ');
-  const vessels = [...new Set(s.projects.map(p => p.vessel))];
+  const allShips = s.projects.flatMap(p => p.cruises.map(c => c.ship || ''));
+  const vessels = [...new Set(allShips.filter(s => s))];
   const archived = s.projects.reduce((n, p) => n + p.cruises.filter(c => c.ncei_url).length, 0);
   const measured = Object.values(TRACKS);
   const trackKm  = measured.reduce((n, t) => n + (t.track_length_km || 0), 0);
-  const lastTile = measured.length
-    ? `<div class="stat"><div class="stat-lbl">Measured Track</div><div class="stat-val">${fmtInt(trackKm)}</div><div class="stat-note">km from ${measured.length} CODAS databases</div></div>`
-    : `<div class="stat"><div class="stat-lbl">NCEI Accessions</div><div class="stat-val">${archived}</div><div class="stat-note">of ${totalCruises} cruises archived</div></div>`;
+  // Removed measured track tile as requested
   document.getElementById('home-stats').innerHTML = `
     <div class="stat"><div class="stat-lbl">Total Cruises</div><div class="stat-val">${totalCruises}</div><div class="stat-note">Across ${s.projects.length} programs</div></div>
-    <div class="stat"><div class="stat-lbl">Programs</div><div class="stat-val">${s.projects.length}</div><div class="stat-note">${s.projects.map(p=>p.short_name).join(' · ')}</div></div>
     <div class="stat"><div class="stat-lbl">Research Vessels</div><div class="stat-val">${vessels.length}</div><div class="stat-note">${vessels.map(v=>v.replace('ARSV ','').replace('R/V ','')).join(' · ')}</div></div>
-    ${lastTile}`;
+    <div class="stat"><div class="stat-lbl">Programs</div><div class="stat-val">${s.projects.length}</div><div class="stat-note">${s.projects.map(p=>p.short_name).join(' · ')}</div></div>
+    `;
 
   // Project cards
   const pc = document.getElementById('project-cards');

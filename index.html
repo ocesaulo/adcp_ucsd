@@ -466,6 +466,8 @@ footer a:hover { color: #fff; }
 .cov-hdr .cov-sub { font-size: 12.5px; color: rgba(255,255,255,.6); margin-top: 3px; }
 .cov-close { background: none; border: none; color: rgba(255,255,255,.7); font-size: 26px; line-height: 1; cursor: pointer; padding: 0 2px; }
 .cov-close:hover { color: #fff; }
+.cov-table-link { color: #fff; border: 1px solid rgba(255,255,255,.45); background: transparent; padding: 4px 9px; border-radius: 5px; font: 500 11px var(--sans); cursor: pointer; white-space: nowrap; }
+.cov-table-link:hover { background: rgba(255,255,255,.12); border-color: #fff; }
 .cov-body { padding: 1.5rem; }
 .cov-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.5rem; }
 .cov-stat { border: 1px solid var(--border); border-radius: 10px; padding: .7rem .8rem; }
@@ -1513,9 +1515,9 @@ function initProjectMap(p) {
       if (!meas) return;
       // wide invisible line so the track is easy to hit with the cursor
       const hit = L.polyline(seg, {color: p.color, weight: 14, opacity: 0}).addTo(lg);
-      hit.on('mouseover', () => highlightTrack(p.id, cruise.id, true, true));
-      hit.on('mouseout',  () => highlightTrack(p.id, cruise.id, false, true));
-      hit.on('click',     () => focusCruise(p.id, cruise.id, false));
+      hit.on('mouseover', () => highlightTrack(p.id, cruise.id, true, false));
+      hit.on('mouseout',  () => highlightTrack(p.id, cruise.id, false, false));
+      hit.bindPopup(cruisePopupHTML(p, cruise, meas));
       hit.bindTooltip(`${cruise.id} · ${cruise.dates}`, {sticky: true, className: 'lbl-tip'});
     });
 
@@ -1559,7 +1561,8 @@ function cruisePopupHTML(p, cruise, meas) {
       <div class="pop-row"><strong>Sonar:</strong> ${cruise.sonar}</div>
       ${rows}
       ${cruise.notes ? `<div class="pop-row" style="margin-top:5px;font-style:italic">${cruise.notes}</div>` : ''}
-      ${meas ? `<a class="pop-link" onclick="focusCruise('${p.id}','${cruise.id}',false)">Data coverage by depth →</a><br>` : ''}
+      <a class="pop-link" onclick="goToCruiseTable('${p.id}','${cruise.id}')">Table entry →</a>
+      ${meas ? `<br><a class="pop-link" onclick="focusCruise('${p.id}','${cruise.id}',false)">Data coverage by depth →</a>` : ''}
       ${cruise.ncei_url ? `<a class="pop-link" href="${cruise.ncei_url}" target="_blank">View on NCEI →</a>` : ''}
   `;
 }
@@ -1569,11 +1572,32 @@ function cruisePopupHTML(p, cruise, meas) {
    ════════════════════════════════════════════════════════ */
 function highlightTrack(projId, cruiseId, on, fromMap) {
   (mapCruiseLines[projId]?.[cruiseId] || []).forEach(l =>
-    l.setStyle({weight: on ? 5 : 2, opacity: on ? 1 : 0.85}));
+    l.setStyle({weight: on ? 6 : 2, color: on ? '#d32f2f' : 'var(--teal)', opacity: on ? 1 : 0.85}));
   const row = document.getElementById(`row-${projId}-${cruiseId}`);
   if (row) {
     row.classList.toggle('row-hl', !!on);
+    if (on && fromMap) {
+      // Scroll to table row when highlighted from map hover
+      setTimeout(() => {
+        row.scrollIntoView({block: 'nearest', behavior: 'smooth'});
+      }, 100);
+    }
   }
+}
+
+function goToCruiseTable(projId, cruiseId) {
+  const p = SITE.projects.find(x => x.id === projId);
+  const cruise = p && p.cruises.find(c => c.id === cruiseId);
+  const row = document.getElementById(`row-${projId}-${cruiseId}`);
+  if (!cruise || !row) return;
+
+  closeCoverage();
+  const year = cruiseYear(cruise);
+  const yearRows = document.getElementById(`yr-rows-${projId}-${year}`);
+  if (yearRows && !yearRows.classList.contains('expanded')) {
+    toggleYearGroup(projId, year);
+  }
+  setTimeout(() => row.scrollIntoView({block: 'center', behavior: 'smooth'}), 100);
 }
 
 /* Zoom the map to a cruise and open its coverage drawer. */
@@ -1594,6 +1618,22 @@ function focusCruise(projId, cruiseId, scroll = true) {
     if (scroll) document.getElementById(`map-${projId}`)
       .scrollIntoView({block: 'center', behavior: 'smooth'});
   }
+
+  // Expand year group and scroll to table row if it exists
+  const row = document.getElementById(`row-${projId}-${cruiseId}`);
+  if (row) {
+    const year = cruiseYear(cruise);
+    const yearRows = document.getElementById(`yr-rows-${projId}-${year}`);
+    if (yearRows && !yearRows.classList.contains('expanded')) {
+      toggleYearGroup(projId, year);
+    }
+    if (scroll) {
+      setTimeout(() => {
+        row.scrollIntoView({block: 'center', behavior: 'smooth'});
+      }, 300);
+    }
+  }
+
   if (meas) openCoverage(projId, cruiseId);
 }
 
@@ -1663,7 +1703,10 @@ function openCoverage(projId, cruiseId) {
         <h3>${cruise.id} · data coverage</h3>
         <div class="cov-sub">${cruise.ship} · ${cruise.dates} · ${cruise.region}</div>
       </div>
-      <button class="cov-close" onclick="closeCoverage()" aria-label="Close">×</button>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="cov-table-link" onclick="goToCruiseTable('${projId}','${cruiseId}')">Table entry</button>
+        <button class="cov-close" onclick="closeCoverage()" aria-label="Close">×</button>
+      </div>
     </div>
     <div class="cov-body">
       <div class="cov-stats">

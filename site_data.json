@@ -53,7 +53,7 @@
    "illustration_credit": "LMG ADCP program sticker, Chereskin Lab",
    "description": "Shipboard ADCP data from the Drake Passage time series, run by the Chereskin group since the hull-mounted 150 kHz narrowband RDI instrument was installed on the ARSV Laurence M. Gould in September 1999. Almost every Gould crossing of Drake Passage and transit along the western Antarctic Peninsula has been measured since; a 38 kHz Ocean Surveyor was added in November 2004, roughly tripling the profiling range. Five cDrake cruises aboard the RVIB Nathaniel B. Palmer (2007–2011) are included. The 1999–2018 cruises are the science-ready sets submitted to the Joint Archive for Shipboard ADCP (JASADCP) and archived at NCEI; 2019 onwards are processed in house.",
    "methods_text": "Data processed using CODAS3 with standard heading calibration procedures. Bottom tracking was available for shallow transits near the Peninsula. Navigation corrections applied via differential GPS.",
-   "acknowledgments": "The collection, processing and dissemination of these data was carried out by the Chereskin Lab at Scripps Institution of Oceanography, UCSD with support from the National Science Foundation Office of Polar Programs grant nos. OPP-9816226, ANT-0338103, ANT-0838750, PLR-1341431 and PLR-1542902. Eric Firing and Jules Hummon at the University of Hawaii provide critical support for the data acquisition and processing of these ADCP data through the development and maintenance of the UHDAS and CODAS software.",
+   "acknowledgments": "The collection, processing and dissemination of these data was carried out by the Chereskin Lab at Scripps Institution of Oceanography, UCSD with support from NSF awards 9816226, 0338103, 0838750, 1341431, 1542902, and 2001646. Eric Firing and Jules Hummon at the University of Hawaii provide critical support for the data acquisition and processing of these ADCP data through the development and maintenance of the UHDAS and CODAS software.",
    "map_center": [
     -61,
     -61
@@ -9707,7 +9707,7 @@
    "illustration_credit": "Objectively mapped 100 m velocity, cruise NH9310",
    "description": "A decade of shipboard ADCP measurements of upper ocean currents off Southern and Central California as part of the quarterly California Cooperative Oceanic Fisheries Investigations (CalCOFI) cruises.",
    "methods_text": "Data collected with RDI 150 kHz narrowband instrument, hull-mounted aboard R/V New Horizon. Processed with CODAS3. Objective mapping applied to produce velocity streamfunctions consistent with geostrophy.",
-   "acknowledgments": "The CalCOFI ADCP data were collected aboard R/V New Horizon as part of the California Cooperative Oceanic Fisheries Investigations program. The collection, processing and dissemination of these data was carried out by the Chereskin Lab at Scripps Institution of Oceanography, UCSD. The data are archived and distributed through the Joint Archive for Shipboard ADCP at the University of Hawaii and NOAA/NCEI.",
+   "acknowledgments": "The CalCOFI ADCP data were collected aboard R/V New Horizon as part of the California Cooperative Oceanic Fisheries Investigations program. The collection, processing and dissemination of these data was carried out by the Chereskin Lab at Scripps Institution of Oceanography, UCSD with support from NSF award 0324360. The data are archived and distributed through the Joint Archive for Shipboard ADCP at the University of Hawaii and NOAA/NCEI.",
    "map_center": [
     33.5,
     -121.5

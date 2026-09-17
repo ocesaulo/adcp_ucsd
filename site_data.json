@@ -2,7 +2,7 @@
  "_README": {
   "description": "Master data file for the Chereskin Lab ADCP Data Portal. Edit this file to update all site content. Then run 'python3 -m http.server 8000' and open localhost:8000 to preview changes.",
   "image_paths": "All image filenames in cruise.images[] are relative to the images/ folder. Example: 'nh9310_100_oa.jpg' → place file at images/nh9310_100_oa.jpg",
-    "branding_note": "project.logo, project.header_image and project.illustration_image are relative to the images/ folder (harvested from the original adcp.ucsd.edu under images/branding/). logo appears on the overview project card and the project page hero; header_image is the project hero banner photo (paired with header_credit); illustration_image sits beside the project page's Acknowledgments panel (paired with illustration_credit). All are optional — omit them to fall back to the plain card/hero layout.",
+  "branding_note": "project.logo, project.header_image and project.illustration_image are relative to the images/ folder (harvested from the original adcp.ucsd.edu under images/branding/). logo appears on the overview project card and the project page hero; header_image is the project hero banner photo (paired with header_credit); illustration_image sits beside the project page's Acknowledgments panel (paired with illustration_credit). All are optional — omit them to fall back to the plain card/hero layout.",
   "track_format": "cruise.track is an optional array of [latitude, longitude] pairs used only when no measured track exists in data/drake_passage_tracks.json.",
   "station_format": "cruise.stations is an array of {lat, lon, label} objects for individual station markers on the map.",
   "status_values": [
@@ -19,11 +19,14 @@
    "calibration"
   ],
   "ncei_url_note": "cruise.ncei_url is the permanent NCEI accession landing page: https://www.ncei.noaa.gov/archive/accession/XXXXXXX . For 1999–2018 the JASADCP submissions were archived in batches, so many cruises share one accession; cruise.ncei_accession holds the bare number.",
-  "last_updated": "2026-08-19",
+  "last_updated": "2026-09-16",
   "contact": "Chereskin Lab, Scripps Institution of Oceanography, UCSD",
-  "tracks_file": "data/drake_passage_tracks.json holds the measured ship tracks (ensembles with valid u and v) and the per-depth-bin data-coverage statistics extracted from the CODAS databases with pysadcp. A cruise is linked to its track through cruise.track_key. Regenerate it with make_drake_passage_web_tracks.py (kept outside this repository, it needs pycurrents/CODAS and the raw loads): the 2019-onwards cruises come from the UHDAS loads under drake_passage_2019_onwards/, and the 1999–2018 cruises from the JAS-ADCP repository, selected with select_drake_passage_jas_dbs.py and merged in with --db-list / --merge-into.",
-  "antarctic_webpy_gallery_file": "data/antarctic_webpy_gallery.json is the generated manifest for standard pycurrents/CODAS PNG figures selected with an Antarctic cruise's Plots button. It is deliberately separate from cruise.images[]; make_drake_passage_web_gallery.py (kept beside the CODAS science tools) copies existing recent webpy output or renders source databases offline into scratch, then publishes only static PNGs and thumbnails under images/antarctic-webpy/.",
-  "jasadcp_note": "cruise.sac_id is the JASADCP (NODC/UH SAC) cruise id of the cruise's primary database, and cruise.jasadcp_url is its page at https://uhslc.soest.hawaii.edu/sadcp/DATABASE/<sac_id>.html . A cruise that submitted more than one sonar has one SAC id per database; they are all listed in cruise.sac_ids[] as {sac_id, sonar}, and the same ids appear per instrument in data/drake_passage_tracks.json."
+  "tracks_file": "data/drake_passage_tracks.json and data/calcofi_tracks.json hold the measured ship tracks (ensembles with valid u and v) and the per-depth-bin data-coverage statistics extracted from the CODAS databases with pysadcp. A cruise is linked to its track through cruise.track_key, and cruise ids are unique across the projects, so the two files share one index. Regenerate them with make_drake_passage_web_tracks.py and make_calcofi_web_tracks.py (kept outside this repository, they need pycurrents/CODAS and the raw loads). The Drake Passage file covers the 2019-onwards UHDAS loads, the 1999-2018 JAS-ADCP submissions and the NCEI accessions; the CalCOFI file covers the 1993-2009 JAS-ADCP submissions and the 2017-2023 UHDAS loads under uh_repo_ccs_dbs/, selected by select_calcofi_dbs.py.",
+  "jasadcp_note": "cruise.sac_id is the JASADCP (NODC/UH SAC) cruise id of the cruise's primary database, and cruise.jasadcp_url is its page at https://uhslc.soest.hawaii.edu/sadcp/DATABASE/<sac_id>.html . A cruise that submitted more than one sonar has one SAC id per database; they are all listed in cruise.sac_ids[] as {sac_id, sonar}, and the same ids appear per instrument in the tracks files.",
+  "calcofi_selection_note": "A CalCOFI cruise cannot be recognised from its CODAS metadata, and the California Current repositories hold plenty of neighbours (CCE-LTER process cruises, transits, other groups' work). The archived cruises come from JASADCP's own CalCOFI inventory, a copy of which is kept at input_info/harvest/jasadcp_calcofi_inventory.html; the 2017-onwards loads were identified against the CalCOFI program's cruise list by ship and date and are named explicitly in select_calcofi_dbs.py.",
+  "webpy_gallery_files": "data/antarctic_webpy_gallery.json and data/calcofi_webpy_gallery.json are the generated manifests for the CODAS section figures a cruise's Plots button selects. They are deliberately separate from cruise.images[]; make_drake_passage_web_gallery.py and make_calcofi_web_gallery.py (kept beside the CODAS science tools) render the databases offline into scratch and publish only static PNGs and thumbnails under images/antarctic-webpy/ and images/calcofi-webpy/. A cruise publishes one figure set per physical sonar over one shared set of section windows, so the columns of the gallery read against one another.",
+  "plots_link_note": "project.plots_link_label names the external plot page a cruise row links to beside its generated CODAS gallery. Set on the CalCOFI project as 'Atlas' because cruise.plots_url there is the 2008 CalCOFI ADCP Digital Atlas page of objectively mapped velocity, which the section figures do not replace. Left unset, an external plots_url is shown only for cruises with no generated gallery.",
+  "calcofi_cruise_note": "cruise.calcofi_cruise is the CalCOFI program's own name for the cruise (2107SR: year, month, ship), which is how CalCOFI indexes its hydrography and plankton data for the same stations."
  },
  "site": {
   "title": "Chereskin Lab · ADCP Data Portal",
@@ -52,7 +55,7 @@
    "illustration_image": "branding/lmgould_sticker.png",
    "illustration_credit": "LMG ADCP program sticker, Chereskin Lab",
    "description": "The Antarctic Circumpolar Current (ACC)  is the largest current on the planet. As the narrowest land gap on its  circumpolar path, Drake Passage is an ideal monitoring spot. The NSF-funded Drake Passage time series collected shipboard ADCP observations from 1998 to 2024 during all transits of Drake Passage and on cruises to the Antarctic Peninsula made by the supply vessel for Palmer Station. A primary goal was to obtain a long time series at near-repeat locations to unambiguously separate temporal from spatial variability and short-term variability from long-term trends. The time series comprises 455 transects of upper ocean currents from a NB150 ADCP (profiling depths 22 m to 250 m) and 309 transects from an OS38 ADCP (profiling depths 46 m to 950 m). These transects have been used to study the ACC on time scales from seasonal to interannual and on space scales from eddies to jets.",
-   "project_description": "The ACC is the largest current on the planet. It plays a key role in the Earth system connecting all the world\u2019s oceans. As the narrowest land gap on its  circumpolar path, Drake Passage is an ideal monitoring spot. However, it is also one of the windiest and roughest stretches of water on the globe. The only ship that crosses Drake Passage year-round is the supply vessel for Palmer Station. The ACC comprises multiple velocity jets that flow west to east around Antarctica and form a  barrier that separates warmer waters to the north from colder waters to the south. Ocean eddies break through the ACC barrier, transferring heat across the ACC towards Antarctica. When warmer ocean waters intrude onto the Antarctic continental shelf, they contribute to glacial melt and ice shelf retreat. Over the past several decades the Southern Ocean has warmed and winds have increased. Somewhat surprisingly, the Drake Passage ADCP observations show that the ACC, though pushed by faster winds, has not accelerated (Gutierrez et al., Nature Comms 2024); a faster current would present a stronger barrier to heat transfer. Instead, ocean eddies have increased in the region between the northernmost ACC fronts in Drake Passage. Combining concurrent temperature and velocity observations from the time series has provided a better understanding of heat transfer across the ACC by eddies (Gutierrez et al., JPO 2020). Additionally, the time series has provided valuable measurements to resolve the coastal circulation of the Antarctic Peninsula (e.g., Savidge and Amft, DSR 2009) as well as ground-truth for satellite measurements and numerical model predictions covering the entire ACC.",
+   "project_description": "The ACC is the largest current on the planet. It plays a key role in the Earth system connecting all the world’s oceans. As the narrowest land gap on its  circumpolar path, Drake Passage is an ideal monitoring spot. However, it is also one of the windiest and roughest stretches of water on the globe. The only ship that crosses Drake Passage year-round is the supply vessel for Palmer Station. The ACC comprises multiple velocity jets that flow west to east around Antarctica and form a  barrier that separates warmer waters to the north from colder waters to the south. Ocean eddies break through the ACC barrier, transferring heat across the ACC towards Antarctica. When warmer ocean waters intrude onto the Antarctic continental shelf, they contribute to glacial melt and ice shelf retreat. Over the past several decades the Southern Ocean has warmed and winds have increased. Somewhat surprisingly, the Drake Passage ADCP observations show that the ACC, though pushed by faster winds, has not accelerated (Gutierrez et al., Nature Comms 2024); a faster current would present a stronger barrier to heat transfer. Instead, ocean eddies have increased in the region between the northernmost ACC fronts in Drake Passage. Combining concurrent temperature and velocity observations from the time series has provided a better understanding of heat transfer across the ACC by eddies (Gutierrez et al., JPO 2020). Additionally, the time series has provided valuable measurements to resolve the coastal circulation of the Antarctic Peninsula (e.g., Savidge and Amft, DSR 2009) as well as ground-truth for satellite measurements and numerical model predictions covering the entire ACC.",
    "methods_text": "Data processed using CODAS3 with standard heading calibration procedures. Bottom tracking was available for shallow transits near the Peninsula. Navigation corrections applied via differential GPS.",
    "acknowledgments": "The collection, processing and dissemination of these data was carried out by the Chereskin Lab at Scripps Institution of Oceanography, UCSD with support from NSF awards 9816226, 0338103, 0838750, 1341431, 1542902, and 2001646. Eric Firing and Jules Hummon at the University of Hawaii provide critical support for the data acquisition and processing of these ADCP data through the development and maintenance of the UHDAS and CODAS software.",
    "map_center": [
@@ -9703,452 +9706,2080 @@
    "region": "California Current System",
    "color": "#c9832e",
    "color_light": "#fdf0e0",
-   "vessel": "R/V New Horizon",
-   "years": "1993–2003",
+   "vessel": "NOAA Ship Bell M. Shimada, NOAA Ship David Starr Jordan, R/V New Horizon, R/V Oceanus, NOAA Ship Reuben Lasker, R/V Roger Revelle, R/V Sally Ride",
+   "years": "1993–2023",
    "logo": "branding/calcofi_logo.png",
    "header_image": "branding/calcofi_header.jpg",
    "header_credit": "Channel Islands, California — photo by Jamie Holte",
    "illustration_image": "branding/calcofi_illustration.jpg",
    "illustration_credit": "Objectively mapped 100 m velocity, cruise NH9310",
-   "description": "A decade of shipboard ADCP measurements of upper ocean currents off Southern and Central California as part of the quarterly California Cooperative Oceanic Fisheries Investigations (CalCOFI) cruises.",
-   "project_description": "A decade of shipboard ADCP measurements of upper ocean currents off Southern and Central California as part of the quarterly California Cooperative Oceanic Fisheries Investigations (CalCOFI) cruises.",
-   "methods_text": "Data collected with RDI 150 kHz narrowband instrument, hull-mounted aboard R/V New Horizon. Processed with CODAS3. Objective mapping applied to produce velocity streamfunctions consistent with geostrophy.",
-   "acknowledgments": "The CalCOFI ADCP data were collected aboard R/V New Horizon as part of the California Cooperative Oceanic Fisheries Investigations program. The collection, processing and dissemination of these data was carried out by the Chereskin Lab at Scripps Institution of Oceanography, UCSD with support from NSF award 0324360. The data are archived and distributed through the Joint Archive for Shipboard ADCP at the University of Hawaii and NOAA/NCEI.",
+   "description": "Three decades of shipboard ADCP measurements of upper-ocean currents off southern and central California, made on the quarterly cruises of the California Cooperative Oceanic Fisheries Investigations (CalCOFI).",
+   "project_description": "CalCOFI has occupied the same station grid off southern California since 1949, and since 1993 the Chereskin Lab has measured the currents over it with a shipboard ADCP. The quarterly cruises trace the California Current, the eastern limb of the North Pacific subtropical gyre, as it carries cool, fresh subarctic water equatorward past the coast, together with the poleward California Undercurrent beneath it and the eddies and filaments that carry water offshore. Because the grid is reoccupied four times a year on fixed lines, the velocity sections stack into a record long enough to separate the seasonal cycle from interannual signals — the 1997–98 El Niño, the warm anomaly of 2014–16 — and to be read alongside the hydrography, nutrients and plankton the same stations have collected for seventy years. The first decade of the record, 1993–2004, was mapped objectively to velocity streamfunctions consistent with geostrophy and published as the CalCOFI ADCP Digital Atlas (Chereskin and Trunnell, 1996; Chereskin, 2008); the 2017-onwards cruises are processed in house and carry up to three sonars each, reaching past 1,000 m where the 38 kHz Ocean Surveyor is fitted.",
+   "methods_text": "The 1993–2009 cruises were measured with a hull-mounted RDI 150 kHz narrowband ADCP and processed with CODAS3; all forty were submitted to the Joint Archive for Shipboard ADCP and are archived at NOAA/NCEI. Objective mapping was applied to the 1993–2004 cruises to produce velocity streamfunctions consistent with geostrophy, which is what the CalCOFI ADCP Digital Atlas publishes at 50 m and 100 m. The 2017-onwards cruises were logged with UHDAS and processed with CODAS in house: an Ocean Surveyor 75 kHz on the NOAA ships, and an Ocean Surveyor 38 kHz, an Ocean Surveyor 150 kHz and a Workhorse 300 kHz together on R/V Sally Ride, the three sonars covering the water column from about 10 m to beyond 1,000 m.",
+   "acknowledgments": "The CalCOFI ADCP data were collected aboard R/V New Horizon, NOAA Ship David Starr Jordan, R/V Roger Revelle, NOAA Ship Bell M. Shimada, NOAA Ship Reuben Lasker, R/V Oceanus and R/V Sally Ride as part of the California Cooperative Oceanic Fisheries Investigations program. The collection, processing and dissemination of these data was carried out by the Chereskin Lab at Scripps Institution of Oceanography, UCSD with support from NSF award 0324360. The archived cruises are distributed through the Joint Archive for Shipboard ADCP at the University of Hawaii and NOAA/NCEI. We thank the officers and crew of every ship, and the CalCOFI program, for making the measurements possible.",
    "map_center": [
-    33.5,
+    34.5,
     -121.5
    ],
    "map_zoom": 6,
+   "plots_link_label": "Atlas",
    "references": [
     "Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619–22629.",
     "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography."
    ],
    "publications": [
-    "Chereskin, T. K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography. http://adcp.ucsd.edu/calcofi"
+    "Chereskin, T. K., and M. Trunnell, 1996. Correlation scales, objective mapping, and absolute geostrophic flow in the California Current. J. Geophys. Res., 101(C10), 22619–22629. DOI: 10.1029/96JC02004",
+    "Chereskin, T. K., 2008. CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography. http://adcp.ucsd.edu/calcofi"
+   ],
+   "other_links": [
+    {
+     "label": "CalCOFI program",
+     "url": "https://calcofi.org"
+    },
+    {
+     "label": "CalCOFI cruise list and reports",
+     "url": "https://calcofi.org/data/cruises/"
+    },
+    {
+     "label": "JASADCP CalCOFI inventory — every archived cruise and its SAC id",
+     "url": "https://uhslc.soest.hawaii.edu/sadcp/INVNTORY/calcofi.html"
+    },
+    {
+     "label": "CalCOFI ADCP Digital Atlas (original portal)",
+     "url": "https://adcp.ucsd.edu/calcofi/"
+    }
    ],
    "cruises": [
     {
      "id": "NH9310",
      "dates": "Oct 1993",
      "dates_iso": [
-      "1993-10-11",
-      "1993-10-28"
+      "1993-10-08",
+      "1993-10-26"
      ],
      "ship": "R/V New Horizon",
      "region": "S. California",
      "pi": "T.K. Chereskin",
      "depths_m": [
-      8,
-      250
+      15,
+      431
      ],
-     "instrument": "RDI 150 kHz NB",
-     "status": "processed",
-     "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9310",
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
      "plots_url": "https://adcp.ucsd.edu/calcofi/1993/nh9310/nh9310.htm",
-     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
-     "notes": "First cruise of the CalCOFI ADCP program. Full CalCOFI grid surveyed.",
-     "track": [
-      [
-       34.5,
-       -120.8
-      ],
-      [
-       33.8,
-       -120.2
-      ],
-      [
-       33.2,
-       -119.5
-      ],
-      [
-       32.5,
-       -118.8
-      ],
-      [
-       31.8,
-       -118.0
-      ],
-      [
-       31.2,
-       -117.5
-      ]
-     ],
-     "stations": [
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/00410.html",
+     "sac_id": "00410",
+     "sac_ids": [
       {
-       "lat": 34.5,
-       "lng": -120.8,
-       "label": "80.55"
-      },
-      {
-       "lat": 33.5,
-       "lng": -119.8,
-       "label": "83.55"
-      },
-      {
-       "lat": 32.5,
-       "lng": -118.8,
-       "label": "86.70"
-      },
-      {
-       "lat": 31.8,
-       "lng": -118.0,
-       "label": "90.70"
+       "sac_id": "00410",
+       "sonar": "nb150"
       }
      ],
-     "images": [
-      {
-       "filename": "nh9310_100_oa.jpg",
-       "caption": "Objectively mapped velocity at 100 m depth, NH9310 — from the CalCOFI ADCP Digital Atlas",
-       "type": "velocity_plot",
-       "depth_m": 100
-      },
-      {
-       "filename": "nh9310_30_oa.jpg",
-       "caption": "Objectively mapped velocity at 30 m depth, NH9310",
-       "type": "velocity_plot",
-       "depth_m": 30
-      },
-      {
-       "filename": "nh9310_track.jpg",
-       "caption": "Cruise track and CalCOFI station grid, NH9310",
-       "type": "station_map"
-      }
+     "calcofi_cruise": "9310NH",
+     "notes": "CalCOFI cruise 9310NH. 4,702 km of track over 18 days, 29.8°N–35.1°N. JASADCP SAC ID 00410 (NB150).",
+     "CODAS_dbs": [
+      "00410"
      ],
-     "sonar": "NB150"
+     "track_key": "NH9310",
+     "track": [],
+     "stations": [],
+     "images": []
     },
     {
-     "id": "NH9401",
-     "dates": "Jan 1994",
+     "id": "DJ9401",
+     "dates": "Jan–Feb 1994",
      "dates_iso": [
-      "1994-01-06",
-      "1994-01-23"
+      "1994-01-20",
+      "1994-02-07"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      424
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1994/dj9401/dj9401.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/00409.html",
+     "sac_id": "00409",
+     "sac_ids": [
+      {
+       "sac_id": "00409",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9401DJ",
+     "notes": "CalCOFI cruise 9401DJ. 4,519 km of track over 18 days, 29.9°N–35.1°N. JASADCP SAC ID 00409 (NB150).",
+     "CODAS_dbs": [
+      "00409"
+     ],
+     "track_key": "DJ9401",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ9403",
+     "dates": "Mar–Apr 1994",
+     "dates_iso": [
+      "1994-03-22",
+      "1994-04-08"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      416
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1994/dj9403/dj9403.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01108.html",
+     "sac_id": "01108",
+     "sac_ids": [
+      {
+       "sac_id": "01108",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9403DJ",
+     "notes": "CalCOFI cruise 9403DJ. 4,409 km of track over 17 days, 29.8°N–35.1°N. JASADCP SAC ID 01108 (NB150).",
+     "CODAS_dbs": [
+      "01108"
+     ],
+     "track_key": "DJ9403",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH9410",
+     "dates": "Sep–Oct 1994",
+     "dates_iso": [
+      "1994-09-30",
+      "1994-10-15"
      ],
      "ship": "R/V New Horizon",
      "region": "S. California",
      "pi": "T.K. Chereskin",
      "depths_m": [
-      8,
-      250
+      12,
+      404
      ],
-     "instrument": "RDI 150 kHz NB",
-     "status": "processed",
-     "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9401",
-     "plots_url": "https://adcp.ucsd.edu/calcofi/",
-     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
-     "notes": "Winter cruise. El Niño conditions beginning.",
-     "track": [
-      [
-       34.2,
-       -121.0
-      ],
-      [
-       33.5,
-       -120.5
-      ],
-      [
-       32.8,
-       -119.5
-      ],
-      [
-       32.0,
-       -118.5
-      ],
-      [
-       31.3,
-       -117.8
-      ]
-     ],
-     "stations": [
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1994/nh9410/nh9410.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/00411.html",
+     "sac_id": "00411",
+     "sac_ids": [
       {
-       "lat": 34.2,
-       "lng": -121.0,
-       "label": "80.51"
-      },
-      {
-       "lat": 33.0,
-       "lng": -119.8,
-       "label": "83.55"
-      },
-      {
-       "lat": 31.8,
-       "lng": -118.2,
-       "label": "90.70"
+       "sac_id": "00411",
+       "sonar": "nb150"
       }
      ],
-     "images": [
-      {
-       "filename": "nh9401_100_oa.jpg",
-       "caption": "Objectively mapped velocity at 100 m, NH9401",
-       "type": "velocity_plot",
-       "depth_m": 100
-      }
+     "calcofi_cruise": "9410NH",
+     "notes": "CalCOFI cruise 9410NH. 4,440 km of track over 15 days, 29.8°N–35.1°N. JASADCP SAC ID 00411 (NB150).",
+     "CODAS_dbs": [
+      "00411"
      ],
-     "sonar": "NB150"
+     "track_key": "NH9410",
+     "track": [],
+     "stations": [],
+     "images": []
     },
     {
-     "id": "NH9407",
-     "dates": "Jul 1994",
-     "dates_iso": [
-      "1994-07-05",
-      "1994-07-25"
-     ],
-     "ship": "R/V New Horizon",
-     "region": "S.–C. California",
-     "pi": "T.K. Chereskin",
-     "depths_m": [
-      8,
-      250
-     ],
-     "instrument": "RDI 150 kHz NB",
-     "status": "processed",
-     "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9407",
-     "plots_url": "https://adcp.ucsd.edu/calcofi/",
-     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
-     "notes": "Summer survey. Extended grid to central California.",
-     "track": [
-      [
-       36.5,
-       -122.5
-      ],
-      [
-       35.5,
-       -121.8
-      ],
-      [
-       34.5,
-       -120.8
-      ],
-      [
-       33.5,
-       -119.8
-      ],
-      [
-       32.5,
-       -118.8
-      ],
-      [
-       31.5,
-       -117.8
-      ]
-     ],
-     "stations": [
-      {
-       "lat": 36.5,
-       "lng": -122.5,
-       "label": "70.45"
-      },
-      {
-       "lat": 34.8,
-       "lng": -121.0,
-       "label": "80.55"
-      },
-      {
-       "lat": 33.0,
-       "lng": -119.5,
-       "label": "86.70"
-      }
-     ],
-     "images": [
-      {
-       "filename": "nh9407_100_oa.jpg",
-       "caption": "Objectively mapped velocity at 100 m, NH9407",
-       "type": "velocity_plot",
-       "depth_m": 100
-      }
-     ],
-     "sonar": "NB150"
-    },
-    {
-     "id": "NH9501",
+     "id": "DJ9501",
      "dates": "Jan 1995",
      "dates_iso": [
-      "1995-01-08",
-      "1995-01-26"
+      "1995-01-04",
+      "1995-01-22"
      ],
-     "ship": "R/V New Horizon",
+     "ship": "NOAA Ship David Starr Jordan",
      "region": "S. California",
      "pi": "T.K. Chereskin",
      "depths_m": [
-      8,
-      250
+      16,
+      416
      ],
-     "instrument": "RDI 150 kHz NB",
-     "status": "processed",
-     "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9501",
-     "plots_url": "https://adcp.ucsd.edu/calcofi/",
-     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
-     "notes": "Winter survey during developing El Niño.",
-     "track": [
-      [
-       34.0,
-       -120.9
-      ],
-      [
-       33.2,
-       -120.1
-      ],
-      [
-       32.5,
-       -119.2
-      ],
-      [
-       31.8,
-       -118.3
-      ],
-      [
-       31.2,
-       -117.6
-      ]
-     ],
-     "stations": [
-      {
-       "lat": 33.5,
-       "lng": -120.2,
-       "label": "83.55"
-      },
-      {
-       "lat": 32.5,
-       "lng": -119.2,
-       "label": "86.70"
-      }
-     ],
-     "images": [],
-     "sonar": "NB150"
-    },
-    {
-     "id": "NH9601",
-     "dates": "Jan 1996",
-     "dates_iso": [
-      "1996-01-09",
-      "1996-01-28"
-     ],
-     "ship": "R/V New Horizon",
-     "region": "S.–C. California",
-     "pi": "T.K. Chereskin",
-     "depths_m": [
-      8,
-      250
-     ],
-     "instrument": "RDI 150 kHz NB",
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
      "status": "archived",
-     "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9601",
-     "plots_url": "https://adcp.ucsd.edu/calcofi/",
-     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
-     "notes": "Extended grid cruise.",
-     "track": [
-      [
-       36.2,
-       -122.8
-      ],
-      [
-       35.2,
-       -122.0
-      ],
-      [
-       34.2,
-       -121.0
-      ],
-      [
-       33.2,
-       -120.0
-      ],
-      [
-       32.2,
-       -118.8
-      ],
-      [
-       31.2,
-       -117.7
-      ]
-     ],
-     "stations": [
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1995/dj9501/dj9501.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01109.html",
+     "sac_id": "01109",
+     "sac_ids": [
       {
-       "lat": 35.2,
-       "lng": -122.0,
-       "label": "73.45"
-      },
-      {
-       "lat": 33.5,
-       "lng": -120.2,
-       "label": "83.55"
-      },
-      {
-       "lat": 31.8,
-       "lng": -118.2,
-       "label": "90.70"
+       "sac_id": "01109",
+       "sonar": "nb150"
       }
      ],
-     "images": [],
-     "sonar": "NB150"
+     "calcofi_cruise": "9501DJ",
+     "notes": "CalCOFI cruise 9501DJ. 4,640 km of track over 18 days, 29.9°N–35.1°N. JASADCP SAC ID 01109 (NB150).",
+     "CODAS_dbs": [
+      "01109"
+     ],
+     "track_key": "DJ9501",
+     "track": [],
+     "stations": [],
+     "images": []
     },
     {
-     "id": "NH0301",
-     "dates": "Jan 2003",
+     "id": "NH9504",
+     "dates": "Apr 1995",
      "dates_iso": [
-      "2003-01-07",
-      "2003-01-25"
+      "1995-04-06",
+      "1995-04-22"
      ],
      "ship": "R/V New Horizon",
      "region": "S. California",
      "pi": "T.K. Chereskin",
      "depths_m": [
-      8,
-      250
+      16,
+      288
      ],
-     "instrument": "RDI 150 kHz BB",
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1995/nh9504/nh9504.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01117.html",
+     "sac_id": "01117",
+     "sac_ids": [
+      {
+       "sac_id": "01117",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9504NH",
+     "notes": "CalCOFI cruise 9504NH. 4,306 km of track over 16 days, 29.9°N–35.1°N. JASADCP SAC ID 01117 (NB150).",
+     "CODAS_dbs": [
+      "01117"
+     ],
+     "track_key": "NH9504",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ9507",
+     "dates": "Jul 1995",
+     "dates_iso": [
+      "1995-07-06",
+      "1995-07-23"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      432
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1995/dj9507/dj9507.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01110.html",
+     "sac_id": "01110",
+     "sac_ids": [
+      {
+       "sac_id": "01110",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9507DJ",
+     "notes": "CalCOFI cruise 9507DJ. 4,516 km of track over 17 days, 29.8°N–35.1°N. JASADCP SAC ID 01110 (NB150).",
+     "CODAS_dbs": [
+      "01110"
+     ],
+     "track_key": "DJ9507",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH9510",
+     "dates": "Oct 1995",
+     "dates_iso": [
+      "1995-10-12",
+      "1995-10-28"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      416
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1995/nh9510/nh9510.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01118.html",
+     "sac_id": "01118",
+     "sac_ids": [
+      {
+       "sac_id": "01118",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9510NH",
+     "notes": "CalCOFI cruise 9510NH. 4,558 km of track over 16 days, 29.8°N–35.1°N. JASADCP SAC ID 01118 (NB150).",
+     "CODAS_dbs": [
+      "01118"
+     ],
+     "track_key": "NH9510",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ9604",
+     "dates": "Apr–May 1996",
+     "dates_iso": [
+      "1996-04-15",
+      "1996-05-04"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      384
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1996/dj9604/dj9604.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01111.html",
+     "sac_id": "01111",
+     "sac_ids": [
+      {
+       "sac_id": "01111",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9604DJ",
+     "notes": "CalCOFI cruise 9604DJ. 4,636 km of track over 18 days, 29.8°N–35.1°N. JASADCP SAC ID 01111 (NB150).",
+     "CODAS_dbs": [
+      "01111"
+     ],
+     "track_key": "DJ9604",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH9608",
+     "dates": "Aug 1996",
+     "dates_iso": [
+      "1996-08-07",
+      "1996-08-22"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      416
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1996/nh9608/nh9608.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01119.html",
+     "sac_id": "01119",
+     "sac_ids": [
+      {
+       "sac_id": "01119",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9608NH",
+     "notes": "CalCOFI cruise 9608NH. 4,056 km of track over 15 days, 29.8°N–35.1°N. JASADCP SAC ID 01119 (NB150).",
+     "CODAS_dbs": [
+      "01119"
+     ],
+     "track_key": "NH9608",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ9702",
+     "dates": "Jan–Feb 1997",
+     "dates_iso": [
+      "1997-01-29",
+      "1997-02-16"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      416
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1997/dj9702/dj9702.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01112.html",
+     "sac_id": "01112",
+     "sac_ids": [
+      {
+       "sac_id": "01112",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9702DJ",
+     "notes": "CalCOFI cruise 9702DJ. 4,828 km of track over 18 days, 29.8°N–35.4°N. JASADCP SAC ID 01112 (NB150).",
+     "CODAS_dbs": [
+      "01112"
+     ],
+     "track_key": "DJ9702",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH9704",
+     "dates": "Apr 1997",
+     "dates_iso": [
+      "1997-04-02",
+      "1997-04-20"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      392
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1997/nh9704/nh9704.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01120.html",
+     "sac_id": "01120",
+     "sac_ids": [
+      {
+       "sac_id": "01120",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9704NH",
+     "notes": "CalCOFI cruise 9704NH. 4,677 km of track over 18 days, 29.8°N–35.1°N. JASADCP SAC ID 01120 (NB150).",
+     "CODAS_dbs": [
+      "01120"
+     ],
+     "track_key": "NH9704",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ9707",
+     "dates": "Jul 1997",
+     "dates_iso": [
+      "1997-07-01",
+      "1997-07-18"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      376
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1997/dj9707/dj9707.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01113.html",
+     "sac_id": "01113",
+     "sac_ids": [
+      {
+       "sac_id": "01113",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9707DJ",
+     "notes": "CalCOFI cruise 9707DJ. 4,486 km of track over 17 days, 29.8°N–35.1°N. JASADCP SAC ID 01113 (NB150).",
+     "CODAS_dbs": [
+      "01113"
+     ],
+     "track_key": "DJ9707",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH9709",
+     "dates": "Sep–Oct 1997",
+     "dates_iso": [
+      "1997-09-20",
+      "1997-10-08"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      368
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1997/nh9709/nh9709.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01121.html",
+     "sac_id": "01121",
+     "sac_ids": [
+      {
+       "sac_id": "01121",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9709NH",
+     "notes": "CalCOFI cruise 9709NH. 4,719 km of track over 18 days, 29.8°N–34.7°N. JASADCP SAC ID 01121 (NB150).",
+     "CODAS_dbs": [
+      "01121"
+     ],
+     "track_key": "NH9709",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ9802",
+     "dates": "Jan–Feb 1998",
+     "dates_iso": [
+      "1998-01-23",
+      "1998-02-14"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      408
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1998/dj9802/dj9802.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01114.html",
+     "sac_id": "01114",
+     "sac_ids": [
+      {
+       "sac_id": "01114",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9802DJ",
+     "notes": "CalCOFI cruise 9802DJ. 6,029 km of track over 22 days, 29.8°N–36.7°N. JASADCP SAC ID 01114 (NB150).",
+     "CODAS_dbs": [
+      "01114"
+     ],
+     "track_key": "DJ9802",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ9804",
+     "dates": "Apr 1998",
+     "dates_iso": [
+      "1998-04-02",
+      "1998-04-24"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      416
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1998/dj9804/dj9804.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01115.html",
+     "sac_id": "01115",
+     "sac_ids": [
+      {
+       "sac_id": "01115",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9804DJ",
+     "notes": "CalCOFI cruise 9804DJ. 5,834 km of track over 21 days, 29.8°N–36.8°N. JASADCP SAC ID 01115 (NB150).",
+     "CODAS_dbs": [
+      "01115"
+     ],
+     "track_key": "DJ9804",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH9809",
+     "dates": "Sep–Oct 1998",
+     "dates_iso": [
+      "1998-09-13",
+      "1998-10-01"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      304
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1998/nh9809/nh9809.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01122.html",
+     "sac_id": "01122",
+     "sac_ids": [
+      {
+       "sac_id": "01122",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9809NH",
+     "notes": "CalCOFI cruise 9809NH. 5,478 km of track over 18 days, 29.8°N–36.8°N. JASADCP SAC ID 01122 (NB150).",
+     "CODAS_dbs": [
+      "01122"
+     ],
+     "track_key": "NH9809",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "RR9901",
+     "dates": "Jan 1999",
+     "dates_iso": [
+      "1999-01-10",
+      "1999-01-29"
+     ],
+     "ship": "R/V Roger Revelle",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      25,
+      393
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1999/rr9901/rr9901.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01134.html",
+     "sac_id": "01134",
+     "sac_ids": [
+      {
+       "sac_id": "01134",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9901RR",
+     "notes": "CalCOFI cruise 9901RR. 5,763 km of track over 19 days, 29.8°N–36.8°N. JASADCP SAC ID 01134 (NB150).",
+     "CODAS_dbs": [
+      "01134"
+     ],
+     "track_key": "RR9901",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ9904",
+     "dates": "Apr 1999",
+     "dates_iso": [
+      "1999-04-01",
+      "1999-04-20"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      416
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1999/dj9904/dj9904.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01116.html",
+     "sac_id": "01116",
+     "sac_ids": [
+      {
+       "sac_id": "01116",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9904DJ",
+     "notes": "CalCOFI cruise 9904DJ. 6,027 km of track over 19 days, 29.8°N–36.8°N. JASADCP SAC ID 01116 (NB150).",
+     "CODAS_dbs": [
+      "01116"
+     ],
+     "track_key": "DJ9904",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH9908",
+     "dates": "Aug 1999",
+     "dates_iso": [
+      "1999-08-07",
+      "1999-08-29"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      392
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1999/nh9908/nh9908.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01123.html",
+     "sac_id": "01123",
+     "sac_ids": [
+      {
+       "sac_id": "01123",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9908NH",
+     "notes": "CalCOFI cruise 9908NH. 6,186 km of track over 22 days, 29.9°N–36.8°N. JASADCP SAC ID 01123 (NB150).",
+     "CODAS_dbs": [
+      "01123"
+     ],
+     "track_key": "NH9908",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH9910",
+     "dates": "Oct 1999",
+     "dates_iso": [
+      "1999-10-03",
+      "1999-10-21"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      384
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/1999/nh9910/nh9910.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01124.html",
+     "sac_id": "01124",
+     "sac_ids": [
+      {
+       "sac_id": "01124",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "9910NH",
+     "notes": "CalCOFI cruise 9910NH. 4,804 km of track over 18 days, 29.8°N–35.1°N. JASADCP SAC ID 01124 (NB150).",
+     "CODAS_dbs": [
+      "01124"
+     ],
+     "track_key": "NH9910",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ0004",
+     "dates": "Apr 2000",
+     "dates_iso": [
+      "2000-04-07",
+      "2000-04-29"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      368
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2000/dj0004/dj0004.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01099.html",
+     "sac_id": "01099",
+     "sac_ids": [
+      {
+       "sac_id": "01099",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0004DJ",
+     "notes": "CalCOFI cruise 0004DJ. 6,856 km of track over 22 days, 29.8°N–40.5°N. JASADCP SAC ID 01099 (NB150).",
+     "CODAS_dbs": [
+      "01099"
+     ],
+     "track_key": "DJ0004",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH0007",
+     "dates": "Jun–Jul 2000",
+     "dates_iso": [
+      "2000-06-29",
+      "2000-07-14"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      368
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2000/nh0007/nh0007.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01125.html",
+     "sac_id": "01125",
+     "sac_ids": [
+      {
+       "sac_id": "01125",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0007NH",
+     "notes": "CalCOFI cruise 0007NH. 4,399 km of track over 15 days, 29.8°N–35.1°N. JASADCP SAC ID 01125 (NB150).",
+     "CODAS_dbs": [
+      "01125"
+     ],
+     "track_key": "NH0007",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH0010",
+     "dates": "Oct–Nov 2000",
+     "dates_iso": [
+      "2000-10-12",
+      "2000-11-01"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      360
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2000/nh0010/nh0010.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01126.html",
+     "sac_id": "01126",
+     "sac_ids": [
+      {
+       "sac_id": "01126",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0010NH",
+     "notes": "CalCOFI cruise 0010NH. 3,533 km of track over 20 days, 31.3°N–35.1°N. JASADCP SAC ID 01126 (NB150).",
+     "CODAS_dbs": [
+      "01126"
+     ],
+     "track_key": "NH0010",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ0101",
+     "dates": "Jan 2001",
+     "dates_iso": [
+      "2001-01-08",
+      "2001-01-26"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      408
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2001/dj0101/dj0101.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01100.html",
+     "sac_id": "01100",
+     "sac_ids": [
+      {
+       "sac_id": "01100",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0101DJ",
+     "notes": "CalCOFI cruise 0101DJ. 5,223 km of track over 18 days, 29.8°N–36.8°N. JASADCP SAC ID 01100 (NB150).",
+     "CODAS_dbs": [
+      "01100"
+     ],
+     "track_key": "DJ0101",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ0104",
+     "dates": "Apr–May 2001",
+     "dates_iso": [
+      "2001-04-06",
+      "2001-05-03"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      384
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2001/dj0104/dj0104.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01101.html",
+     "sac_id": "01101",
+     "sac_ids": [
+      {
+       "sac_id": "01101",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0104DJ",
+     "notes": "CalCOFI cruise 0104DJ. 7,390 km of track over 27 days, 29.8°N–37.8°N. JASADCP SAC ID 01101 (NB150).",
+     "CODAS_dbs": [
+      "01101"
+     ],
+     "track_key": "DJ0104",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH0107",
+     "dates": "Jul 2001",
+     "dates_iso": [
+      "2001-07-10",
+      "2001-07-27"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      408
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2001/nh0107/nh0107.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01127.html",
+     "sac_id": "01127",
+     "sac_ids": [
+      {
+       "sac_id": "01127",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0107NH",
+     "notes": "CalCOFI cruise 0107NH. 4,578 km of track over 17 days, 29.9°N–35.1°N. JASADCP SAC ID 01127 (NB150).",
+     "CODAS_dbs": [
+      "01127"
+     ],
+     "track_key": "NH0107",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH0110",
+     "dates": "Oct–Nov 2001",
+     "dates_iso": [
+      "2001-10-25",
+      "2001-11-09"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      416
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2001/nh0110/nh0110.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01128.html",
+     "sac_id": "01128",
+     "sac_ids": [
+      {
+       "sac_id": "01128",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0110NH",
+     "notes": "CalCOFI cruise 0110NH. 4,332 km of track over 15 days, 29.8°N–35.1°N. JASADCP SAC ID 01128 (NB150).",
+     "CODAS_dbs": [
+      "01128"
+     ],
+     "track_key": "NH0110",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ0201",
+     "dates": "Jan–Feb 2002",
+     "dates_iso": [
+      "2002-01-24",
+      "2002-02-11"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      408
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2002/dj0201/dj0201.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01102.html",
+     "sac_id": "01102",
+     "sac_ids": [
+      {
+       "sac_id": "01102",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0201DJ",
+     "notes": "CalCOFI cruise 0201DJ. 4,445 km of track over 18 days, 29.8°N–35.1°N. JASADCP SAC ID 01102 (NB150).",
+     "CODAS_dbs": [
+      "01102"
+     ],
+     "track_key": "DJ0201",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ0204",
+     "dates": "Mar–Apr 2002",
+     "dates_iso": [
+      "2002-03-28",
+      "2002-04-25"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      408
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2002/dj0204/dj0204.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01103.html",
+     "sac_id": "01103",
+     "sac_ids": [
+      {
+       "sac_id": "01103",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0204DJ",
+     "notes": "CalCOFI cruise 0204DJ. 7,130 km of track over 28 days, 29.8°N–35.4°N. JASADCP SAC ID 01103 (NB150).",
+     "CODAS_dbs": [
+      "01103"
+     ],
+     "track_key": "DJ0204",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH0207",
+     "dates": "Jul 2002",
+     "dates_iso": [
+      "2002-07-02",
+      "2002-07-18"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      408
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2002/nh0207/nh0207.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01129.html",
+     "sac_id": "01129",
+     "sac_ids": [
+      {
+       "sac_id": "01129",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0207NH",
+     "notes": "CalCOFI cruise 0207NH. 4,439 km of track over 16 days, 29.8°N–35.1°N. JASADCP SAC ID 01129 (NB150).",
+     "CODAS_dbs": [
+      "01129"
+     ],
+     "track_key": "NH0207",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH0211",
+     "dates": "Nov 2002",
+     "dates_iso": [
+      "2002-11-10",
+      "2002-11-26"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      400
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2002/nh0211/nh0211.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01130.html",
+     "sac_id": "01130",
+     "sac_ids": [
+      {
+       "sac_id": "01130",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0211NH",
+     "notes": "CalCOFI cruise 0211NH. 4,391 km of track over 16 days, 29.8°N–35.1°N. JASADCP SAC ID 01130 (NB150).",
+     "CODAS_dbs": [
+      "01130"
+     ],
+     "track_key": "NH0211",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ0302",
+     "dates": "Jan–Feb 2003",
+     "dates_iso": [
+      "2003-01-31",
+      "2003-02-25"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      408
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2003/dj0302/dj0302.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01104.html",
+     "sac_id": "01104",
+     "sac_ids": [
+      {
+       "sac_id": "01104",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0302DJ",
+     "notes": "CalCOFI cruise 0302DJ. 7,378 km of track over 25 days, 29.8°N–37.8°N. JASADCP SAC ID 01104 (NB150).",
+     "CODAS_dbs": [
+      "01104"
+     ],
+     "track_key": "DJ0302",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH0307",
+     "dates": "Jul 2003",
+     "dates_iso": [
+      "2003-07-17",
+      "2003-07-30"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      408
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2003/nh0307/nh0307.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01131.html",
+     "sac_id": "01131",
+     "sac_ids": [
+      {
+       "sac_id": "01131",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0307NH",
+     "notes": "CalCOFI cruise 0307NH. 4,071 km of track over 13 days, 30.2°N–35.1°N. JASADCP SAC ID 01131 (NB150).",
+     "CODAS_dbs": [
+      "01131"
+     ],
+     "track_key": "NH0307",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH0310",
+     "dates": "Oct–Nov 2003",
+     "dates_iso": [
+      "2003-10-20",
+      "2003-11-04"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      416
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2003/nh0310/nh0310.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01132.html",
+     "sac_id": "01132",
+     "sac_ids": [
+      {
+       "sac_id": "01132",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0310NH",
+     "notes": "CalCOFI cruise 0310NH. 4,372 km of track over 15 days, 29.8°N–35.1°N. JASADCP SAC ID 01132 (NB150).",
+     "CODAS_dbs": [
+      "01132"
+     ],
+     "track_key": "NH0310",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ0401",
+     "dates": "Jan 2004",
+     "dates_iso": [
+      "2004-01-06",
+      "2004-01-29"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      256
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2004/dj0401/dj0401.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01105.html",
+     "sac_id": "01105",
+     "sac_ids": [
+      {
+       "sac_id": "01105",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0401DJ",
+     "notes": "CalCOFI cruise 0401DJ. 6,597 km of track over 23 days, 29.8°N–37.8°N. JASADCP SAC ID 01105 (NB150).",
+     "CODAS_dbs": [
+      "01105"
+     ],
+     "track_key": "DJ0401",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH0404",
+     "dates": "Mar–Apr 2004",
+     "dates_iso": [
+      "2004-03-23",
+      "2004-04-09"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      368
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2004/nh0404/nh0404.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01133.html",
+     "sac_id": "01133",
+     "sac_ids": [
+      {
+       "sac_id": "01133",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0404NH",
+     "notes": "CalCOFI cruise 0404NH. 4,774 km of track over 17 days, 29.8°N–35.1°N. JASADCP SAC ID 01133 (NB150).",
+     "CODAS_dbs": [
+      "01133"
+     ],
+     "track_key": "NH0404",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ0404",
+     "dates": "Apr 2004",
+     "dates_iso": [
+      "2004-04-13",
+      "2004-04-24"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      408
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2004/dj0404/dj0404.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01106.html",
+     "sac_id": "01106",
+     "sac_ids": [
+      {
+       "sac_id": "01106",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0404DJ",
+     "notes": "CalCOFI cruise 0404DJ. 3,068 km of track over 11 days, 32.9°N–37.8°N. JASADCP SAC ID 01106 (NB150).",
+     "CODAS_dbs": [
+      "01106"
+     ],
+     "track_key": "DJ0404",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "DJ0407",
+     "dates": "Jul 2004",
+     "dates_iso": [
+      "2004-07-13",
+      "2004-07-28"
+     ],
+     "ship": "NOAA Ship David Starr Jordan",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      16,
+      408
+     ],
+     "instrument": "RDI 150 kHz narrowband",
+     "sonar": "NB150",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0049878",
+     "ncei_accession": "0049878",
+     "plots_url": "https://adcp.ucsd.edu/calcofi/2004/dj0407/dj0407.htm",
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01107.html",
+     "sac_id": "01107",
+     "sac_ids": [
+      {
+       "sac_id": "01107",
+       "sonar": "nb150"
+      }
+     ],
+     "calcofi_cruise": "0407DJ",
+     "notes": "CalCOFI cruise 0407DJ. 4,298 km of track over 15 days, 29.8°N–35.1°N. JASADCP SAC ID 01107 (NB150).",
+     "CODAS_dbs": [
+      "01107"
+     ],
+     "track_key": "DJ0407",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "NH0901",
+     "dates": "Jan 2009",
+     "dates_iso": [
+      "2009-01-08",
+      "2009-01-24"
+     ],
+     "ship": "R/V New Horizon",
+     "region": "S. California",
+     "pi": "E. Firing, J. Hummon",
+     "depths_m": [
+      29,
+      605
+     ],
+     "instrument": "RDI Ocean Surveyor 75 kHz narrowband",
+     "sonar": "OS75NB",
+     "status": "archived",
+     "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0067774",
+     "ncei_accession": "0067774",
+     "plots_url": null,
+     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01304.html",
+     "sac_id": "01304",
+     "sac_ids": [
+      {
+       "sac_id": "01304",
+       "sonar": "os75nb"
+      }
+     ],
+     "calcofi_cruise": "0901NH",
+     "notes": "CalCOFI cruise 0901NH. 4,331 km of track over 16 days, 29.8°N–35.1°N. JASADCP SAC ID 01304 (OS75NB).",
+     "CODAS_dbs": [
+      "01304"
+     ],
+     "track_key": "NH0901",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "SH1704",
+     "dates": "Mar–Apr 2017",
+     "dates_iso": [
+      "2017-03-29",
+      "2017-04-20"
+     ],
+     "ship": "NOAA Ship Bell M. Shimada",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      21,
+      565
+     ],
+     "instrument": "RDI Ocean Surveyor 75 kHz narrowband",
+     "sonar": "OS75NB",
      "status": "processed",
-     "ncei_url": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH0301",
-     "plots_url": "https://adcp.ucsd.edu/calcofi/",
-     "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
-     "notes": "Final cruise of the CalCOFI ADCP program. Broadband instrument used.",
-     "track": [
-      [
-       33.8,
-       -120.6
-      ],
-      [
-       33.0,
-       -119.9
-      ],
-      [
-       32.3,
-       -119.1
-      ],
-      [
-       31.6,
-       -118.2
-      ],
-      [
-       31.0,
-       -117.5
-      ]
+     "ncei_url": null,
+     "ncei_accession": null,
+     "plots_url": null,
+     "jasadcp_url": null,
+     "sac_id": null,
+     "sac_ids": [],
+     "calcofi_cruise": "1704SH",
+     "notes": "CalCOFI cruise 1704SH. 6,769 km of track over 22 days, 29.8°N–37.8°N. Processed in house; not yet submitted to the archive. CODAS databases: SH1704/os75nb.",
+     "CODAS_dbs": [
+      "cryosat/SH1704/os75nb"
      ],
-     "stations": [
-      {
-       "lat": 33.0,
-       "lng": -119.9,
-       "label": "83.55"
-      },
-      {
-       "lat": 32.3,
-       "lng": -119.1,
-       "label": "86.70"
-      },
-      {
-       "lat": 31.6,
-       "lng": -118.2,
-       "label": "90.70"
-      }
+     "track_key": "SH1704",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "SR1717",
+     "dates": "Nov 2017",
+     "dates_iso": [
+      "2017-11-09",
+      "2017-11-24"
      ],
-     "images": [
-      {
-       "filename": "nh0301_100_oa.jpg",
-       "caption": "Objectively mapped velocity at 100 m, NH0301",
-       "type": "velocity_plot",
-       "depth_m": 100
-      }
+     "ship": "R/V Sally Ride",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      10,
+      1028
      ],
-     "sonar": "BB150"
+     "instrument": "RDI Ocean Surveyor 150 kHz narrowband + RDI Ocean Surveyor 38 kHz narrowband + RDI Workhorse 300 kHz",
+     "sonar": "OS150NB + OS38NB + WH300",
+     "status": "processed",
+     "ncei_url": null,
+     "ncei_accession": null,
+     "plots_url": null,
+     "jasadcp_url": null,
+     "sac_id": null,
+     "sac_ids": [],
+     "calcofi_cruise": "1711SR",
+     "notes": "CalCOFI cruise 1711SR. 4,422 km of track over 15 days, 29.8°N–35.1°N. Processed in house; not yet submitted to the archive. CODAS databases: SR1717/os150nb, SR1717/os38nb, SR1717/wh300.",
+     "CODAS_dbs": [
+      "cryosat/SR1717/os150nb",
+      "cryosat/SR1717/os38nb",
+      "cryosat/SR1717/wh300"
+     ],
+     "track_key": "SR1717",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "SR1808",
+     "dates": "Jun 2018",
+     "dates_iso": [
+      "2018-06-09",
+      "2018-06-24"
+     ],
+     "ship": "R/V Sally Ride",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      10,
+      812
+     ],
+     "instrument": "RDI Ocean Surveyor 150 kHz narrowband + RDI Ocean Surveyor 38 kHz narrowband + RDI Workhorse 300 kHz",
+     "sonar": "OS150NB + OS38NB + WH300",
+     "status": "processed",
+     "ncei_url": null,
+     "ncei_accession": null,
+     "plots_url": null,
+     "jasadcp_url": null,
+     "sac_id": null,
+     "sac_ids": [],
+     "calcofi_cruise": "1806SR",
+     "notes": "CalCOFI cruise 1806SR. 4,205 km of track over 15 days, 29.8°N–35.1°N. Processed in house; not yet submitted to the archive. CODAS databases: SR1808/os150nb, SR1808/os38nb, SR1808/wh300.",
+     "CODAS_dbs": [
+      "cryosat/SR1808/os150nb",
+      "cryosat/SR1808/os38nb",
+      "cryosat/SR1808/wh300"
+     ],
+     "track_key": "SR1808",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "SR1815",
+     "dates": "Oct 2018",
+     "dates_iso": [
+      "2018-10-14",
+      "2018-10-29"
+     ],
+     "ship": "R/V Sally Ride",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      10,
+      884
+     ],
+     "instrument": "RDI Ocean Surveyor 150 kHz narrowband + RDI Ocean Surveyor 38 kHz narrowband + RDI Workhorse 300 kHz",
+     "sonar": "OS150NB + OS38NB + WH300",
+     "status": "processed",
+     "ncei_url": null,
+     "ncei_accession": null,
+     "plots_url": null,
+     "jasadcp_url": null,
+     "sac_id": null,
+     "sac_ids": [],
+     "calcofi_cruise": "1810SR",
+     "notes": "CalCOFI cruise 1810SR. 4,255 km of track over 15 days, 29.8°N–35.1°N. Processed in house; not yet submitted to the archive. CODAS databases: SR1815/os150nb, SR1815/os38nb.uvship, SR1815/wh300.",
+     "CODAS_dbs": [
+      "cryosat/SR1815/os150nb",
+      "cryosat/SR1815/os38nb.uvship",
+      "cryosat/SR1815/wh300"
+     ],
+     "track_key": "SR1815",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "OC1911A",
+     "dates": "Nov 2019",
+     "dates_iso": [
+      "2019-11-04",
+      "2019-11-19"
+     ],
+     "ship": "R/V Oceanus",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      9,
+      621
+     ],
+     "instrument": "RDI Ocean Surveyor 75 kHz narrowband + RDI Workhorse 300 kHz",
+     "sonar": "OS75NB + WH300",
+     "status": "processed",
+     "ncei_url": null,
+     "ncei_accession": null,
+     "plots_url": null,
+     "jasadcp_url": null,
+     "sac_id": null,
+     "sac_ids": [],
+     "calcofi_cruise": "1911OC",
+     "notes": "CalCOFI cruise 1911OC. 4,511 km of track over 15 days, 29.8°N–35.1°N. Processed in house; not yet submitted to the archive. CODAS databases: OC1911A/os75nb, OC1911A/wh300.",
+     "CODAS_dbs": [
+      "cryosat/OC1911A/os75nb",
+      "cryosat/OC1911A/wh300"
+     ],
+     "track_key": "OC1911A",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "RL2001",
+     "dates": "Jan 2020",
+     "dates_iso": [
+      "2020-01-04",
+      "2020-01-26"
+     ],
+     "ship": "NOAA Ship Reuben Lasker",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      29,
+      589
+     ],
+     "instrument": "RDI Ocean Surveyor 75 kHz narrowband",
+     "sonar": "OS75NB",
+     "status": "processed",
+     "ncei_url": null,
+     "ncei_accession": null,
+     "plots_url": null,
+     "jasadcp_url": null,
+     "sac_id": null,
+     "sac_ids": [],
+     "calcofi_cruise": "2001RL",
+     "notes": "CalCOFI cruise 2001RL. 6,303 km of track over 22 days, 29.8°N–37.8°N. Processed in house; not yet submitted to the archive. CODAS databases: RL2001/os75nb.",
+     "CODAS_dbs": [
+      "cryosat/RL2001/os75nb"
+     ],
+     "track_key": "RL2001",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "SR2004",
+     "dates": "Jul 2020",
+     "dates_iso": [
+      "2020-07-13",
+      "2020-07-27"
+     ],
+     "ship": "R/V Sally Ride",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      10,
+      836
+     ],
+     "instrument": "RDI Ocean Surveyor 150 kHz narrowband + RDI Ocean Surveyor 38 kHz narrowband + RDI Workhorse 300 kHz",
+     "sonar": "OS150NB + OS38NB + WH300",
+     "status": "processed",
+     "ncei_url": null,
+     "ncei_accession": null,
+     "plots_url": null,
+     "jasadcp_url": null,
+     "sac_id": null,
+     "sac_ids": [],
+     "calcofi_cruise": "2007SR",
+     "notes": "CalCOFI cruise 2007SR. 4,302 km of track over 14 days, 29.8°N–35.1°N. Processed in house; not yet submitted to the archive. CODAS databases: SR2004/os150nb, SR2004/os38nb, SR2004/wh300.",
+     "CODAS_dbs": [
+      "cryosat/SR2004/os150nb",
+      "cryosat/SR2004/os38nb",
+      "cryosat/SR2004/wh300"
+     ],
+     "track_key": "SR2004",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "SR2008",
+     "dates": "Oct 2020",
+     "dates_iso": [
+      "2020-10-11",
+      "2020-10-24"
+     ],
+     "ship": "R/V Sally Ride",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      10,
+      764
+     ],
+     "instrument": "RDI Ocean Surveyor 150 kHz narrowband + RDI Ocean Surveyor 38 kHz narrowband + RDI Workhorse 300 kHz",
+     "sonar": "OS150NB + OS38NB + WH300",
+     "status": "processed",
+     "ncei_url": null,
+     "ncei_accession": null,
+     "plots_url": null,
+     "jasadcp_url": null,
+     "sac_id": null,
+     "sac_ids": [],
+     "calcofi_cruise": "2010SR",
+     "notes": "CalCOFI cruise 2010SR. 3,962 km of track over 13 days, 29.8°N–35.1°N. Processed in house; not yet submitted to the archive. CODAS databases: SR2008/os150nb, SR2008/os38nb, SR2008/wh300.",
+     "CODAS_dbs": [
+      "cryosat/SR2008/os150nb",
+      "cryosat/SR2008/os38nb",
+      "cryosat/SR2008/wh300"
+     ],
+     "track_key": "SR2008",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "RL2101",
+     "dates": "Jan–Feb 2021",
+     "dates_iso": [
+      "2021-01-15",
+      "2021-02-05"
+     ],
+     "ship": "NOAA Ship Reuben Lasker",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      29,
+      621
+     ],
+     "instrument": "RDI Ocean Surveyor 75 kHz narrowband",
+     "sonar": "OS75NB",
+     "status": "processed",
+     "ncei_url": null,
+     "ncei_accession": null,
+     "plots_url": null,
+     "jasadcp_url": null,
+     "sac_id": null,
+     "sac_ids": [],
+     "calcofi_cruise": "2101RL",
+     "notes": "CalCOFI cruise 2101RL. 5,707 km of track over 21 days, 29.8°N–36.2°N. Processed in house; not yet submitted to the archive. CODAS databases: RL2101/os75nb.",
+     "CODAS_dbs": [
+      "cryosat/RL2101/os75nb"
+     ],
+     "track_key": "RL2101",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "SH2103",
+     "dates": "May 2021",
+     "dates_iso": [
+      "2021-05-04",
+      "2021-05-14"
+     ],
+     "ship": "NOAA Ship Bell M. Shimada",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      21,
+      477
+     ],
+     "instrument": "RDI Ocean Surveyor 75 kHz broadband + RDI Ocean Surveyor 75 kHz narrowband",
+     "sonar": "OS75BB + OS75NB",
+     "status": "processed",
+     "ncei_url": null,
+     "ncei_accession": null,
+     "plots_url": null,
+     "jasadcp_url": null,
+     "sac_id": null,
+     "sac_ids": [],
+     "calcofi_cruise": "2105SH",
+     "notes": "CalCOFI cruise 2105SH. 3,038 km of track over 10 days, 30.5°N–34.4°N. Processed in house; not yet submitted to the archive. CODAS databases: SH2103/os75bb, SH2103/os75nb.",
+     "CODAS_dbs": [
+      "cryosat/SH2103/os75bb",
+      "cryosat/SH2103/os75nb"
+     ],
+     "track_key": "SH2103",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "SR2105",
+     "dates": "Jul–Aug 2021",
+     "dates_iso": [
+      "2021-07-19",
+      "2021-08-02"
+     ],
+     "ship": "R/V Sally Ride",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      10,
+      1124
+     ],
+     "instrument": "RDI Ocean Surveyor 150 kHz narrowband + RDI Ocean Surveyor 38 kHz narrowband + RDI Workhorse 300 kHz",
+     "sonar": "OS150NB + OS38NB + WH300",
+     "status": "processed",
+     "ncei_url": null,
+     "ncei_accession": null,
+     "plots_url": null,
+     "jasadcp_url": null,
+     "sac_id": null,
+     "sac_ids": [],
+     "calcofi_cruise": "2107SR",
+     "notes": "CalCOFI cruise 2107SR. 4,247 km of track over 15 days, 29.8°N–35.1°N. Processed in house; not yet submitted to the archive. CODAS databases: SR2105/os150nb, SR2105/os38nb, SR2105/wh300.",
+     "CODAS_dbs": [
+      "cryosat/SR2105/os150nb",
+      "cryosat/SR2105/os38nb",
+      "cryosat/SR2105/wh300"
+     ],
+     "track_key": "SR2105",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "SR2112",
+     "dates": "Oct–Nov 2021",
+     "dates_iso": [
+      "2021-10-31",
+      "2021-11-15"
+     ],
+     "ship": "R/V Sally Ride",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      10,
+      1148
+     ],
+     "instrument": "RDI Ocean Surveyor 38 kHz narrowband + RDI Workhorse 300 kHz",
+     "sonar": "OS38NB + WH300",
+     "status": "processed",
+     "ncei_url": null,
+     "ncei_accession": null,
+     "plots_url": null,
+     "jasadcp_url": null,
+     "sac_id": null,
+     "sac_ids": [],
+     "calcofi_cruise": "2111SR",
+     "notes": "CalCOFI cruise 2111SR. 4,300 km of track over 15 days, 29.8°N–35.1°N. Processed in house; not yet submitted to the archive. CODAS databases: SR2112/os38nb, SR2112/wh300.",
+     "CODAS_dbs": [
+      "cryosat/SR2112/os38nb",
+      "cryosat/SR2112/wh300"
+     ],
+     "track_key": "SR2112",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "SH2204",
+     "dates": "Apr 2022",
+     "dates_iso": [
+      "2022-04-07",
+      "2022-04-28"
+     ],
+     "ship": "NOAA Ship Bell M. Shimada",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      21,
+      501
+     ],
+     "instrument": "RDI Ocean Surveyor 75 kHz narrowband",
+     "sonar": "OS75NB",
+     "status": "processed",
+     "ncei_url": null,
+     "ncei_accession": null,
+     "plots_url": null,
+     "jasadcp_url": null,
+     "sac_id": null,
+     "sac_ids": [],
+     "calcofi_cruise": "2204SH",
+     "notes": "CalCOFI cruise 2204SH. 6,274 km of track over 20 days, 29.8°N–37.8°N. Processed in house; not yet submitted to the archive. CODAS databases: SH2204/os75nb.",
+     "CODAS_dbs": [
+      "cryosat/SH2204/os75nb"
+     ],
+     "track_key": "SH2204",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "SR2211",
+     "dates": "Nov 2022",
+     "dates_iso": [
+      "2022-11-06",
+      "2022-11-20"
+     ],
+     "ship": "R/V Sally Ride",
+     "region": "S. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      10,
+      980
+     ],
+     "instrument": "RDI Ocean Surveyor 38 kHz narrowband + RDI Workhorse 300 kHz",
+     "sonar": "OS38NB + WH300",
+     "status": "processed",
+     "ncei_url": null,
+     "ncei_accession": null,
+     "plots_url": null,
+     "jasadcp_url": null,
+     "sac_id": null,
+     "sac_ids": [],
+     "calcofi_cruise": "2211SR",
+     "notes": "CalCOFI cruise 2211SR. 4,059 km of track over 15 days, 29.8°N–35.1°N. Processed in house; not yet submitted to the archive. CODAS databases: SR2211/os38nb, SR2211/wh300.",
+     "CODAS_dbs": [
+      "cryosat_2023/SR2211/os38nb",
+      "cryosat_2023/SR2211/wh300"
+     ],
+     "track_key": "SR2211",
+     "track": [],
+     "stations": [],
+     "images": []
+    },
+    {
+     "id": "RL2302",
+     "dates": "Jan 2023",
+     "dates_iso": [
+      "2023-01-06",
+      "2023-01-26"
+     ],
+     "ship": "NOAA Ship Reuben Lasker",
+     "region": "S. & C. California",
+     "pi": "T.K. Chereskin",
+     "depths_m": [
+      29,
+      573
+     ],
+     "instrument": "RDI Ocean Surveyor 75 kHz narrowband",
+     "sonar": "OS75NB",
+     "status": "processed",
+     "ncei_url": null,
+     "ncei_accession": null,
+     "plots_url": null,
+     "jasadcp_url": null,
+     "sac_id": null,
+     "sac_ids": [],
+     "calcofi_cruise": "2301RL",
+     "notes": "CalCOFI cruise 2301RL. 5,181 km of track over 20 days, 29.8°N–37.5°N. Processed in house; not yet submitted to the archive. CODAS databases: RL2302/os75nb.",
+     "CODAS_dbs": [
+      "cryosat_2023/RL2302/os75nb"
+     ],
+     "track_key": "RL2302",
+     "track": [],
+     "stations": [],
+     "images": []
     }
    ]
   }

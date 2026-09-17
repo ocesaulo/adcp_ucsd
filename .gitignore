@@ -1,10 +1,13 @@
 # Manually curated per-cruise image files are not committed (uploaded
-# separately per admin.html). Site-wide chrome — the generated Antarctic
-# CODAS gallery and the harvested branding assets (logos, hero photos) used
-# on every page load — are reproducible static portal assets and are versioned.
+# separately per admin.html). Site-wide chrome — the generated Antarctic and
+# CalCOFI CODAS galleries and the harvested branding assets (logos, hero
+# photos) used on every page load — are reproducible static portal assets and
+# are versioned.
 images/*
 !images/antarctic-webpy/
 !images/antarctic-webpy/**
+!images/calcofi-webpy/
+!images/calcofi-webpy/**
 !images/branding/
 !images/branding/**
 

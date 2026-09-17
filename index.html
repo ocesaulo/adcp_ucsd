@@ -218,10 +218,13 @@ nav a.active { background: var(--teal); color: #fff; }
 }
 .gal-btn.active, .gal-btn:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
 .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
-/* Two sonars over the same window belong side by side, so a paired cruise
-   gets exactly two columns: one section per row, deeper sonar on the left. */
-.gallery-grid.paired { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-@media (max-width: 700px) { .gallery-grid.paired { grid-template-columns: 1fr; } }
+/* The sonars of a cruise cover the same window, so they belong side by side:
+   one column each, one section per row, deepest sonar on the left. The
+   Antarctic cruises publish two; a CalCOFI Sally Ride cruise publishes three. */
+.gallery-grid.sonars-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.gallery-grid.sonars-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1000px) { .gallery-grid.sonars-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .gallery-grid.sonars-2, .gallery-grid.sonars-3 { grid-template-columns: 1fr; } }
 .gal-item {
   border-radius: 10px; overflow: hidden; border: 1px solid var(--border);
   cursor: pointer; transition: .15s; background: var(--sand);
@@ -689,25 +692,40 @@ footer a:hover { color: #fff; }
 let SITE = null;          // populated after load
 let TRACKS = {};          // measured ship tracks, keyed by cruise id
 let TRACK_META = null;    // header of the tracks file (provenance)
-let WEBPY_GALLERY = {};   // Antarctic CODAS figures, keyed by cruise id
+let WEBPY_GALLERY = {};   // CODAS section figures, keyed by cruise id
 let CALIBRATIONS = null;  // calibration tables harvested from the original portal
 let webpyGalleryLoaded = false; // true once the manifest fetch has succeeded
 let selectedGalleryCruise = null;
+let galleryProjId = null;  // the project whose CODAS gallery DOM is on screen
 let mapsInitialized = {}; // track which Leaflet maps are built
 let mapCruiseLayers = {}; // per-project, per-cruise LayerGroups
 let mapCruiseLines  = {}; // per-project, per-cruise track polylines (for highlighting)
 
 /* Files holding measured tracks + depth-coverage statistics, produced from the
-   CODAS databases by make_drake_passage_web_tracks.py (see _README). */
-const TRACK_FILES = ['data/drake_passage_tracks.json'];
-const WEBPY_GALLERY_FILE = 'data/antarctic_webpy_gallery.json';
+   CODAS databases by make_drake_passage_web_tracks.py and
+   make_calcofi_web_tracks.py (see _README). Cruise ids are unique across the
+   projects, so the two files share one TRACKS index. */
+const TRACK_FILES = ['data/drake_passage_tracks.json', 'data/calcofi_tracks.json'];
+const WEBPY_GALLERY_FILES = ['data/antarctic_webpy_gallery.json',
+                             'data/calcofi_webpy_gallery.json'];
 const CALIBRATION_FILE = 'data/calibrations.json';
 
-/* Series colours for the coverage charts, one per sonar. */
-const SONAR_COLORS = { nb150: '#0e8c7a', os38nb: '#c9832e', os38bb: '#7c5cbf' };
-const SONAR_NAMES  = { nb150: 'NB150', os38nb: 'OS38NB', os38bb: 'OS38BB' };
+/* The projects whose Plots button opens a generated CODAS section gallery
+   rather than linking out to a static plot page. */
+const CODAS_GALLERY_PROJECTS = ['antarctic', 'calcofi'];
+function hasCodasGallery(projId) { return CODAS_GALLERY_PROJECTS.includes(projId); }
 
-/* JASADCP page for a database's SAC id. 'unsubmitted' marks the 2019-onwards
+/* Series colours for the coverage charts, one per sonar. The California
+   Current cruises run an Ocean Surveyor pair and a Workhorse alongside the
+   150 kHz narrowband the Drake Passage series uses. */
+const SONAR_COLORS = { nb150: '#0e8c7a', os38nb: '#c9832e', os38bb: '#7c5cbf',
+                       os75nb: '#2874c5', os75bb: '#5aa0e0', os150nb: '#b8477e',
+                       os150bb: '#d4799f', wh300: '#6a9a2e' };
+const SONAR_NAMES  = { nb150: 'NB150', os38nb: 'OS38NB', os38bb: 'OS38BB',
+                       os75nb: 'OS75NB', os75bb: 'OS75BB', os150nb: 'OS150NB',
+                       os150bb: 'OS150BB', wh300: 'WH300' };
+
+/* JASADCP page for a database's SAC id. 'unsubmitted' marks the in-house
    loads that have not been sent to the archive, and gets no link. */
 const JASADCP_DB = 'https://uhslc.soest.hawaii.edu/sadcp/DATABASE/';
 /* Readable name for the load a database came from. UHDAS and JAS-ADCP loads
@@ -718,6 +736,25 @@ function loadLabel(dbDir) {
   const parts = String(dbDir || '').split('/').filter(Boolean);
   if (parts.length < 2) return dbDir || '';
   return /^\d{7}$/.test(parts[0]) ? 'NCEI ' + parts[0] : parts[parts.length - 1];
+}
+
+/* The Plots links of a cruise row and of its coverage drawer.
+
+   A project with a generated CODAS gallery gets a button that opens it. Where
+   the project also names an external plot page worth keeping (project.
+   plots_link_label — the CalCOFI rows link the 2008 Digital Atlas page of
+   objectively mapped velocity, which the section figures do not replace) the
+   outside link is shown beside the button; otherwise the button replaces it,
+   which is what the Antarctic rows want from a plots_url pointing only at the
+   old portal's front door. */
+function plotsLinks(p, cruise, track) {
+  const gallery = hasCodasGallery(p.id) && track && WEBPY_GALLERY[cruise.id]
+    ? `<button type="button" class="lnk-plots" onclick="openWebpyGallery('${cruise.id}')">Plots</button>`
+    : '';
+  const outside = cruise.plots_url && (!gallery || p.plots_link_label)
+    ? `<a class="lnk-plots" href="${cruise.plots_url}" target="_blank">${p.plots_link_label || 'Plots'}</a>`
+    : '';
+  return gallery + outside;
 }
 
 function sacLink(sac, published) {
@@ -776,14 +813,18 @@ async function loadCalibrations() {
 }
 
 async function loadWebpyGallery() {
-  try {
-    const r = await fetch(WEBPY_GALLERY_FILE, {cache: 'no-store'});
-    if (!r.ok) throw new Error(r.status + ' ' + r.statusText);
-    const d = await r.json();
-    WEBPY_GALLERY = Object.fromEntries((d.cruises || []).map(c => [c.cruise_id, c]));
-    webpyGalleryLoaded = true;
-  } catch(e) {
-    console.warn('Could not load ' + WEBPY_GALLERY_FILE + ':', e);
+  for (const f of WEBPY_GALLERY_FILES) {
+    try {
+      const r = await fetch(f, {cache: 'no-store'});
+      if (!r.ok) throw new Error(r.status + ' ' + r.statusText);
+      const d = await r.json();
+      (d.cruises || []).forEach(c => { WEBPY_GALLERY[c.cruise_id] = c; });
+      // One manifest is enough to say the gallery is published; a project
+      // whose manifest is missing simply has no cruises in the index.
+      webpyGalleryLoaded = true;
+    } catch(e) {
+      console.warn('Could not load ' + f + ':', e);
+    }
   }
 }
 
@@ -852,54 +893,44 @@ const EMBEDDED_DATA = {
       ]
     },
     {
-      id: "calcofi", name: "CalCOFI — California Cooperative Cruises", short_name: "CalCOFI",
+      id: "calcofi", name: "California Cooperative Oceanic Fisheries Investigations (CalCOFI) Cruises", short_name: "CalCOFI",
       region: "California Current System", color: "#c9832e", color_light: "#fdf0e0",
-      vessel: "R/V New Horizon", years: "1993–2003",
+      vessel: "NOAA Ship Bell M. Shimada, NOAA Ship David Starr Jordan, R/V New Horizon, R/V Oceanus, NOAA Ship Reuben Lasker, R/V Roger Revelle, R/V Sally Ride",
+      years: "1993\u20132023",
       logo: "branding/calcofi_logo.png", header_image: "branding/calcofi_header.jpg", header_credit: "Channel Islands, California — photo by Jamie Holte",
       illustration_image: "branding/calcofi_illustration.jpg", illustration_credit: "Objectively mapped 100 m velocity, cruise NH9310",
-      description: "A decade of quarterly ADCP measurements off Southern and Central California as part of the CalCOFI program.",
-      project_description: "A decade of quarterly ADCP measurements off Southern and Central California as part of the CalCOFI program.",
-      methods_text: "RDI 150 kHz NB instrument. CODAS3 processing. Objective mapping to produce velocity streamfunctions.",
-      map_center: [33.5, -121.5], map_zoom: 6,
-      references: [
-        "Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619–22629.",
-        "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography."
-      ],
+      description: "Three decades of shipboard ADCP measurements of upper-ocean currents off southern and central California, made on the quarterly cruises of the California Cooperative Oceanic Fisheries Investigations (CalCOFI).",
+      project_description: "CalCOFI has occupied the same station grid off southern California since 1949, and since 1993 the Chereskin Lab has measured the currents over it with a shipboard ADCP. The quarterly cruises trace the California Current, the eastern limb of the North Pacific subtropical gyre, as it carries cool, fresh subarctic water equatorward past the coast, together with the poleward California Undercurrent beneath it and the eddies and filaments that carry water offshore. Because the grid is reoccupied four times a year on fixed lines, the velocity sections stack into a record long enough to separate the seasonal cycle from interannual signals \u2014 the 1997\u201398 El Ni\u00f1o, the warm anomaly of 2014\u201316 \u2014 and to be read alongside the hydrography, nutrients and plankton the same stations have collected for seventy years. The first decade of the record, 1993\u20132004, was mapped objectively to velocity streamfunctions consistent with geostrophy and published as the CalCOFI ADCP Digital Atlas (Chereskin and Trunnell, 1996; Chereskin, 2008); the 2017-onwards cruises are processed in house and carry up to three sonars each, reaching past 1,000 m where the 38 kHz Ocean Surveyor is fitted.",
+      methods_text: "The 1993\u20132009 cruises were measured with a hull-mounted RDI 150 kHz narrowband ADCP and processed with CODAS3; all forty were submitted to the Joint Archive for Shipboard ADCP and are archived at NOAA/NCEI. Objective mapping was applied to the 1993\u20132004 cruises to produce velocity streamfunctions consistent with geostrophy, which is what the CalCOFI ADCP Digital Atlas publishes at 50 m and 100 m. The 2017-onwards cruises were logged with UHDAS and processed with CODAS in house: an Ocean Surveyor 75 kHz on the NOAA ships, and an Ocean Surveyor 38 kHz, an Ocean Surveyor 150 kHz and a Workhorse 300 kHz together on R/V Sally Ride, the three sonars covering the water column from about 10 m to beyond 1,000 m.",
+      map_center: [34.5, -121.5], map_zoom: 6,
+      plots_link_label: "Atlas",
+      references: ["Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619\u201322629.", "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography."],
       cruises: [
-        { id:"NH9310", dates:"Oct 1993", ship:"R/V New Horizon", region:"S. California", sonar:"NB150", instrument:"RDI 150 kHz NB", status:"processed",
-          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9310",
-          plots_url:"https://adcp.ucsd.edu/calcofi/1993/nh9310/nh9310.htm", notes:"First cruise of program.",
-          track:[[34.5,-120.8],[33.8,-120.2],[33.2,-119.5],[32.5,-118.8],[31.8,-118.0],[31.2,-117.5]],
-          stations:[{lat:34.5,lng:-120.8,label:"80.55"},{lat:33.5,lng:-119.8,label:"83.55"},{lat:32.5,lng:-118.8,label:"86.70"},{lat:31.8,lng:-118.0,label:"90.70"}],
-          images:[{filename:"nh9310_100_oa.jpg",caption:"Objectively mapped velocity at 100 m, NH9310",type:"velocity_plot",depth_m:100},{filename:"nh9310_30_oa.jpg",caption:"Objectively mapped velocity at 30 m, NH9310",type:"velocity_plot",depth_m:30},{filename:"nh9310_track.jpg",caption:"Cruise track and CalCOFI grid, NH9310",type:"station_map"}] },
-        { id:"NH9401", dates:"Jan 1994", ship:"R/V New Horizon", region:"S. California", sonar:"NB150", instrument:"RDI 150 kHz NB", status:"processed",
-          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9401",
-          plots_url:"https://adcp.ucsd.edu/calcofi/", notes:"Winter cruise.",
-          track:[[34.2,-121.0],[33.5,-120.5],[32.8,-119.5],[32.0,-118.5],[31.3,-117.8]],
-          stations:[{lat:34.2,lng:-121.0,label:"80.51"},{lat:33.0,lng:-119.8,label:"83.55"},{lat:31.8,lng:-118.2,label:"90.70"}],
-          images:[{filename:"nh9401_100_oa.jpg",caption:"Objectively mapped velocity at 100 m, NH9401",type:"velocity_plot",depth_m:100}] },
-        { id:"NH9407", dates:"Jul 1994", ship:"R/V New Horizon", region:"S.–C. California", sonar:"NB150", instrument:"RDI 150 kHz NB", status:"processed",
-          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9407",
-          plots_url:"https://adcp.ucsd.edu/calcofi/", notes:"Summer survey.",
-          track:[[36.5,-122.5],[35.5,-121.8],[34.5,-120.8],[33.5,-119.8],[32.5,-118.8],[31.5,-117.8]],
-          stations:[{lat:36.5,lng:-122.5,label:"70.45"},{lat:34.8,lng:-121.0,label:"80.55"},{lat:33.0,lng:-119.5,label:"86.70"}],
-          images:[] },
-        { id:"NH9501", dates:"Jan 1995", ship:"R/V New Horizon", region:"S. California", sonar:"NB150", instrument:"RDI 150 kHz NB", status:"processed",
-          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9501",
-          plots_url:"https://adcp.ucsd.edu/calcofi/", notes:"El Niño winter.",
-          track:[[34.0,-120.9],[33.2,-120.1],[32.5,-119.2],[31.8,-118.3],[31.2,-117.6]],
-          stations:[{lat:33.5,lng:-120.2,label:"83.55"},{lat:32.5,lng:-119.2,label:"86.70"}], images:[] },
-        { id:"NH9601", dates:"Jan 1996", ship:"R/V New Horizon", region:"S.–C. California", sonar:"NB150", instrument:"RDI 150 kHz NB", status:"archived",
-          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH9601",
-          plots_url:"https://adcp.ucsd.edu/calcofi/", notes:"Extended grid cruise.",
-          track:[[36.2,-122.8],[35.2,-122.0],[34.2,-121.0],[33.2,-120.0],[32.2,-118.8],[31.2,-117.7]],
-          stations:[{lat:35.2,lng:-122.0,label:"73.45"},{lat:33.5,lng:-120.2,label:"83.55"},{lat:31.8,lng:-118.2,label:"90.70"}], images:[] },
-        { id:"NH0301", dates:"Jan 2003", ship:"R/V New Horizon", region:"S. California", sonar:"BB150", instrument:"RDI 150 kHz BB", status:"processed",
-          ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=NH0301",
-          plots_url:"https://adcp.ucsd.edu/calcofi/", notes:"Final cruise. Broadband instrument.",
-          track:[[33.8,-120.6],[33.0,-119.9],[32.3,-119.1],[31.6,-118.2],[31.0,-117.5]],
-          stations:[{lat:33.0,lng:-119.9,label:"83.55"},{lat:32.3,lng:-119.1,label:"86.70"},{lat:31.6,lng:-118.2,label:"90.70"}],
-          images:[{filename:"nh0301_100_oa.jpg",caption:"Objectively mapped velocity at 100 m, NH0301",type:"velocity_plot",depth_m:100}] }
+        { id:"NH9310", dates:"Oct 1993", ship:"R/V New Horizon", region:"S. California", sonar:"NB150", instrument:"RDI 150 kHz narrowband", status:"archived",
+          ncei_url:"https://www.ncei.noaa.gov/archive/accession/0049878", jasadcp_url:"https://uhslc.soest.hawaii.edu/sadcp/DATABASE/00410.html", plots_url:"https://adcp.ucsd.edu/calcofi/1993/nh9310/nh9310.htm",
+          notes:"CalCOFI cruise 9310NH. 4,702 km of track over 18 days, 29.8\u00b0N\u201335.1\u00b0N. JASADCP SAC ID 00410 (NB150).",
+          track:[[32.93, -117.37], [32.23, -118.79], [31.53, -120.23], [30.87, -121.64], [30.1, -123.16], [30.77, -123.33], [31.6, -121.22], [32.38, -120.02], [33.19, -118.42], [33.58, -118.02], [33.31, -119.7], [31.99, -122.4], [32.22, -123.49], [33.55, -120.8], [34.12, -119.72]],
+          stations:[], images:[] },
+        { id:"DJ9802", dates:"Jan\u2013Feb 1998", ship:"NOAA Ship David Starr Jordan", region:"S. & C. California", sonar:"NB150", instrument:"RDI 150 kHz narrowband", status:"archived",
+          ncei_url:"https://www.ncei.noaa.gov/archive/accession/0049878", jasadcp_url:"https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01114.html", plots_url:"https://adcp.ucsd.edu/calcofi/1998/dj9802/dj9802.htm",
+          notes:"CalCOFI cruise 9802DJ. 6,029 km of track over 22 days, 29.8\u00b0N\u201336.7\u00b0N. JASADCP SAC ID 01114 (NB150).",
+          track:[[33.45, -117.74], [33.66, -118.97], [33.33, -119.65], [33.02, -120.35], [32.33, -121.71], [31.32, -123.74], [32.23, -123.48], [32.69, -122.59], [32.77, -121.99], [33.1, -121.82], [32.92, -122.15], [33.17, -121.51], [33.21, -121.5], [33.76, -120.38], [34.22, -119.45]],
+          stations:[], images:[] },
+        { id:"NH0310", dates:"Oct\u2013Nov 2003", ship:"R/V New Horizon", region:"S. California", sonar:"NB150", instrument:"RDI 150 kHz narrowband", status:"archived",
+          ncei_url:"https://www.ncei.noaa.gov/archive/accession/0049878", jasadcp_url:"https://uhslc.soest.hawaii.edu/sadcp/DATABASE/01132.html", plots_url:"https://adcp.ucsd.edu/calcofi/2003/nh0310/nh0310.htm",
+          notes:"CalCOFI cruise 0310NH. 4,372 km of track over 15 days, 29.8\u00b0N\u201335.1\u00b0N. JASADCP SAC ID 01132 (NB150).",
+          track:[[32.96, -117.31], [31.98, -119.28], [30.55, -122.3], [30.88, -123.12], [32.42, -119.96], [33.43, -117.71], [33.5, -119.32], [32.11, -122.17], [32.26, -123.5], [33.75, -120.42], [34.27, -120.01], [33.54, -122.41], [33.72, -123.64], [35.02, -120.92], [32.98, -117.74]],
+          stations:[], images:[] },
+        { id:"SR1808", dates:"Jun 2018", ship:"R/V Sally Ride", region:"S. California", sonar:"OS150NB + OS38NB + WH300", instrument:"RDI Ocean Surveyor 150 kHz narrowband + RDI Ocean Surveyor 38 kHz narrowband + RDI Workhorse 300 kHz", status:"processed",
+          ncei_url:null, jasadcp_url:null, plots_url:null,
+          notes:"CalCOFI cruise 1806SR. 4,205 km of track over 15 days, 29.8\u00b0N\u201335.1\u00b0N. Processed in house; not yet submitted to the archive. CODAS databases: SR1808/os150nb, SR1808/os38nb, SR1808/wh300.",
+          track:[[32.65, -117.23], [32.52, -118.22], [31.47, -120.34], [30.43, -124.0], [31.76, -121.34], [33.2, -118.39], [33.88, -118.45], [33.1, -120.12], [31.91, -124.17], [33.34, -121.24], [33.83, -121.86], [33.72, -123.65], [34.92, -121.12], [34.27, -120.04]],
+          stations:[], images:[] },
+        { id:"RL2302", dates:"Jan 2023", ship:"NOAA Ship Reuben Lasker", region:"S. & C. California", sonar:"OS75NB", instrument:"RDI Ocean Surveyor 75 kHz narrowband", status:"processed",
+          ncei_url:null, jasadcp_url:null, plots_url:null,
+          notes:"CalCOFI cruise 2301RL. 5,181 km of track over 20 days, 29.8\u00b0N\u201337.5\u00b0N. Processed in house; not yet submitted to the archive. CODAS databases: RL2302/os75nb.",
+          track:[[33.96, -119.67], [32.33, -121.67], [31.66, -123.08], [31.92, -124.16], [32.6, -122.81], [33.71, -120.48], [34.27, -120.01], [34.38, -120.67], [33.94, -121.6], [33.15, -123.22], [33.2, -123.24], [33.72, -122.97], [34.75, -121.49], [35.63, -121.27]],
+          stations:[], images:[] }
       ]
     }
   ]
@@ -908,6 +939,12 @@ const EMBEDDED_DATA = {
 /* ════════════════════════════════════════════════════════
    SITE INITIALIZATION
    ════════════════════════════════════════════════════════ */
+/* A ship without its operator prefix — 'NOAA Ship Bell M. Shimada' is listed
+   under Bell M. Shimada, beside Laurence M. Gould and Sally Ride. */
+function shipName(vessel) {
+  return String(vessel || '').replace(/^(ARSV|RVIB|FSV|R\/V|NOAA Ship)\s+/, '');
+}
+
 function initSite() {
   const s = SITE;
   // Footer
@@ -936,7 +973,7 @@ function initSite() {
   // Removed measured track tile as requested
   document.getElementById('home-stats').innerHTML = `
     <div class="stat"><div class="stat-lbl">Total Cruises</div><div class="stat-val">${totalCruises}</div><div class="stat-note">Across ${s.projects.length} programs</div></div>
-    <div class="stat"><div class="stat-lbl">Research Vessels</div><div class="stat-val">${vessels.length}</div><div class="stat-note">${vessels.map(v=>v.replace('ARSV ','').replace('R/V ','')).join(' · ')}</div></div>
+    <div class="stat"><div class="stat-lbl">Research Vessels</div><div class="stat-val">${vessels.length}</div><div class="stat-note">${vessels.map(shipName).sort().join(' · ')}</div></div>
     <div class="stat"><div class="stat-lbl">Programs</div><div class="stat-val">${s.projects.length}</div><div class="stat-note">${s.projects.map(p=>p.short_name).join(' · ')}</div></div>
     `;
 
@@ -1178,6 +1215,12 @@ function showProject(projId, push = true) {
   const p = SITE.projects.find(x => x.id === projId);
   if (!p) return;
 
+  // A gallery selection belongs to the project that made it; carrying an
+  // Antarctic cruise over to the CalCOFI page would render its figures into
+  // the wrong grid.
+  if (galleryProjId !== projId) selectedGalleryCruise = null;
+  galleryProjId = hasCodasGallery(projId) ? projId : null;
+
   // Update nav
   document.querySelectorAll('nav a').forEach(a => {
     a.classList.toggle('active', a.textContent.toLowerCase().includes(projId === 'calcofi' ? 'calcofi' : 'antarctic'));
@@ -1274,14 +1317,14 @@ function buildProjectHTML(p) {
     <div class="panel">
       <div class="panel-hdr">
         <div>
-          <div class="panel-title">${p.id === 'antarctic' ? 'CODAS Plot Gallery' : 'Image Gallery'}</div>
-          <div class="panel-sub">${p.id === 'antarctic' ? 'Three to six section figures per sonar — u, v, signal amplitude and percent good — '
+          <div class="panel-title">${hasCodasGallery(p.id) ? 'CODAS Plot Gallery' : 'Image Gallery'}</div>
+          <div class="panel-sub">${hasCodasGallery(p.id) ? 'Section figures per sonar — u, v, signal amplitude and percent good — '
               + 'rendered from the CODAS database with pycurrents.' : 'Velocity plots, cruise photos, and station maps. Click to enlarge.'}</div>
         </div>
-        <span class="panel-count" id="gallery-count-${p.id}">${p.id === 'antarctic' ? 'Select a track' : totalImgs + ' images'}</span>
+        <span class="panel-count" id="gallery-count-${p.id}">${hasCodasGallery(p.id) ? 'Select a track' : totalImgs + ' images'}</span>
       </div>
       <div class="gallery-outer">
-        ${p.id === 'antarctic'
+        ${hasCodasGallery(p.id)
           ? `<div id="gallery-selection-${p.id}" class="gallery-selection">Use a cruise's Plots button to view its CODAS section figures.</div>`
           : `<div class="gallery-controls">
           <button class="gal-btn active" onclick="filterGallery('${p.id}', 'all', this)">All</button>
@@ -1292,12 +1335,12 @@ function buildProjectHTML(p) {
         </div>`}
         <div class="gallery-grid" id="gallery-${p.id}">`;
 
-  if (p.id === 'antarctic') {
+  if (hasCodasGallery(p.id)) {
     html += `<div class="no-images" style="grid-column:1/-1">No cruise is selected.</div>`;
   }
 
   let hasAnyImages = false;
-  if (p.id !== 'antarctic') p.cruises.forEach(c => {
+  if (!hasCodasGallery(p.id)) p.cruises.forEach(c => {
     c.images.forEach(img => {
       hasAnyImages = true;
       const typeLabels = {velocity_plot:'Velocity Plot', station_map:'Station Map', cruise_photo:'Photo', echo_intensity:'Echo Intensity', calibration:'Calibration'};
@@ -1320,7 +1363,7 @@ function buildProjectHTML(p) {
     });
   });
 
-  if (p.id !== 'antarctic' && !hasAnyImages) {
+  if (!hasCodasGallery(p.id) && !hasAnyImages) {
     html += `<div class="no-images" style="grid-column:1/-1">No images have been added for this project yet. Add image filenames and captions to <code>site_data.json</code> and place image files in the <code>images/</code> folder.</div>`;
   }
 
@@ -1403,9 +1446,7 @@ function buildProjectHTML(p) {
                 ${c.ncei_url ? `<a class="lnk-ncei" href="${c.ncei_url}" target="_blank">
                   <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 6h8M6 2l4 4-4 4"/></svg>NCEI
                 </a>` : ''}
-                ${p.id === 'antarctic' && t
-                  ? `<button type="button" class="lnk-plots" onclick="openWebpyGallery('${c.id}')">Plots</button>`
-                  : (c.plots_url ? `<a class="lnk-plots" href="${c.plots_url}" target="_blank">Plots</a>` : '')}
+                ${plotsLinks(p, c, t)}
                 ${c.jasadcp_url ? `<a class="lnk-jasadcp" href="${c.jasadcp_url}" target="_blank">JASADCP</a>` : ''}
               </td>
             </tr>`;
@@ -1451,7 +1492,7 @@ function buildProjectHTML(p) {
     </div>` : ''}`;
 
   document.getElementById('proj-content').innerHTML = html;
-  if (p.id === 'antarctic' && selectedGalleryCruise) {
+  if (hasCodasGallery(p.id) && selectedGalleryCruise) {
     renderWebpyGallery(selectedGalleryCruise);
   }
 }
@@ -1576,7 +1617,7 @@ function initProjectMap(p) {
   if (document.querySelector(`#cruise-sel-${p.id} .cruise-sel-yr[data-year="2000"]`)) {
     setCruisesYear(p.id, '2000');
   }
-  if (p.id === 'antarctic' && !selectedGalleryCruise) {
+  if (hasCodasGallery(p.id) && !selectedGalleryCruise) {
     const first2000Gallery = p.cruises.find(c => cruiseYear(c) === '2000' && WEBPY_GALLERY[c.id]);
     if (first2000Gallery) selectWebpyGallery(first2000Gallery.id);
   }
@@ -1710,6 +1751,21 @@ function fmtLon(v, dec = 2) {
     : `${Math.abs(v).toFixed(dec)}°${v < 0 ? 'W' : 'E'}`;
 }
 
+/* The fourth stat card, which is the one thing about a cruise that differs by
+   series. A Drake Passage cruise is measured by its crossings of 60°S; a
+   CalCOFI cruise crosses nothing, and what separates one from the next is how
+   deep its sonars reached, so the tracks file carries deepest_50pct_m instead.
+   Older tracks files carry neither and get no fourth card. */
+function coverageFourthStat(t) {
+  if (t.n_drake_crossings !== undefined && t.n_drake_crossings !== null) {
+    return `<div class="cov-stat"><div class="k">60°S</div><div class="v">${t.n_drake_crossings}</div><div class="u">crossing${t.n_drake_crossings === 1 ? '' : 's'}</div></div>`;
+  }
+  if (t.deepest_50pct_m) {
+    return `<div class="cov-stat"><div class="k">Reach</div><div class="v">${Math.round(t.deepest_50pct_m)}</div><div class="u">m at 50% coverage</div></div>`;
+  }
+  return '';
+}
+
 function openCoverage(projId, cruiseId) {
   const p = SITE.projects.find(x => x.id === projId);
   const cruise = p && p.cruises.find(c => c.id === cruiseId);
@@ -1747,8 +1803,8 @@ function openCoverage(projId, cruiseId) {
       <div class="cov-stats">
         <div class="cov-stat"><div class="k">Track</div><div class="v">${fmtInt(t.track_length_km)}</div><div class="u">km measured</div></div>
         <div class="cov-stat"><div class="k">Duration</div><div class="v">${Math.round(t.duration_days)}</div><div class="u">days</div></div>
-        <div class="cov-stat"><div class="k">Profiles</div><div class="v">${fmtInt(t.n_ens_valid)}</div><div class="u">valid u, v${inst.length > 1 ? ' (both sonars)' : ''}</div></div>
-        <div class="cov-stat"><div class="k">60°S</div><div class="v">${t.n_drake_crossings}</div><div class="u">crossing${t.n_drake_crossings === 1 ? '' : 's'}</div></div>
+        <div class="cov-stat"><div class="k">Profiles</div><div class="v">${fmtInt(t.n_ens_valid)}</div><div class="u">valid u, v${inst.length > 1 ? ` (all ${inst.length} sonars)` : ''}</div></div>
+        ${coverageFourthStat(t)}
       </div>
 
       <div class="cov-extent">
@@ -1811,9 +1867,7 @@ function openCoverage(projId, cruiseId) {
       <div class="cov-links">
         ${cruise.ncei_url ? `<a class="lnk-ncei" href="${cruise.ncei_url}" target="_blank">NCEI accession</a>` : ''}
         ${cruise.jasadcp_url ? `<a class="lnk-jasadcp" href="${cruise.jasadcp_url}" target="_blank">JASADCP</a>` : ''}
-        ${p.id === 'antarctic'
-          ? `<button type="button" class="lnk-plots" onclick="openWebpyGallery('${cruise.id}')">Plots</button>`
-          : (cruise.plots_url ? `<a class="lnk-plots" href="${cruise.plots_url}" target="_blank">Plots</a>` : '')}
+        ${plotsLinks(p, cruise, t)}
       </div>
     </div>`;
 
@@ -1993,19 +2047,19 @@ function selectWebpyGallery(cruiseId) {
 function openWebpyGallery(cruiseId) {
   selectWebpyGallery(cruiseId);
   closeCoverage();
-  const gallery = document.getElementById('gallery-antarctic');
+  const gallery = document.getElementById('gallery-' + galleryProjId);
   const panel = gallery && gallery.closest('.panel');
   if (panel) panel.scrollIntoView({block: 'start', behavior: 'smooth'});
 }
 
 function clearWebpyGallery() {
   selectedGalleryCruise = null;
-  const selection = document.getElementById('gallery-selection-antarctic');
-  const gallery = document.getElementById('gallery-antarctic');
-  const count = document.getElementById('gallery-count-antarctic');
+  const selection = document.getElementById('gallery-selection-' + galleryProjId);
+  const gallery = document.getElementById('gallery-' + galleryProjId);
+  const count = document.getElementById('gallery-count-' + galleryProjId);
   if (!selection || !gallery || !count) return;
   selection.textContent = 'Use a cruise\'s Plots button to view its CODAS section figures.';
-  gallery.classList.remove('paired');
+  setGallerySonarColumns(gallery, 1);
   gallery.innerHTML = '<div class="no-images" style="grid-column:1/-1">No cruise is selected.</div>';
   count.textContent = 'Select a track';
 }
@@ -2023,6 +2077,20 @@ const WEBPY_FAMILY_LABELS = {
   loncont: 'Contours by longitude',
   latcont: 'Contours by latitude'
 };
+
+/* 'NB150', 'NB150 and OS38NB', 'OS38NB, OS150NB and WH300'. */
+function listAnd(items) {
+  if (items.length < 3) return items.join(' and ');
+  return items.slice(0, -1).join(', ') + ' and ' + items[items.length - 1];
+}
+
+/* One grid column per sonar the cruise publishes, so each row of tiles is one
+   section window read across its sonars. A cruise publishing one sonar keeps
+   the auto-fill layout the image galleries use. */
+function setGallerySonarColumns(gallery, n) {
+  gallery.classList.remove('sonars-2', 'sonars-3');
+  if (n > 1) gallery.classList.add('sonars-' + Math.min(n, 3));
+}
 
 function webpyBadge(plot, sectionCount) {
   const label = WEBPY_FAMILY_LABELS[plot.family] || plot.family;
@@ -2044,9 +2112,9 @@ function webpyTileText(plot) {
 }
 
 function renderWebpyGallery(cruiseId) {
-  const selection = document.getElementById('gallery-selection-antarctic');
-  const gallery = document.getElementById('gallery-antarctic');
-  const count = document.getElementById('gallery-count-antarctic');
+  const selection = document.getElementById('gallery-selection-' + galleryProjId);
+  const gallery = document.getElementById('gallery-' + galleryProjId);
+  const count = document.getElementById('gallery-count-' + galleryProjId);
   if (!selection || !gallery || !count) return;
 
   const entry = WEBPY_GALLERY[cruiseId];
@@ -2059,7 +2127,7 @@ function renderWebpyGallery(cruiseId) {
         ? entry.reason
         : 'Standard CODAS figures have not been published for this cruise yet.');
     selection.innerHTML = `<span><strong>${cruiseId}</strong><br>${reason}</span>${clear}`;
-    gallery.classList.remove('paired');
+    setGallerySonarColumns(gallery, 1);
     gallery.innerHTML = '<div class="no-images" style="grid-column:1/-1">No published CODAS figures for this cruise.</div>';
     count.textContent = 'No figures';
     return;
@@ -2072,21 +2140,20 @@ function renderWebpyGallery(cruiseId) {
   });
   const sonars = [...new Set(plots.filter(pl => pl.family === 'section').map(pl => pl.sonar))];
   const windows = entry.section_count || sectionCounts[plots[0].database] || plots.length;
-  const paired = sonars.length > 1;
-  // The two sonars run the same windows, so say it once and let the badges
-  // carry which is which.
-  const over = paired
-    ? `${windows} window${windows === 1 ? '' : 's'} shared by the ${sonars.map(s => s.toUpperCase()).join(' and ')}`
+  // Every sonar of a cruise runs the same windows, so say it once and let the
+  // badges carry which is which.
+  const over = sonars.length > 1
+    ? `${windows} window${windows === 1 ? '' : 's'} shared by the ${listAnd(sonars.map(s => s.toUpperCase()))}`
     : `${windows} window${windows === 1 ? '' : 's'} of the ${(sonars[0] || '').toUpperCase()}`;
   // A sonar left out is worth saying: a reader who knows the cruise carried
   // two would otherwise wonder where the second went.
   const left = (entry.omitted || []).filter(item => !/better database/.test(item.reason || ''));
   const dropped = left.length
-    ? ` The ${left.map(item => (item.sonar || '').toUpperCase()).join(' and ')} ${left.length === 1 ? 'is' : 'are'} not shown — ${left.map(item => item.reason).join('; ')}.`
+    ? ` The ${listAnd(left.map(item => (item.sonar || '').toUpperCase()))} ${left.length === 1 ? 'is' : 'are'} not shown — ${left.map(item => item.reason).join('; ')}.`
     : '';
   selection.innerHTML = `<span><strong>${cruiseId}</strong><br>${plots.length} section figure${plots.length === 1 ? '' : 's'} over ${over} — <em>u</em>, <em>v</em>, signal amplitude and percent good, with ship speed over the velocity panels.${dropped}</span>${clear}`;
   count.textContent = `${plots.length} figures`;
-  gallery.classList.toggle('paired', paired);
+  setGallerySonarColumns(gallery, sonars.length);
   gallery.innerHTML = plots.map((plot, index) => `
     <div class="gal-item" onclick="openWebpyPlot('${cruiseId}',${index})">
       <img class="gal-img" src="${plot.thumbnail || plot.image}" alt="${plot.caption}"

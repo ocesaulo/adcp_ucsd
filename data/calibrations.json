@@ -5518,7 +5518,7 @@
       "N"
      ],
      "year": 1994,
-     "cruise": null,
+     "cruise": "DJ9401",
      "kind": "cruise"
     },
     {
@@ -5534,7 +5534,7 @@
       "N"
      ],
      "year": 1994,
-     "cruise": null,
+     "cruise": "DJ9403",
      "kind": "cruise"
     },
     {
@@ -5550,7 +5550,7 @@
       "N"
      ],
      "year": 1994,
-     "cruise": null,
+     "cruise": "NH9410",
      "kind": "cruise"
     },
     {
@@ -5566,7 +5566,7 @@
       "N"
      ],
      "year": 1995,
-     "cruise": null,
+     "cruise": "DJ9501",
      "kind": "cruise"
     },
     {
@@ -5582,7 +5582,7 @@
       "N"
      ],
      "year": 1995,
-     "cruise": null,
+     "cruise": "NH9504",
      "kind": "cruise"
     },
     {
@@ -5598,7 +5598,7 @@
       "N"
      ],
      "year": 1995,
-     "cruise": null,
+     "cruise": "DJ9507",
      "kind": "cruise"
     },
     {
@@ -5614,7 +5614,7 @@
       "N"
      ],
      "year": 1995,
-     "cruise": null,
+     "cruise": "NH9510",
      "kind": "cruise"
     },
     {
@@ -5630,7 +5630,7 @@
       "N"
      ],
      "year": 1996,
-     "cruise": null,
+     "cruise": "DJ9604",
      "kind": "cruise"
     },
     {
@@ -5646,7 +5646,7 @@
       "N"
      ],
      "year": 1996,
-     "cruise": null,
+     "cruise": "NH9608",
      "kind": "cruise"
     },
     {
@@ -5662,7 +5662,7 @@
       "N"
      ],
      "year": 1997,
-     "cruise": null,
+     "cruise": "DJ9702",
      "kind": "cruise"
     },
     {
@@ -5678,7 +5678,7 @@
       "N"
      ],
      "year": 1997,
-     "cruise": null,
+     "cruise": "NH9704",
      "kind": "cruise"
     },
     {
@@ -5694,7 +5694,7 @@
       "N"
      ],
      "year": 1997,
-     "cruise": null,
+     "cruise": "DJ9707",
      "kind": "cruise"
     },
     {
@@ -5710,7 +5710,7 @@
       "N"
      ],
      "year": 1997,
-     "cruise": null,
+     "cruise": "NH9709",
      "kind": "cruise"
     },
     {
@@ -5742,7 +5742,7 @@
       "E"
      ],
      "year": 1998,
-     "cruise": null,
+     "cruise": "DJ9802",
      "kind": "cruise"
     },
     {
@@ -5758,7 +5758,7 @@
       "E"
      ],
      "year": 1998,
-     "cruise": null,
+     "cruise": "DJ9804",
      "kind": "cruise"
     },
     {
@@ -5774,7 +5774,7 @@
       "E"
      ],
      "year": 1998,
-     "cruise": null,
+     "cruise": "NH9809",
      "kind": "cruise"
     },
     {
@@ -5790,7 +5790,7 @@
       "E"
      ],
      "year": 1999,
-     "cruise": null,
+     "cruise": "RR9901",
      "kind": "cruise"
     },
     {
@@ -5806,7 +5806,7 @@
       "E"
      ],
      "year": 1999,
-     "cruise": null,
+     "cruise": "DJ9904",
      "kind": "cruise"
     },
     {
@@ -5822,7 +5822,7 @@
       "E"
      ],
      "year": 1999,
-     "cruise": null,
+     "cruise": "NH9908",
      "kind": "cruise"
     },
     {
@@ -5838,7 +5838,7 @@
       "N"
      ],
      "year": 1999,
-     "cruise": null,
+     "cruise": "NH9910",
      "kind": "cruise"
     },
     {
@@ -5854,7 +5854,7 @@
       "E"
      ],
      "year": 2000,
-     "cruise": null,
+     "cruise": "DJ0004",
      "kind": "cruise"
     },
     {
@@ -5870,7 +5870,7 @@
       "N"
      ],
      "year": 2000,
-     "cruise": null,
+     "cruise": "NH0007",
      "kind": "cruise"
     },
     {
@@ -5886,7 +5886,7 @@
       "N"
      ],
      "year": 2000,
-     "cruise": null,
+     "cruise": "NH0010",
      "kind": "cruise"
     },
     {
@@ -5902,7 +5902,7 @@
       "E"
      ],
      "year": 2001,
-     "cruise": null,
+     "cruise": "DJ0101",
      "kind": "cruise"
     },
     {
@@ -5918,7 +5918,7 @@
       "E"
      ],
      "year": 2001,
-     "cruise": null,
+     "cruise": "DJ0104",
      "kind": "cruise"
     },
     {
@@ -5934,7 +5934,7 @@
       "N"
      ],
      "year": 2001,
-     "cruise": null,
+     "cruise": "NH0107",
      "kind": "cruise"
     },
     {
@@ -5950,7 +5950,7 @@
       "N"
      ],
      "year": 2001,
-     "cruise": null,
+     "cruise": "NH0110",
      "kind": "cruise"
     },
     {
@@ -5966,7 +5966,7 @@
       "N"
      ],
      "year": 2002,
-     "cruise": null,
+     "cruise": "DJ0201",
      "kind": "cruise"
     },
     {
@@ -5982,7 +5982,7 @@
       "E"
      ],
      "year": 2002,
-     "cruise": null,
+     "cruise": "DJ0204",
      "kind": "cruise"
     },
     {
@@ -5998,7 +5998,7 @@
       "N"
      ],
      "year": 2002,
-     "cruise": null,
+     "cruise": "NH0207",
      "kind": "cruise"
     },
     {
@@ -6014,7 +6014,7 @@
       "N"
      ],
      "year": 2002,
-     "cruise": null,
+     "cruise": "NH0211",
      "kind": "cruise"
     },
     {
@@ -6030,7 +6030,7 @@
       ""
      ],
      "year": 2003,
-     "cruise": null,
+     "cruise": "DJ0302",
      "kind": "cruise"
     },
     {
@@ -6046,7 +6046,7 @@
       ""
      ],
      "year": 2003,
-     "cruise": null,
+     "cruise": "NH0307",
      "kind": "cruise"
     },
     {
@@ -6062,7 +6062,7 @@
       ""
      ],
      "year": 2003,
-     "cruise": null,
+     "cruise": "NH0310",
      "kind": "cruise"
     },
     {
@@ -6078,7 +6078,7 @@
       ""
      ],
      "year": 2004,
-     "cruise": null,
+     "cruise": "DJ0401",
      "kind": "cruise"
     },
     {
@@ -6094,7 +6094,7 @@
       ""
      ],
      "year": 2004,
-     "cruise": null,
+     "cruise": "NH0404",
      "kind": "cruise"
     },
     {
@@ -6110,7 +6110,7 @@
       ""
      ],
      "year": 2004,
-     "cruise": null,
+     "cruise": "DJ0404",
      "kind": "cruise"
     },
     {
@@ -6126,7 +6126,7 @@
       ""
      ],
      "year": 2004,
-     "cruise": null,
+     "cruise": "DJ0407",
      "kind": "cruise"
     },
     {

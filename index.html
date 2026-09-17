@@ -29,6 +29,35 @@
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
+
+/* ─── FOCUS (WCAG 2.4.7) ───
+   One ring for the whole site. Navy reads at 14:1 or better against every
+   light surface the portal uses; the pale teal is for controls sitting on
+   --navy or on the lightbox scrim, where navy would vanish. */
+:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+header :focus-visible,
+.hero :focus-visible,
+.cov-hdr :focus-visible,
+.proj-hero :focus-visible,
+#lightbox :focus-visible {
+  outline-color: var(--teal-lt);
+}
+
+/* ─── SKIP NAVIGATION (WCAG 2.4.1) ───
+   A 620px map and a few hundred cruise chips sit between the header and the
+   cruise table, so a keyboard user needs a way past them. */
+.skip-link {
+  position: absolute; left: 8px; top: -60px; z-index: 1000;
+  background: var(--navy); color: #fff; text-decoration: none;
+  font-size: 13px; font-weight: 500; padding: 9px 16px; border-radius: 0 0 7px 7px;
+  transition: top .12s;
+}
+.skip-link:focus { top: 0; }
+main:focus { outline: none; }
 body { font-family: var(--sans); background: var(--sand); color: var(--text); font-size: 15px; line-height: 1.65; }
 
 /* ─── HEADER ─── */
@@ -170,6 +199,8 @@ nav a.active { background: var(--teal); color: #fff; }
 .pop-row   { font-size: 12.5px; color: var(--muted); margin-bottom: 3px; }
 .pop-row strong { color: var(--text); }
 .pop-link  { display: inline-block; margin-top: 8px; color: var(--teal); font-size: 12px; font-weight: 500; text-decoration: none; }
+button.pop-link { background: none; border: none; padding: 0; cursor: pointer; font-family: var(--sans); text-align: left; }
+button.pop-link:hover { text-decoration: underline; }
 .map-legend { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
 .leg-item  { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
 .leg-dot   { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
@@ -200,13 +231,24 @@ nav a.active { background: var(--teal); color: #fff; }
 }
 .cruise-sel-all:hover { background: var(--teal-pale); color: var(--teal); border-color: var(--teal); }
 .cruise-chip {
+  /* positioning context for the clipped checkbox below, so focusing it scrolls
+     to the chip rather than to wherever the page would otherwise place it */
+  position: relative;
   display: inline-flex; align-items: center;
   font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 100px;
   border: 1px solid var(--border); background: var(--white); color: var(--navy);
   cursor: pointer; user-select: none; font-family: var(--mono); transition: .12s;
 }
 .cruise-chip.active { background: var(--navy); color: #fff; border-color: var(--navy); }
-.cruise-chip input[type=checkbox] { display: none; }
+/* The checkbox is the control; hiding it with display:none took a few hundred
+   map toggles out of the tab order and the accessibility tree at once. Clipped
+   instead, so it still focuses, still announces, and still carries its state. */
+.cruise-chip input[type=checkbox] {
+  position: absolute; width: 1px; height: 1px; margin: -1px;
+  padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+.cruise-chip:has(input:focus-visible) { outline: 2px solid var(--navy); outline-offset: 2px; }
+.cruise-chip.active:has(input:focus-visible) { outline-color: var(--teal-lt); }
 
 /* ─── IMAGE GALLERY ─── */
 .gallery-outer { padding: 1.5rem; }
@@ -228,6 +270,8 @@ nav a.active { background: var(--teal); color: #fff; }
 .gal-item {
   border-radius: 10px; overflow: hidden; border: 1px solid var(--border);
   cursor: pointer; transition: .15s; background: var(--sand);
+  display: block; width: 100%; padding: 0; text-align: left;
+  font: inherit; color: inherit;
 }
 .gal-item:hover { border-color: var(--teal); box-shadow: 0 4px 14px rgba(14,140,122,.12); }
 .gal-img {
@@ -242,7 +286,7 @@ nav a.active { background: var(--teal); color: #fff; }
 }
 .gal-img-placeholder svg { width: 32px; height: 32px; opacity: .5; }
 .gal-cap {
-  padding: 8px 10px; font-size: 11.5px; color: var(--muted); line-height: 1.4;
+  display: block; padding: 8px 10px; font-size: 11.5px; color: var(--muted); line-height: 1.4;
   border-top: 1px solid var(--border); background: var(--white);
 }
 .gal-type-badge { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; margin-bottom: 4px; }
@@ -267,7 +311,8 @@ nav a.active { background: var(--teal); color: #fff; }
 #lightbox.open { display: flex; }
 #lb-img { max-width: 90vw; max-height: 80vh; border-radius: 8px; object-fit: contain; }
 #lb-cap { color: rgba(255,255,255,.8); font-size: 13px; margin-top: 12px; text-align: center; max-width: 600px; }
-#lb-close { position: fixed; top: 18px; right: 24px; color: #fff; font-size: 28px; cursor: pointer; font-weight: 300; line-height: 1; }
+#lb-close { position: fixed; top: 18px; right: 24px; color: #fff; font-size: 28px; cursor: pointer; font-weight: 300; line-height: 1;
+  background: none; border: none; padding: 0 4px; font-family: var(--sans); }
 .lb-nav {
   position: fixed; top: 50%; transform: translateY(-50%); width: 42px; height: 42px;
   border: 1px solid rgba(255,255,255,.35); border-radius: 50%; background: rgba(0,0,0,.35);
@@ -333,12 +378,15 @@ button.lnk-plots { background: var(--white); cursor: pointer; font-family: var(-
 .data-tbl .year-header .year-header-toggle { color: #fff; }
 .year-header:hover { background: #4a6a8e; }
 .year-header-toggle {
-  display: inline-flex; align-items: center; gap: 8px; width: 100%;
+  display: flex; align-items: center; gap: 8px; width: 100%;
+  background: none; border: none; cursor: pointer; text-align: left;
+  font: inherit; color: #fff; padding: 8px 1.5rem;
 }
+.data-tbl .year-header td { padding: 0; }
 .year-header-toggle::before {
   content: '▸'; display: inline-flex; flex-shrink: 0; width: 16px; transition: transform 0.2s; color: var(--teal-lt);
 }
-.year-header.expanded::before { transform: rotate(90deg); }
+.year-header.expanded .year-header-toggle::before { transform: rotate(90deg); }
 .year-header-toggle .year-count { margin-left: auto; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.95); }
 .year-rows { display: none; }
 .year-rows.expanded { display: table-row-group; }
@@ -408,7 +456,7 @@ footer a:hover { color: #fff; }
   flex: 1 1 220px; max-width: 320px; padding: 7px 12px; border: 1px solid var(--border);
   border-radius: 8px; font: 12.5px var(--sans); background: var(--white); color: var(--text);
 }
-.cal-search:focus { outline: none; border-color: var(--teal); }
+.cal-search:focus { border-color: var(--teal); }
 .cal-count { font-family: var(--mono); font-size: 11.5px; color: var(--light); }
 .cal-years { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 1rem; }
 .cal-year {
@@ -520,12 +568,13 @@ footer a:hover { color: #fff; }
 /* ─── TRACK ↔ TABLE LINKING ─── */
 .data-tbl tr.row-hl td { background: rgba(14,140,122,.09); }
 .data-tbl tr[data-track] { cursor: pointer; }
-.lnk-track {
+button.lnk-track {
   display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 500;
   padding: 3px 9px; border-radius: 6px; text-decoration: none; border: 1px solid var(--teal);
   color: var(--teal); background: var(--teal-pale); cursor: pointer;
+  font-family: var(--sans); white-space: nowrap;
 }
-.lnk-track:hover { background: var(--teal); color: #fff; }
+button.lnk-track:hover { background: var(--teal); color: #fff; }
 .cov-cell { font-size: 11.5px; color: var(--muted); font-family: var(--mono); white-space: nowrap; }
 .cov-cell .dash { color: var(--border); }
 
@@ -542,9 +591,13 @@ footer a:hover { color: #fff; }
 </head>
 <body>
 
+<a class="skip-link" href="#main"
+   onclick="document.getElementById('main').focus(); return false;">Skip to content</a>
+
 <!-- LIGHTBOX -->
 <div id="lightbox" onclick="closeLB()">
-  <div id="lb-close" onclick="closeLB()">×</div>
+  <button type="button" id="lb-close" aria-label="Close plot viewer"
+          onclick="event.stopPropagation(); closeLB()">×</button>
   <button type="button" class="lb-nav" id="lb-prev" aria-label="Previous plot" onclick="event.stopPropagation(); stepLB(-1)">‹</button>
   <img id="lb-img" src="" alt="">
   <button type="button" class="lb-nav" id="lb-next" aria-label="Next plot" onclick="event.stopPropagation(); stepLB(1)">›</button>
@@ -560,7 +613,7 @@ footer a:hover { color: #fff; }
 <header>
   <div class="site-warning">Test Site Under Construction</div>
   <div class="hdr-inner">
-    <div class="logo" onclick="showSection('home')">
+    <a class="logo" href="#home" onclick="navTo('home',null); return false;">
       <div class="logo-icon">
         <img src="images/branding/adcp-instrument.gif" alt="ADCP instrument sketch">
       </div>
@@ -568,7 +621,7 @@ footer a:hover { color: #fff; }
         <div class="logo-name">Chereskin Lab · ADCP Data Portal</div>
         <div class="logo-sub">Scripps Institution of Oceanography</div>
       </div>
-    </div>
+    </a>
     <nav id="main-nav">
       <a href="#" class="active" onclick="navTo('home',this); return false;">Overview</a>
       <a href="#" onclick="navTo('antarctic',this); return false;">Antarctic</a>
@@ -578,7 +631,7 @@ footer a:hover { color: #fff; }
   </div>
 </header>
 
-<div class="page">
+<main class="page" id="main" tabindex="-1">
 
   <!-- ══ HOME ══════════════════════════════════════════════ -->
   <section id="section-home" class="section visible">
@@ -679,7 +732,7 @@ footer a:hover { color: #fff; }
     <div id="cal-content"><!-- filled by JS --></div>
   </section>
 
-</div><!-- .page -->
+</main><!-- .page -->
 
 <footer id="site-footer"><!-- filled by JS --></footer>
 
@@ -1088,7 +1141,9 @@ function showCalibration(id) {
       <p>${t.subtitle}</p>
       <div class="cal-src">Carried over from the original portal page
         <a href="${t.source_url}" target="_blank" rel="noopener">${t.source_url.replace('https://', '')} ↗</a>.
-        Values are reproduced as recorded${t.legend?.length ? '; the key below explains the shorthand' : ''}.</div>
+        Values are reproduced as recorded${t.legend?.length ? '; the key below explains the shorthand' : ''}.
+        The table itself is re-rendered here rather than archived unaltered, so it is held to the
+        same accessibility standard as the rest of the portal.</div>
     </div>`;
 
   host.innerHTML = head + (t.kind === 'cruise' ? cruiseCalibration(t, project) : transducerCalibration(t))
@@ -1348,18 +1403,18 @@ function buildProjectHTML(p) {
       const lbl = typeLabels[img.type] || img.type;
       const clr = typeColors[img.type] || '#888';
       html += `
-          <div class="gal-item" data-type="${img.type}" data-proj="${p.id}" onclick="openLB('images/${img.filename}','${img.caption.replace(/'/g,"\\'")} — ${c.id}', this)">
+          <button type="button" class="gal-item" data-type="${img.type}" data-proj="${p.id}" onclick="openLB('images/${img.filename}','${img.caption.replace(/'/g,"\\'")} — ${c.id}', this)">
             <img class="gal-img" src="images/${img.filename}" alt="${img.caption}"
                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="gal-img-placeholder" style="display:none">
+            <span class="gal-img-placeholder" style="display:none">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
               <span>${c.id}<br>${img.filename}</span>
-            </div>
-            <div class="gal-cap">
+            </span>
+            <span class="gal-cap">
               <span class="gal-type-badge" style="background:${clr}22;color:${clr}">${lbl}</span><br>
               ${img.caption}
-            </div>
-          </div>`;
+            </span>
+          </button>`;
     });
   });
 
@@ -1417,7 +1472,10 @@ function buildProjectHTML(p) {
   // Build year-grouped table
   years.forEach(year => {
     const crCount = cruisesByYear[year].length;
-    html += `<tr class="year-header" id="yr-hdr-${p.id}-${year}" onclick="toggleYearGroup('${p.id}','${year}')"><td colspan="7"><span class="year-header-toggle">Year ${year}<span class="year-count">${crCount} cruise${crCount === 1 ? '' : 's'}</span></span></td></tr>`;
+    html += `<tr class="year-header" id="yr-hdr-${p.id}-${year}"><td colspan="7"><button type="button" class="year-header-toggle"`
+      + ` aria-expanded="false" aria-controls="yr-rows-${p.id}-${year}"`
+      + ` onclick="toggleYearGroup('${p.id}','${year}')">Year ${year}`
+      + `<span class="year-count">${crCount} cruise${crCount === 1 ? '' : 's'}</span></button></td></tr>`;
     html += `<tbody class="year-rows" id="yr-rows-${p.id}-${year}">`;
 
     cruisesByYear[year].forEach(c => {
@@ -1440,9 +1498,9 @@ function buildProjectHTML(p) {
               ${covCell}
               <td>${statusBadge[c.status] || c.status}</td>
               <td class="cell-acts" onclick="event.stopPropagation()">
-                ${t ? `<span class="lnk-track" onclick="focusCruise('${p.id}','${c.id}')">
-                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 9l3.5-6 3 4 3.5-5"/></svg>Coverage
-                </span>` : ''}
+                ${t ? `<button type="button" class="lnk-track" aria-label="Coverage by depth, ${c.id}" onclick="focusCruise('${p.id}','${c.id}')">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 9l3.5-6 3 4 3.5-5"/></svg>Coverage
+                </button>` : ''}
                 ${c.ncei_url ? `<a class="lnk-ncei" href="${c.ncei_url}" target="_blank">
                   <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 6h8M6 2l4 4-4 4"/></svg>NCEI
                 </a>` : ''}
@@ -1637,8 +1695,8 @@ function cruisePopupHTML(p, cruise, meas) {
       <div class="pop-row"><strong>Sonar:</strong> ${cruise.sonar}</div>
       ${rows}
       ${cruise.notes ? `<div class="pop-row" style="margin-top:5px;font-style:italic">${cruise.notes}</div>` : ''}
-      <a class="pop-link" onclick="goToCruiseTable('${p.id}','${cruise.id}')">Table entry →</a>
-      ${meas ? `<br><a class="pop-link" onclick="focusCruise('${p.id}','${cruise.id}',false)">Data coverage by depth →</a>` : ''}
+      <button type="button" class="pop-link" onclick="goToCruiseTable('${p.id}','${cruise.id}')">Table entry →</button>
+      ${meas ? `<br><button type="button" class="pop-link" onclick="focusCruise('${p.id}','${cruise.id}',false)">Data coverage by depth →</button>` : ''}
       ${cruise.ncei_url ? `<a class="pop-link" href="${cruise.ncei_url}" target="_blank">View on NCEI →</a>` : ''}
   `;
 }
@@ -2155,14 +2213,14 @@ function renderWebpyGallery(cruiseId) {
   count.textContent = `${plots.length} figures`;
   setGallerySonarColumns(gallery, sonars.length);
   gallery.innerHTML = plots.map((plot, index) => `
-    <div class="gal-item" onclick="openWebpyPlot('${cruiseId}',${index})">
+    <button type="button" class="gal-item" onclick="openWebpyPlot('${cruiseId}',${index})">
       <img class="gal-img" src="${plot.thumbnail || plot.image}" alt="${plot.caption}"
            onerror="this.src='${plot.image}'">
-      <div class="gal-cap">
+      <span class="gal-cap">
         <span class="gal-type-badge" style="background:#0e8c7a22;color:#0e8c7a">${webpyBadge(plot, sectionCounts[plot.database])}</span><br>
         ${webpyTileText(plot)}
-      </div>
-    </div>`).join('');
+      </span>
+    </button>`).join('');
 }
 
 function openWebpyPlot(cruiseId, index) {
@@ -2182,13 +2240,24 @@ function filterGallery(projId, type, btn) {
 /* ════════════════════════════════════════════════════════
    TABLE FILTER & YEAR GROUPING
    ════════════════════════════════════════════════════════ */
+/* The disclosure state lives in three places — the tbody's class (which shows
+   the rows), the header's class (which points the caret) and the button's
+   aria-expanded (which is the only one assistive technology can read). Both
+   callers go through here so the three cannot drift. */
+function setYearExpanded(header, rows, expanded) {
+  rows.classList.toggle('expanded', expanded);
+  header.classList.toggle('expanded', expanded);
+  const btn = header.querySelector('.year-header-toggle');
+  if (btn) btn.setAttribute('aria-expanded', String(expanded));
+}
+
 function toggleYearGroup(projId, year) {
   const header = document.getElementById(`yr-hdr-${projId}-${year}`);
   const rows = document.getElementById(`yr-rows-${projId}-${year}`);
   if (!header || !rows) return;
 
-  const expanded = rows.classList.toggle('expanded');
-  header.classList.toggle('expanded', expanded);
+  const expanded = !rows.classList.contains('expanded');
+  setYearExpanded(header, rows, expanded);
 
   // Store expansion state in sessionStorage
   const key = `year-expanded-${projId}-${year}`;
@@ -2227,10 +2296,7 @@ function filterTbl(projId, val) {
     // Auto-expand year if it has matches
     if (yearGroups[year]) {
       const rows = document.getElementById(`yr-rows-${projId}-${year}`);
-      if (rows) {
-        rows.classList.add('expanded');
-        header.classList.add('expanded');
-      }
+      if (rows) setYearExpanded(header, rows, true);
     }
   });
 }

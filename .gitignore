@@ -20,7 +20,10 @@ input_info/*
 
 # Local tooling. harvest_calibrations.py produces data/calibrations.json, which
 # is committed; the script itself is kept out, like the CODAS builders in
-# ../../science/technical_sadcp/scripts/.
+# ../../science/technical_sadcp/scripts/. admin.html lives here too — it is a
+# local composer that emits JSON to paste into site_data.json, serves no
+# purpose on the published site, and staying unpublished keeps it out of the
+# WCAG 2.1 AA scope the DOJ ADA Title II rule puts on the portal.
 tools/
 
 __pycache__/

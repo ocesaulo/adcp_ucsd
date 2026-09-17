@@ -22,7 +22,7 @@ The site has three source files and six data files:
 - **`data/antarctic_webpy_gallery.json`**, **`data/calcofi_webpy_gallery.json`** — generated manifests of the per-cruise CODAS section figures. The gallery fetches both at runtime; a missing manifest leaves that project's gallery in its unavailable state without affecting the map or coverage drawer.
 - **`data/calibrations.json`** — the calibration histories carried over from the original adcp.ucsd.edu portal, produced by `tools/harvest_calibrations.py` (see below). Fetched at runtime by the Documentation page; absent, that page says so and nothing else is affected.
 - **`index.html`** — the public-facing portal. Fetches the data files at runtime and builds all UI (Leaflet maps, coverage charts, image gallery, cruise table) via JavaScript. Contains embedded fallback data (`EMBEDDED_DATA`) for `file://` preview.
-- **`admin.html`** — a standalone form tool for composing new cruise records. Its output is JSON to copy-paste into `site_data.json`. It does not write files directly.
+- **`tools/admin.html`** — a standalone form tool for composing new cruise records. Its output is JSON to copy-paste into `site_data.json`; it does not write files directly. It lives under `tools/` and is *not* published: it serves no purpose on the live site, and keeping it out of the deploy keeps it out of the accessibility scope described below.
 `tools/` holds local, uncommitted tooling — `harvest_calibrations.py` and `build_calcofi_cruises.py` (both below), which need nothing but the web, `site_data.json` and the generated data files. Their output is committed; the scripts are not, like the CODAS builders under `../../science/technical_sadcp/scripts/`.
 - **`images/`** — manually curated image files referenced by `site_data.json` (`cruise.images[].filename` paths are relative to this folder) are ignored. The reproducible generated figures under `images/antarctic-webpy/` and `images/calcofi-webpy/` are committed static assets.
 - **`input_info/harvest/`** — the only part of `input_info/` that is committed: the original-portal pages the generated data is derived from (the three calibration pages, the CalCOFI atlas cruise index, and JASADCP's CalCOFI inventory), kept so the harvests stay reproducible after adcp.ucsd.edu and uhslc are gone.
@@ -428,3 +428,49 @@ Key globals and functions:
 - `buildCalibrationCards()` / `showCalibration(id)` — the Documentation page's Calibrations block and the full-width view of one table, with `calFilter()` / `calYear()` behind the search box and year chips. `focusCruiseFromCalibration()` hands a linked cruise id to `showProject()` and then `focusCruise()`.
 
 Navigation is section-based (no URL routing): `showSection(id)` shows/hides `<section id="section-{id}">` elements. The sections are `home`, `project`, `docs` (the Documentation tab) and `calibration` (one calibration table, reached from Documentation).
+
+## Accessibility
+
+The portal is a UC public-facing site, so it is held to **WCAG 2.1 Level A and
+AA** by the DOJ's ADA Title II rule (28 CFR Part 35); the Title II compliance
+date is **26 April 2027**. Two rules follow from that and are easy to undo by
+accident:
+
+- **A control is a `<button>` or an `<a href>`, never a `<div onclick>`.** The
+  portal's interactive surface is built by JavaScript, and a click handler on a
+  `<div>`, `<span>` or `<tr>` is invisible to the keyboard. So the coverage
+  control in the Data Access cell, the gallery tiles, the year-group
+  disclosures, the lightbox close and the two in-popup actions are all real
+  buttons, and the logo is a real link. Mouse-only conveniences layered *on
+  top* of a keyboard route are fine — the `<tr data-track onclick>` row click
+  and the Leaflet track click both duplicate the row's Coverage button, which
+  is why they may stay as they are. A control that is the *only* route to
+  something must be focusable.
+- **A control that hides its own input must clip it, not remove it.** The
+  cruise chips are a `<label>` wrapping a checkbox; `display: none` on that
+  checkbox (the original styling) took a few hundred map toggles out of the tab
+  order and the accessibility tree at once. The chip clips the box instead
+  (`position:absolute; clip:rect(0 0 0 0)`) so it still focuses and still
+  announces its state.
+
+Other pieces worth not regressing: the `.skip-link` is the first focusable
+element and moves focus to `<main id="main" tabindex="-1">` in script rather
+than navigating, because a bare `#main` hash jump pushes a stateless history
+entry and `popstate` reads a null state as "go to Overview" (see 33af5c4); one
+global `:focus-visible` rule provides the focus ring, with a pale-teal override
+for controls on `--navy` surfaces, and nothing may set `outline: none` without
+replacing the indicator; `setYearExpanded()` is the only writer of the
+year-group disclosure state, because that state lives in three places (the
+tbody class, the header class and the button's `aria-expanded`) and both
+`toggleYearGroup()` and `filterTbl()` change it.
+
+Still outstanding, in rough priority order: the palette fails 1.4.3 in 14 of 32
+sampled pairs (`--light` at 3.01:1 on white, `--teal` at 4.16:1) and `--border`
+fails 1.4.11 at 1.35:1 as a control boundary; `renderLB()` never sets the
+lightbox image's `alt`; the three table/gallery filter controls have no labels
+and their result counts are not live regions; `.sec-title` and `.panel-title`
+are visual headings with no heading semantics and `<th>` carries no `scope`;
+the drawer and lightbox are not marked up as dialogs and manage no focus;
+`document.title` never changes between views; the header does not reflow below
+~380px; 18 `target="_blank"` links do not announce the new window; and there is
+no `prefers-reduced-motion` guard.

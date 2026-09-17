@@ -394,7 +394,7 @@ The `_README` key at the top of the file documents the schema. Key points:
 - `cruise.sac_id` / `cruise.sac_ids` — the JASADCP (NODC/UH SAC) cruise id of the primary database, and one `{sac_id, sonar}` entry per submitted database. `jasadcp_url` is `https://uhslc.soest.hawaii.edu/sadcp/DATABASE/<sac_id>.html`. Cruises processed in house and not yet submitted have none of these — the Antarctic series from 2019, the CalCOFI series from 2017.
 - `cruise.calcofi_cruise` — CalCOFI only: the programme's own name for the cruise (`2107SR` — year, month, ship), which is how CalCOFI indexes the hydrography and plankton data from the same stations.
 - `project.plots_link_label` — names the external plot page a cruise row links to *beside* its generated CODAS gallery. Set to `"Atlas"` on CalCOFI, where `cruise.plots_url` is the 2008 CalCOFI ADCP Digital Atlas page of objectively mapped velocity at 50 m and 100 m, which the section figures do not replace. Which cruises have one is read from the atlas's own cruise index, committed at `input_info/harvest/calcofi_all_cruise.htm` — 39 of the 55. Left unset (Antarctic), an external `plots_url` is shown only for cruises with no generated gallery.
-- `cruise.ncei_accession` — the bare NCEI accession number behind `ncei_url` (`https://www.ncei.noaa.gov/archive/accession/<n>`). JASADCP submissions up to ~2018 were archived in batches, so many cruises share one accession; from 2019 each Drake Passage season has its own. `../../science/technical_sadcp/scripts/resolve_jasadcp_ncei_accessions.py` rebuilds the SAC-id-to-accession mapping by walking the NCEI archive directories (NCEI's own mapping page went with the GOCD when it was decommissioned in April 2025).
+- `cruise.ncei_accession` — the bare NCEI accession number behind `ncei_url` (`https://www.ncei.noaa.gov/archive/accession/<n>`). For the recent CalCOFI cruises the numbers come from `input_info/harvest/Cryosat Accessions.xlsx`, the group's own submission record; four of the fifteen in-house cruises are archived (OC1911A `0316807`, RL2001 `0314048`, RL2101 `0314054`, RL2302 `0314049`, each verified against its NCEI ISO landing page by ship and date range), and the other eleven — SH1704, SR1717, SR1808, SR1815, SR2004, SR2008, SH2103, SR2105, SR2112, SH2204, SR2211 — are listed in that spreadsheet with a blank accession, meaning not yet submitted. The accessions are **not** a contiguous block: `0314051`, which sits between two of ours, is an RRS Discovery North Atlantic cruise, so they cannot be guessed by range. Re-check the spreadsheet when cruises are submitted. Note these four were written into `site_data.json` by hand, because `tools/build_calcofi_cruises.py` needs `calcofi_cruises.json` and `jasadcp_ncei_accessions.json` from `../../science/technical_sadcp/`, which are not present — a regeneration without them would drop the links. JASADCP submissions up to ~2018 were archived in batches, so many cruises share one accession; from 2019 each Drake Passage season has its own. `../../science/technical_sadcp/scripts/resolve_jasadcp_ncei_accessions.py` rebuilds the SAC-id-to-accession mapping by walking the NCEI archive directories (NCEI's own mapping page went with the GOCD when it was decommissioned in April 2025).
 - The gallery manifests are intentionally separate from `cruise.images[]`; they carry generated CODAS section-figure paths, thumbnails, checksums, per-window time and position metadata, and per-cruise availability.
 - The CalCOFI cruise rows are generated, not hand-written: `tools/build_calcofi_cruises.py` derives every field from `data/calcofi_tracks.json`, the `select_calcofi_dbs.py` sidecar and the NCEI accession map, and rewrites `projects[].cruises`, `years` and `vessel` for that project while leaving its prose alone.
 
@@ -464,13 +464,42 @@ year-group disclosure state, because that state lives in three places (the
 tbody class, the header class and the button's `aria-expanded`) and both
 `toggleYearGroup()` and `filterTbl()` change it.
 
-Still outstanding, in rough priority order: the palette fails 1.4.3 in 14 of 32
-sampled pairs (`--light` at 3.01:1 on white, `--teal` at 4.16:1) and `--border`
-fails 1.4.11 at 1.35:1 as a control boundary; `renderLB()` never sets the
-lightbox image's `alt`; the three table/gallery filter controls have no labels
-and their result counts are not live regions; `.sec-title` and `.panel-title`
-are visual headings with no heading semantics and `<th>` carries no `scope`;
-the drawer and lightbox are not marked up as dialogs and manage no focus;
-`document.title` never changes between views; the header does not reflow below
-~380px; 18 `target="_blank"` links do not announce the new window; and there is
-no `prefers-reduced-motion` guard.
+### The palette is measured, not eyeballed
+
+`tools/check_contrast.py` reads the tokens out of `index.html`'s `:root` block
+and checks the 38 pairs the site actually renders — it exits non-zero on a
+failure, so it can gate a commit. **Run it after touching any colour.**
+
+```bash
+python3 tools/check_contrast.py        # 38 pairs, 0 below threshold
+python3 tools/check_contrast.py -v     # list the passes too
+```
+
+Two things it encodes that are easy to get wrong. First, a token has to clear
+its threshold against *every* ground it lands on, which is why `--light` is
+`#5c6d86` rather than something lighter: it reads on white at 5.27:1 but the
+table headers sit on `--sand`, where it is 4.67:1. Same for `--teal`, which is
+both link text on white and the ground under white button text — one value has
+to serve both, and `--teal-hover` exists because `--teal-lt` under white text
+was 2.2:1.
+
+Second, **`--border` and `--border-ui` are not interchangeable.** `--border`
+(`#d6dfe8`) is a decorative rule between rows. `--border-ui` (`#7789a1`) is the
+visible boundary of something you can click or type into, which 1.4.11 holds to
+3:1. A new input, select, chip or outline button takes `--border-ui`.
+
+A project's identity colour is a third case. `project.color` is picked to read
+on a map basemap, and `#c9832e` is only 3.10:1 on white — so map tracks, legend
+dots and accent bars keep the identity colour (1.4.3 governs text, not
+graphics) while anything rendering it *as type* goes through `textSafe()` in
+`index.html`, which darkens it until it clears. `tint()`/`text_safe()` in the
+checker mirror that function; if one changes, change both.
+
+Still outstanding, in rough priority order: the three table/gallery filter
+controls have no labels and their result counts are not live regions;
+`.sec-title` and `.panel-title` are visual headings with no heading semantics
+and `<th>` carries no `scope`; the drawer and lightbox are not marked up as
+dialogs and manage no focus, and the closed drawer keeps focusable content
+inside `aria-hidden`; `document.title` never changes between views; the header
+does not reflow below ~380px; 18 `target="_blank"` links do not announce the
+new window; and there is no `prefers-reduced-motion` guard.

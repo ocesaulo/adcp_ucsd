@@ -387,14 +387,16 @@ The `_README` key at the top of the file documents the schema. Key points:
 - `cruise.track` — array of `[latitude, longitude]` pairs (negative = S/W) forming the map polyline.
 - `cruise.stations` — array of `{lat, lng, label}` objects for individual markers.
 - `cruise.images[].filename` — basename only; file must exist at `images/<filename>`.
-- `cruise.status` — one of `"processed"`, `"archived"`, `"in_review"`, `"pending"`.
+- `cruise.status` — one of `"processed"`, `"archived"`, `"submitted"`, `"in_review"`, `"pending"`.
 - `cruise.jasadcp_url` — optional; renders a purple "JASADCP" button in the data table when present.
 - `cruise.track_key` — links the cruise to its measured track in `data/drake_passage_tracks.json` or `data/calcofi_tracks.json`. When it resolves, the measured track replaces `cruise.track` on the map and the row becomes clickable.
 - `cruise.CODAS_dbs` — the CODAS database directories the cruise was built from; the table is expected to stay in step with these loads.
 - `cruise.sac_id` / `cruise.sac_ids` — the JASADCP (NODC/UH SAC) cruise id of the primary database, and one `{sac_id, sonar}` entry per submitted database. `jasadcp_url` is `https://uhslc.soest.hawaii.edu/sadcp/DATABASE/<sac_id>.html`. Cruises processed in house and not yet submitted have none of these — the Antarctic series from 2019, the CalCOFI series from 2017.
 - `cruise.calcofi_cruise` — CalCOFI only: the programme's own name for the cruise (`2107SR` — year, month, ship), which is how CalCOFI indexes the hydrography and plankton data from the same stations.
 - `project.plots_link_label` — names the external plot page a cruise row links to *beside* its generated CODAS gallery. Set to `"Atlas"` on CalCOFI, where `cruise.plots_url` is the 2008 CalCOFI ADCP Digital Atlas page of objectively mapped velocity at 50 m and 100 m, which the section figures do not replace. Which cruises have one is read from the atlas's own cruise index, committed at `input_info/harvest/calcofi_all_cruise.htm` — 39 of the 55. Left unset (Antarctic), an external `plots_url` is shown only for cruises with no generated gallery.
-- `cruise.ncei_accession` — the bare NCEI accession number behind `ncei_url` (`https://www.ncei.noaa.gov/archive/accession/<n>`). For the recent CalCOFI cruises the numbers come from `input_info/harvest/Cryosat Accessions.xlsx`, the group's own submission record; four of the fifteen in-house cruises are archived (OC1911A `0316807`, RL2001 `0314048`, RL2101 `0314054`, RL2302 `0314049`, each verified against its NCEI ISO landing page by ship and date range), and the other eleven — SH1704, SR1717, SR1808, SR1815, SR2004, SR2008, SH2103, SR2105, SR2112, SH2204, SR2211 — are listed in that spreadsheet with a blank accession, meaning not yet submitted. The accessions are **not** a contiguous block: `0314051`, which sits between two of ours, is an RRS Discovery North Atlantic cruise, so they cannot be guessed by range. Re-check the spreadsheet when cruises are submitted. Note these four were written into `site_data.json` by hand, because `tools/build_calcofi_cruises.py` needs `calcofi_cruises.json` and `jasadcp_ncei_accessions.json` from `../../science/technical_sadcp/`, which are not present — a regeneration without them would drop the links. JASADCP submissions up to ~2018 were archived in batches, so many cruises share one accession; from 2019 each Drake Passage season has its own. `../../science/technical_sadcp/scripts/resolve_jasadcp_ncei_accessions.py` rebuilds the SAC-id-to-accession mapping by walking the NCEI archive directories (NCEI's own mapping page went with the GOCD when it was decommissioned in April 2025).
+- `cruise.ncei_accession` — the bare NCEI accession number behind `ncei_url` (`https://www.ncei.noaa.gov/archive/accession/<n>`). For the recent CalCOFI cruises the numbers come from `input_info/harvest/Cryosat Accessions.xlsx`, the group's own submission record; four of the fifteen in-house cruises are archived (OC1911A `0316807`, RL2001 `0314048`, RL2101 `0314054`, RL2302 `0314049`, each verified against its NCEI ISO landing page by ship and date range), and the other eleven — SH1704, SR1717, SR1808, SR1815, SR2004, SR2008, SH2103, SR2105, SR2112, SH2204, SR2211 — are listed in that spreadsheet with a blank accession, meaning not yet submitted. The accessions are **not** a contiguous block and cannot be guessed by range — `0314051` is an RRS Discovery North Atlantic cruise, `0314047` is a Ryofu Maru III GO-SHIP leg, `0314055` is a Himawari-9 SST granule. The eleven were searched for exhaustively and are genuinely unarchived: **R/V Sally Ride, NOAA Ship Bell M. Shimada and NOAA Ship Reuben Lasker do not appear in the JASADCP ship inventory at all** (`http://uhslc.soest.hawaii.edu/sadcp/ship.html`), so none of the SR/SH/RL cruises can have reached NCEI through an old JASADCP batch; R/V Oceanus *is* indexed there but its inventory stops at OC1610A in October 2016. NCEI's own JASADCP-to-accession mapping page (`.../global-ocean-currents-database/jasadcp/ncei_accns.html`) now 404s, as expected — it went with the GOCD. Re-check the spreadsheet when cruises are submitted.
+
+  Separately, NOAA's OMAO ship-data pages *do* list cruise records matching SH1704, SH2103 and SH2204 by date (e.g. cruise `332220170319`, 2017-03-19 to 2017-04-20, project "CalCOFI - Spring"), and there is an OMAO ADCP accession `0279675` for a July 2019 Shimada leg. These are NOAA's own underway ADCP holdings, **not** this lab's processed CODAS submission, so they are deliberately not used as `ncei_accession` — that field means "where this portal's processed data is archived". Note these four were written into `site_data.json` by hand, because `tools/build_calcofi_cruises.py` needs `calcofi_cruises.json` and `jasadcp_ncei_accessions.json` from `../../science/technical_sadcp/`, which are not present — a regeneration without them would drop the links. JASADCP submissions up to ~2018 were archived in batches, so many cruises share one accession; from 2019 each Drake Passage season has its own. `../../science/technical_sadcp/scripts/resolve_jasadcp_ncei_accessions.py` rebuilds the SAC-id-to-accession mapping by walking the NCEI archive directories (NCEI's own mapping page went with the GOCD when it was decommissioned in April 2025).
 - The gallery manifests are intentionally separate from `cruise.images[]`; they carry generated CODAS section-figure paths, thumbnails, checksums, per-window time and position metadata, and per-cruise availability.
 - The CalCOFI cruise rows are generated, not hand-written: `tools/build_calcofi_cruises.py` derives every field from `data/calcofi_tracks.json`, the `select_calcofi_dbs.py` sidecar and the NCEI accession map, and rewrites `projects[].cruises`, `years` and `vessel` for that project while leaving its prose alone.
 
@@ -451,7 +453,13 @@ accident:
   checkbox (the original styling) took a few hundred map toggles out of the tab
   order and the accessibility tree at once. The chip clips the box instead
   (`position:absolute; clip:rect(0 0 0 0)`) so it still focuses and still
-  announces its state.
+  announces its state. The pill is a `<span class="chip-pill">` rather than the
+  label itself, so the focus ring is drawn by `input:focus-visible +
+  .chip-pill` — a plain sibling selector with no `:has()` dependency, tracing
+  the pill's own rounded shape. `.cruise-chips` needs its padding and
+  `scroll-padding`: it is a `max-height` scroll box, and without them the ring
+  on the first or last visible row is clipped, which reads as "tabbing does
+  nothing".
 
 Other pieces worth not regressing: the `.skip-link` is the first focusable
 element and moves focus to `<main id="main" tabindex="-1">` in script rather
@@ -495,11 +503,29 @@ graphics) while anything rendering it *as type* goes through `textSafe()` in
 `index.html`, which darkens it until it clears. `tint()`/`text_safe()` in the
 checker mirror that function; if one changes, change both.
 
-Still outstanding, in rough priority order: the three table/gallery filter
-controls have no labels and their result counts are not live regions;
-`.sec-title` and `.panel-title` are visual headings with no heading semantics
-and `<th>` carries no `scope`; the drawer and lightbox are not marked up as
-dialogs and manage no focus, and the closed drawer keeps focusable content
-inside `aria-hidden`; `document.title` never changes between views; the header
-does not reflow below ~380px; 18 `target="_blank"` links do not announce the
-new window; and there is no `prefers-reduced-motion` guard.
+### Headings, names and announcements
+
+Three more contracts, all verifiable:
+
+- **Each view has exactly one `h1` and its outline never skips a level.** The
+  view's own title is the `h1` (`.sec-title` on the project and Documentation
+  pages, the hero heading on Overview); each `.panel-title` and each
+  `.info-panel` heading is an `h2` under it; things nested inside those are
+  `h3`. `.sec-title` pins `font-weight: 400` because it is a heading now and
+  would otherwise come out bold in the serif face.
+- **Every `<th>` declares a `scope`.** The calibration table is the one that
+  matters: its sticky first column is a `<th scope="row">`, which is why the
+  sticky-top rule is scoped `.cal-tbl thead th` — an unscoped `.cal-tbl th`
+  would make every row header try to stick to the top as well.
+- **Anything that silently changes a result count is a live region.** The
+  cruise table (`#tbl-count-<proj>`), the gallery count and `.cal-count` all
+  carry `role="status"`; `filterTbl()` tallies matches and writes the count,
+  and clears it when nothing is filtered so the region does not nag.
+
+The three filter controls carry `aria-label` (a placeholder is not a name).
+
+Still outstanding: the drawer and lightbox are not marked up as dialogs and
+manage no focus, and the closed drawer keeps focusable content inside
+`aria-hidden`; `document.title` never changes between views; the header does
+not reflow below ~380px; 18 `target="_blank"` links do not announce the new
+window; and there is no `prefers-reduced-motion` guard.

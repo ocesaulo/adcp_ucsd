@@ -135,7 +135,7 @@ nav a.active { background: var(--teal); color: #fff; }
 .stat-note { font-size: 12px; color: var(--muted); }
 
 /* ─── SECTION TITLE ─── */
-.sec-title { font-family: var(--serif); font-size: 1.65rem; color: var(--navy); margin-bottom: .2rem; }
+.sec-title { font-family: var(--serif); font-size: 1.65rem; font-weight: 400; color: var(--navy); margin-bottom: .2rem; }
 .sec-sub   { font-size: 13.5px; color: var(--muted); margin-bottom: 1.75rem; font-weight: 300; }
 
 /* ─── PROJECT CARDS ─── */
@@ -191,6 +191,9 @@ nav a.active { background: var(--teal); color: #fff; }
 .panel-title { font-size: 14px; font-weight: 600; color: var(--navy); }
 .panel-sub   { font-size: 12px; color: var(--muted); margin-top: 2px; }
 .panel-count { font-size: 11px; font-weight: 500; letter-spacing: .06em; background: var(--teal-pale); color: var(--teal); padding: 3px 10px; border-radius: 100px; }
+.status-caption { display: flex; flex-wrap: wrap; gap: 4px 14px; padding: .65rem 1.5rem; border-bottom: 1px solid var(--border); color: var(--muted); font-size: 11px; line-height: 1.45; }
+.status-caption span { flex: 1 1 280px; }
+.status-caption b { color: var(--navy); font-weight: 600; }
 
 /* ─── MAP ─── */
 .leaflet-map { height: 620px; width: 100%; }
@@ -216,8 +219,15 @@ button.pop-link:hover { text-decoration: underline; }
 .cruise-chips {
   display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
   width: 100%; max-height: 116px; overflow-y: auto;
-  padding-top: 8px; margin-top: 2px; border-top: 1px dashed var(--border);
+  margin-top: 2px; border-top: 1px dashed var(--border);
+  /* Room for a focused chip's outline: this box scrolls and clips, so with no
+     padding the ring on the first or last visible row was cut in half, which
+     reads as "tabbing does nothing". scroll-padding keeps a chip clear of both
+     edges when the browser scrolls it into view. */
+  padding: 11px 4px 4px;
+  scroll-padding-block: 8px;
 }
+.cruise-chip { scroll-margin-block: 6px; }
 .cruise-sel-yr {
   font-size: 11px; font-weight: 500; padding: 3px 7px; border-radius: 100px;
   border: 1px solid var(--border-ui); background: var(--white); color: var(--muted);
@@ -233,15 +243,26 @@ button.pop-link:hover { text-decoration: underline; }
 }
 .cruise-sel-all:hover { background: var(--teal-pale); color: var(--teal); border-color: var(--teal); }
 .cruise-chip {
-  /* positioning context for the clipped checkbox below, so focusing it scrolls
-     to the chip rather than to wherever the page would otherwise place it */
+  /* The label is only a wrapper and a positioning context for the clipped
+     checkbox, so focusing the box scrolls to the chip rather than to wherever
+     the page would otherwise place it. The pill itself is the span, which lets
+     the focus ring be drawn with a plain sibling selector — no :has() — and
+     lets it trace the pill's own rounded shape. */
   position: relative;
+  display: inline-flex; align-items: center;
+  cursor: pointer; user-select: none;
+}
+.chip-pill {
   display: inline-flex; align-items: center;
   font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 100px;
   border: 1px solid var(--border-ui); background: var(--white); color: var(--navy);
-  cursor: pointer; user-select: none; font-family: var(--mono); transition: .12s;
+  font-family: var(--mono); transition: .12s;
 }
-.cruise-chip.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+.cruise-chip.active .chip-pill { background: var(--navy); color: #fff; border-color: var(--navy); }
+.cruise-chip input:focus-visible + .chip-pill {
+  outline: 2px solid var(--navy); outline-offset: 2px;
+}
+.cruise-chip.active input:focus-visible + .chip-pill { outline-color: var(--teal-lt); }
 /* The checkbox is the control; hiding it with display:none took a few hundred
    map toggles out of the tab order and the accessibility tree at once. Clipped
    instead, so it still focuses, still announces, and still carries its state. */
@@ -249,8 +270,7 @@ button.pop-link:hover { text-decoration: underline; }
   position: absolute; width: 1px; height: 1px; margin: -1px;
   padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
 }
-.cruise-chip:has(input:focus-visible) { outline: 2px solid var(--navy); outline-offset: 2px; }
-.cruise-chip.active:has(input:focus-visible) { outline-color: var(--teal-lt); }
+
 
 /* ─── IMAGE GALLERY ─── */
 .gallery-outer { padding: 1.5rem; }
@@ -333,6 +353,7 @@ button.pop-link:hover { text-decoration: underline; }
   font-size: 12.5px; font-family: var(--sans); background: var(--white); color: var(--text);
 }
 .f-input { flex: 1; max-width: 280px; }
+.f-count { align-self: center; font-size: 12px; color: var(--muted); font-family: var(--mono); }
 .data-tbl { width: 100%; border-collapse: collapse; }
 .data-tbl th {
   text-align: left; font-size: 10.5px; font-weight: 600; letter-spacing: .08em;
@@ -396,7 +417,8 @@ button.lnk-plots { background: var(--white); cursor: pointer; font-family: var(-
 
 /* ─── INFO / METHODS ─── */
 .info-panel { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem 2rem; margin-bottom: 2rem; }
-.info-panel h3 { font-family: var(--serif); font-size: 1.2rem; color: var(--navy); margin-bottom: .75rem; }
+.info-panel h2 { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: .75rem; }
+.info-panel h3 { font-size: 14px; font-weight: 600; color: var(--navy); }
 .info-panel p  { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: .75rem; }
 .info-panel p:last-child { margin-bottom: 0; }
 .info-panel a  { color: var(--teal); }
@@ -438,7 +460,7 @@ footer a:hover { color: #fff; }
 }
 .cal-card:hover { border-color: var(--teal); box-shadow: 0 6px 20px rgba(11,34,64,.09); transform: translateY(-1px); }
 .cal-card .prog { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; }
-.cal-card h4 { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; color: var(--navy); line-height: 1.25; }
+.cal-card h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; color: var(--navy); line-height: 1.25; }
 .cal-card p { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
 .cal-card .meta { margin-top: auto; padding-top: .7rem; display: flex; justify-content: space-between;
   align-items: baseline; gap: 10px; font-family: var(--mono); font-size: 11px; color: var(--light); }
@@ -470,7 +492,7 @@ footer a:hover { color: #fff; }
 
 .cal-tbl-wrap { overflow: auto; max-height: 68vh; border: 1px solid var(--border); border-radius: 10px; background: var(--white); }
 .cal-tbl { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 12px; }
-.cal-tbl th {
+.cal-tbl thead th {
   position: sticky; top: 0; z-index: 2; background: var(--sand); text-align: left; vertical-align: bottom;
   padding: 9px 10px; font-size: 10px; letter-spacing: .05em; text-transform: uppercase;
   color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--border); white-space: nowrap;
@@ -478,15 +500,17 @@ footer a:hover { color: #fff; }
 .cal-tbl td { padding: 6px 10px; border-bottom: 1px solid #eef2f6; font-family: var(--mono);
   color: var(--text); white-space: nowrap; vertical-align: top; }
 .cal-tbl tbody tr:hover td { background: rgba(14,140,122,.055); }
-.cal-tbl td.cid { font-weight: 500; color: var(--navy); position: sticky; left: 0; background: var(--white); }
-.cal-tbl tbody tr:hover td.cid { background: #eef7f5; }
-.cal-tbl td.cid a { color: var(--teal); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.cal-tbl .cid { font-weight: 500; color: var(--navy); position: sticky; left: 0; background: var(--white);
+  text-align: left; font-family: var(--mono); font-size: 12px; padding: 6px 10px;
+  border-bottom: 1px solid #eef2f6; white-space: nowrap; vertical-align: top; text-transform: none; letter-spacing: 0; }
+.cal-tbl tbody tr:hover .cid { background: #eef7f5; }
+.cal-tbl .cid a { color: var(--teal); text-decoration: none; border-bottom: 1px dotted currentColor; }
 .cal-tbl td.dates { font-size: 11.5px; color: var(--muted); white-space: normal; min-width: 165px; }
 .cal-tbl td .none { color: var(--light); }
 .cal-tbl td .alt { display: block; color: var(--muted); font-size: 11px; }
 /* a milestone rather than a cruise: "SOFTWARE UPGRADE", "shipyard" */
 .cal-tbl tr.cal-note td { background: #fbf7ec; color: var(--muted); font-style: italic; }
-.cal-tbl tr.cal-note td.cid { background: #f7f1e3; }
+.cal-tbl tr.cal-note .cid { background: #f7f1e3; }
 
 .cal-legend { margin-top: 1.5rem; }
 .cal-legend h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; color: var(--navy); margin-bottom: .6rem; }
@@ -649,11 +673,11 @@ button.lnk-track:hover { background: var(--teal); color: #fff; }
 
     <div class="stats" id="home-stats"><!-- filled by JS --></div>
 
-    <div class="sec-title">Programs</div>
+    <h2 class="sec-title">Programs</h2>
     <div class="sec-sub">Click a project to explore interactive maps, image galleries, and download links.</div>
     <div class="proj-grid" id="project-cards"><!-- filled by JS --></div>
 
-    <div class="sec-title">External Archives</div>
+    <h2 class="sec-title">External Archives</h2>
     <div class="sec-sub">Processed data are mirrored in the following national repositories.</div>
     <div class="proj-grid" style="margin-bottom:2.5rem">
       <a class="proj-card" href="https://doi.org/10.25921/g961-ya97" target="_blank" style="border-left: 4px solid #2874c5;">
@@ -675,7 +699,7 @@ button.lnk-track:hover { background: var(--teal); color: #fff; }
     </div>
 
     <div class="info-panel">
-      <h3>About This Portal</h3>
+      <h2>About This Portal</h2>
       <p>This site presents processed ADCP data from cruises led by the Chereskin Lab. Data are available for public download from NCEI (NOAA) and from JASADCP at the University of Hawaii. Graphical images (.jpg, .pdf) may be used in publications with the credit line: <em>"From the Chereskin Lab ADCP Data Portal, Scripps Institution of Oceanography."</em></p>
       <p>For data format documentation, the calibration histories, and processing software, see the <a href="#" onclick="navTo('docs',null); return false;">Documentation</a> page.</p>
     </div>
@@ -689,41 +713,41 @@ button.lnk-track:hover { background: var(--teal); color: #fff; }
 
   <!-- ══ DOCUMENTATION ════════════════════════════════════ -->
   <section id="section-docs" class="section">
-    <div class="sec-title">Documentation</div>
+    <h1 class="sec-title">Documentation</h1>
     <div class="sec-sub">Calibration histories, data collection, processing methodology, and citation information.</div>
 
     <div class="info-panel">
-      <h3>Instrumentation</h3>
+      <h2>Instrumentation</h2>
       <p>Shipboard ADCP data were collected with RD Instruments narrowband (NB, 150 kHz) and broadband (BB, 150 kHz) instruments. The transducer was mounted in the ship's hull, pinging continuously during transit and on-station periods. Data were recorded at 2-minute ensemble intervals with 8 m depth bins.</p>
       <p>Navigation data were integrated from shipboard GPS and from the PHINS/Octans gyrocompass systems depending on cruise year. Heading corrections were applied using the Firing et al. (1995) calibration procedure based on GPS velocity.</p>
     </div>
 
     <div class="info-panel">
-      <h3>Data Processing — CODAS3</h3>
+      <h2>Data Processing — CODAS3</h2>
       <p>All data were processed using <strong>CODAS3</strong> (Common Ocean Data Access System version 3), developed by E. Firing at the University of Hawaii. Standard processing steps:</p>
       <p><strong>1.</strong> Navigation smoothing and heading calibration via GPS ship velocity. <strong>2.</strong> Water-tracking mode; bottom-tracking correction when available. <strong>3.</strong> Outlier editing and ensemble averaging. <strong>4.</strong> Absolute velocity referencing via GPS. <strong>5.</strong> Echo intensity profiling for bin quality assessment.</p>
       <p>Calibration constants (amplitude A and phase φ) were determined from dedicated calibration runs and applied to correct for transducer misalignment.</p>
       <div id="docs-methods-by-project"><!-- filled by JS: per-project processing methods --></div>
     </div>
 
-    <div class="sec-title" style="font-size:1.3rem;margin-top:1.75rem">Calibrations</div>
+    <h2 class="sec-title" style="font-size:1.3rem;margin-top:1.75rem">Calibrations</h2>
     <div class="sec-sub">The amplitude and phase corrections applied when each cruise was processed, carried over
       from the original portal. Choose a program to open its table.</div>
     <div class="cal-grid" id="calibration-cards"><!-- filled by JS --></div>
 
     <div class="info-panel">
-      <h3>Available File Formats</h3>
+      <h2>Available File Formats</h2>
       <p><strong>CODAS3 binary</strong> — native format, readable with the <code>pycurrents</code> Python package (UH Currents Group). <strong>NetCDF (.nc)</strong> — CF-convention compliant, one file per cruise. <strong>ASCII/CSV</strong> — tabular text of ensemble-averaged profiles. <strong>MATLAB (.mat)</strong> — available on request.</p>
       <p>Python reading example: <code>from pycurrents.data.navcalc import lonlat_inside_km</code> — see the <a href="https://currents.soest.hawaii.edu/home/software/" target="_blank">UH CODAS documentation</a> for full API details.</p>
     </div>
 
     <div class="info-panel">
-      <h3>Citation</h3>
+      <h2>Citation</h2>
       <ul class="ref-list" id="docs-refs"><!-- filled by JS --></ul>
     </div>
 
     <div class="info-panel">
-      <h3>Contact</h3>
+      <h2>Contact</h2>
       <p>For data access questions or to report processing issues, contact the <a href="http://tryfan.ucsd.edu" target="_blank">Chereskin Lab</a> at Scripps Institution of Oceanography, University of California San Diego.</p>
       <p>For software support, see the <a href="https://currents.soest.hawaii.edu/home/" target="_blank">UH Currents Group</a> — maintainers of CODAS and JASADCP.</p>
     </div>
@@ -1111,7 +1135,8 @@ function initSite() {
   const dm = document.getElementById('docs-methods-by-project');
   if (dm) {
     s.projects.forEach(p => {
-      dm.innerHTML += `<h4 style="margin-top:1rem">${p.short_name}</h4><p>${p.methods_text}</p>`;
+      // nested inside the "Data Processing — CODAS3" panel, whose heading is h2
+      dm.innerHTML += `<h3 style="margin-top:1rem">${p.short_name}</h3><p>${p.methods_text}</p>`;
     });
   }
 
@@ -1158,7 +1183,7 @@ function buildCalibrationCards() {
       <button class="cal-card" style="border-left-color:${colour}"
               onclick="showCalibration('${t.id}')">
         <span class="prog" style="color:${colour}">${project ? project.short_name : t.project}</span>
-        <h4>${t.title}</h4>
+        <h3>${t.title}</h3>
         <p>${t.subtitle}</p>
         <span class="meta"><span>${count}${calibrationSpan(t) ? ' · ' + calibrationSpan(t) : ''}</span><span class="go">Open table →</span></span>
       </button>`;
@@ -1208,7 +1233,7 @@ function cruiseCalibration(t, project) {
       : (cells[0] || '<span class="none">—</span>');
     return `<tr class="${row.kind === 'note' ? 'cal-note' : ''}" data-year="${row.year || ''}"
         data-search="${cells.join(' ').toLowerCase().replace(/"/g, '')}">
-      <td class="cid">${linked}</td>
+      <th scope="row" class="cid">${linked}</th>
       <td class="dates">${calCell(cells[1])}</td>
       ${cells.slice(2).map(v => `<td>${calCell(v)}</td>`).join('')}
     </tr>`;
@@ -1216,9 +1241,11 @@ function cruiseCalibration(t, project) {
 
   return `
     <div class="cal-toolbar">
-      <input class="cal-search" id="cal-search" type="search" placeholder="Filter by cruise, date or value…"
+      <input class="cal-search" id="cal-search" type="search"
+             aria-label="Filter calibration rows by cruise, date or value"
+             placeholder="Filter by cruise, date or value…"
              oninput="calFilter('${t.id}')">
-      <span class="cal-count" id="cal-count"></span>
+      <span class="cal-count" id="cal-count" role="status"></span>
     </div>
     <div class="cal-years" id="cal-years">
       <button class="cal-year active" data-year="" onclick="calYear('${t.id}','',this)">All years</button>
@@ -1226,7 +1253,7 @@ function cruiseCalibration(t, project) {
     </div>
     <div class="cal-tbl-wrap">
       <table class="cal-tbl" id="cal-table">
-        <thead><tr>${t.columns.map(c => `<th>${c}</th>`).join('')}</tr></thead>
+        <thead><tr>${t.columns.map(c => `<th scope="col">${c}</th>`).join('')}</tr></thead>
         <tbody>${body}</tbody>
       </table>
     </div>`;
@@ -1237,7 +1264,7 @@ function transducerCalibration(t) {
     <div class="cal-sn-card">
       <h4>${g.serial}</h4>
       <table>
-        <thead><tr><th>Beam</th>${g.columns.map(c => `<th>${c}</th>`).join('')}</tr></thead>
+        <thead><tr><th scope="col">Beam</th>${g.columns.map(c => `<th scope="col">${c}</th>`).join('')}</tr></thead>
         <tbody>${g.rows.map(r => `<tr>${r.map(v => `<td>${v || '—'}</td>`).join('')}</tr>`).join('')}</tbody>
       </table>
       ${g.note ? `<div class="sn-note">${g.note.split(' / ').join('<br>')}</div>` : ''}
@@ -1344,7 +1371,8 @@ window.addEventListener('popstate', (e) => {
    PROJECT PAGE BUILDER
    ════════════════════════════════════════════════════════ */
 function buildProjectHTML(p) {
-  const processed = p.cruises.filter(c => c.status === 'processed').length;
+  const archived = p.cruises.filter(c => c.status === 'archived').length;
+  const submitted = p.cruises.filter(c => c.status === 'submitted').length;
   const totalImgs = p.cruises.reduce((n,c) => n + c.images.length, 0);
   const measuredCount = p.cruises.filter(c => trackFor(c)).length;
 
@@ -1367,7 +1395,7 @@ function buildProjectHTML(p) {
       </div>
     </div>` : ''}
 
-    <div class="sec-title">${p.name}</div>
+    <h1 class="sec-title">${p.name}</h1>
     <div class="sec-sub">${p.vessel} · ${p.region} · ${p.years}</div>
 
     ${measuredCount
@@ -1378,7 +1406,7 @@ function buildProjectHTML(p) {
     <div class="panel">
       <div class="panel-hdr">
         <div>
-          <div class="panel-title">Cruise Tracks & Station Positions</div>
+          <h2 class="panel-title">Cruise Tracks &amp; Station Positions</h2>
           <div class="panel-sub">${measuredCount ? 'Click a track or its marker for cruise details and depth-coverage statistics.' : 'Click a marker to view cruise details and access data.'}</div>
         </div>
         <div class="map-legend">
@@ -1397,7 +1425,8 @@ function buildProjectHTML(p) {
           return `<label class="cruise-chip${on ? ' active' : ''}" id="chip-${p.id}-${c.id}">`
             + `<input type="checkbox" ${on ? 'checked' : ''} data-cruise="${c.id}"`
             + ` data-year="${cruiseYear(c)}"`
-            + ` onchange="toggleCruiseLayer('${p.id}','${c.id}',this.checked)">${c.id}</label>`;
+            + ` onchange="toggleCruiseLayer('${p.id}','${c.id}',this.checked)">`
+            + `<span class="chip-pill">${c.id}</span></label>`;
         }).join('');
         const years = [...new Set(withTracks.map(cruiseYear))].filter(Boolean).sort();
         const yrBtns = years.length > 1
@@ -1417,11 +1446,11 @@ function buildProjectHTML(p) {
     <div class="panel">
       <div class="panel-hdr">
         <div>
-          <div class="panel-title">${hasCodasGallery(p.id) ? 'CODAS Plot Gallery' : 'Image Gallery'}</div>
+          <h2 class="panel-title">${hasCodasGallery(p.id) ? 'CODAS Plot Gallery' : 'Image Gallery'}</h2>
           <div class="panel-sub">${hasCodasGallery(p.id) ? 'Section figures per sonar — u, v, signal amplitude and percent good — '
               + 'rendered from the CODAS database with pycurrents.' : 'Velocity plots, cruise photos, and station maps. Click to enlarge.'}</div>
         </div>
-        <span class="panel-count" id="gallery-count-${p.id}">${hasCodasGallery(p.id) ? 'Select a track' : totalImgs + ' images'}</span>
+        <span class="panel-count" id="gallery-count-${p.id}" role="status">${hasCodasGallery(p.id) ? 'Select a track' : totalImgs + ' images'}</span>
       </div>
       <div class="gallery-outer">
         ${hasCodasGallery(p.id)
@@ -1475,31 +1504,44 @@ function buildProjectHTML(p) {
     <!-- ── DATA TABLE ── -->
     <div class="panel">
       <div class="panel-hdr">
-        <div class="panel-title">Cruise Data Index</div>
-        <span class="panel-count">${p.cruises.length} cruises · ${processed} processed</span>
+        <h2 class="panel-title">Cruise Data Index</h2>
+        <span class="panel-count">${p.cruises.length} cruises · ${archived} archived · ${submitted} submitted</span>
+      </div>
+      <div class="status-caption" aria-label="Cruise status definitions">
+        <span><b>Archived</b> — data has been archived in long term repository</span>
+        <span><b>Submitted</b> — data has been submitted to repository for long term archival</span>
+        <span><b>Processed</b> — data has been processed, has not yet been submitted for archival and is available in house upon request</span>
+        <span><b>In review</b> — data processing is complete pending final manual review</span>
+        <span><b>Pending</b> — data processing ongoing or queued for processing</span>
       </div>
       <div class="tbl-filters">
-        <input class="f-input" placeholder="Filter by cruise ID, region…" oninput="filterTbl('${p.id}', this.value)">
-        <select class="f-select" onchange="filterTbl('${p.id}', this.value)">
+        <input class="f-input" id="f-input-${p.id}" type="search"
+               aria-label="Filter cruises by ID or region"
+               placeholder="Filter by cruise ID, region…" oninput="filterTbl('${p.id}', this.value)">
+        <select class="f-select" id="f-status-${p.id}"
+                aria-label="Filter cruises by status" onchange="filterTbl('${p.id}', this.value)">
           <option value="">All statuses</option>
           <option value="processed">Processed</option>
           <option value="archived">Archived</option>
+          <option value="submitted">Submitted</option>
           <option value="in_review">In review</option>
           <option value="pending">Pending</option>
         </select>
+        <span class="f-count" id="tbl-count-${p.id}" role="status"></span>
       </div>
       <div style="overflow-x:auto">
         <table class="data-tbl" id="tbl-${p.id}">
           <thead>
             <tr>
-              <th>Cruise ID</th><th>Dates</th><th>Ship</th><th>Region</th>
-              <th>Sonar / Coverage (50%)</th><th>Status</th><th>Data Access</th>
+              <th scope="col">Cruise ID</th><th scope="col">Dates</th><th scope="col">Ship</th><th scope="col">Region</th>
+              <th scope="col">Sonar / Coverage (50%)</th><th scope="col">Status</th><th scope="col">Data Access</th>
             </tr>
           </thead>`;
 
   const statusBadge = {
     processed: '<span class="badge b-teal">Processed</span>',
     archived:  '<span class="badge b-navy">Archived</span>',
+    submitted: '<span class="badge b-amber">Submitted</span>',
     in_review: '<span class="badge b-amber">In review</span>',
     pending:   '<span class="badge b-gray">Pending</span>'
   };
@@ -1565,11 +1607,11 @@ function buildProjectHTML(p) {
 
     <!-- ── DESCRIPTION ── -->
     <div class="info-panel">
-      <h3>Project Description</h3>
+      <h2>Project Description</h2>
       <p>${p.project_description}</p>
     </div>
     <div class="info-panel">
-      <h3>Acknowledgments</h3>
+      <h2>Acknowledgments</h2>
       ${p.illustration_image ? `
       <div class="info-panel-media">
         <div class="ipm-text"><p>${p.acknowledgments}</p></div>
@@ -1580,17 +1622,17 @@ function buildProjectHTML(p) {
       </div>` : `<p>${p.acknowledgments}</p>`}
     </div>
     <div class="info-panel">
-      <h3>Publications</h3>
+      <h2>Publications</h2>
       <ul class="ref-list">${(p.publications || []).map(pub => `<li>${pub}</li>`).join('')}</ul>
     </div>
     ${(p.other_group_publications || []).length ? `
     <div class="info-panel">
-      <h3>Publications by Other Groups Using These Data</h3>
+      <h2>Publications by Other Groups Using These Data</h2>
       <ul class="ref-list">${p.other_group_publications.map(pub => `<li>${pub}</li>`).join('')}</ul>
     </div>` : ''}
     ${(p.other_links || []).length ? `
     <div class="info-panel">
-      <h3>Other Links</h3>
+      <h2>Other Links</h2>
       <ul class="ref-list">${p.other_links.map(link => `<li><a href="${link.url}" target="_blank">${link.label} ↗</a></li>`).join('')}</ul>
     </div>` : ''}`;
 
@@ -1921,7 +1963,7 @@ function openCoverage(projId, cruiseId) {
         <div><span class="k">Longitude</span><b>${fmtLon(t.bbox?.[1])} to ${fmtLon(t.bbox?.[3])}</b></div>
       </div>
 
-      <div class="cov-sec-title">Sonars in this load</div>
+      <h4 class="cov-sec-title">Sonars in this load</h4>
       <div class="cov-sec-sub">Coverage depths are the deepest bin still holding valid velocity in at least half (50%) or four fifths (80%) of the cruise's ensembles.</div>
       <div class="cov-inst">
         ${inst.map(i => `
@@ -1945,12 +1987,12 @@ function openCoverage(projId, cruiseId) {
       </div>
       <div class="cov-charts">
         <div class="cov-chart-box">
-          <div class="cov-chart-ttl">Ensembles with valid u, v</div>
+          <h5 class="cov-chart-ttl">Ensembles with valid u, v</h5>
           ${profileChart('cov-c1', covSeries, {maxDepth, xMax: 100, xTicks: [0,25,50,75,100], refX: 50, xLabel: 'percent of ensembles', unit: '%', dec: 0})}
           <div class="cov-readout" id="cov-c1-readout">Hover the profile for values by depth</div>
         </div>
         <div class="cov-chart-box">
-          <div class="cov-chart-ttl">Error velocity (RMS)</div>
+          <h5 class="cov-chart-ttl">Error velocity (RMS)</h5>
           ${profileChart('cov-c2', errSeries, {maxDepth, xLabel: 'cm s⁻¹', unit: ' cm/s', dec: 1})}
           <div class="cov-readout" id="cov-c2-readout">A rising error velocity marks the loss of range</div>
         </div>
@@ -1959,7 +2001,7 @@ function openCoverage(projId, cruiseId) {
       <button class="cov-tbl-btn" onclick="document.getElementById('cov-numbers').classList.toggle('open')">Show the numbers</button>
       <div class="cov-numbers" id="cov-numbers">
         <table>
-          <thead><tr><th>Sonar</th><th>Depth (m)</th><th>Valid ens.</th><th>Coverage</th><th>Err. RMS</th><th>Pct good</th></tr></thead>
+          <thead><tr><th scope="col">Sonar</th><th scope="col">Depth (m)</th><th scope="col">Valid ens.</th><th scope="col">Coverage</th><th scope="col">Err. RMS</th><th scope="col">Pct good</th></tr></thead>
           <tbody>
             ${inst.map(i => i.coverage.depth_m.map((z, k) => `
               <tr><td>${SONAR_NAMES[i.sonar] || i.sonar}</td><td>${Math.round(z)}</td>
@@ -2320,6 +2362,7 @@ function filterTbl(projId, val) {
   if (!table) return;
 
   const yearGroups = {};
+  let shown = 0, total = 0;
 
   // First pass: check which cruises match
   table.querySelectorAll('.year-rows').forEach(tbody => {
@@ -2331,11 +2374,20 @@ function filterTbl(projId, val) {
       const search = tr.dataset.search || '';
       const matches = search.toLowerCase().includes(q);
       tr.style.display = matches ? '' : 'none';
-      if (matches) hasMatch = true;
+      total++;
+      if (matches) { hasMatch = true; shown++; }
     });
 
     yearGroups[year] = hasMatch;
   });
+
+  // Sighted users watch the table shrink; this is the same news for everyone
+  // else. role="status" announces it politely, without moving focus.
+  const count = document.getElementById(`tbl-count-${projId}`);
+  if (count) {
+    count.textContent = shown === total
+      ? '' : `${shown} of ${total} cruise${total === 1 ? '' : 's'}`;
+  }
 
   // Second pass: show/hide year headers based on matches
   table.querySelectorAll('.year-header').forEach(header => {

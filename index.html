@@ -60,6 +60,24 @@ header :focus-visible,
 }
 .skip-link:focus { top: 0; }
 main:focus { outline: none; }
+
+/* Text for screen readers only — kept in the accessibility tree, out of the
+   visual layout. Not display:none, which would remove it from both. */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  border: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ─── REDUCED MOTION (WCAG 2.3.3) ───
+   The drawer slides 620px and every navigation smooth-scrolls; honour the
+   OS setting rather than making that decision for the reader. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important; scroll-behavior: auto !important;
+  }
+}
 body { font-family: var(--sans); background: var(--sand); color: var(--text); font-size: 15px; line-height: 1.65; }
 
 /* ─── HEADER ─── */
@@ -209,6 +227,9 @@ button.pop-link:hover { text-decoration: underline; }
 .map-legend { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
 .leg-item  { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
 .leg-dot   { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+/* Shape as well as colour, so the legend does not rely on hue alone: a track
+   is a line, a station is a dot — which is how each is actually drawn. */
+.leg-line  { width: 18px; height: 3px; border-radius: 2px; flex-shrink: 0; }
 /* ─── CRUISE SELECTOR ─── */
 .cruise-sel-bar {
   padding: 10px 16px; border-top: 1px solid var(--border); background: var(--sand);
@@ -535,9 +556,19 @@ footer a:hover { color: #fff; }
   position: fixed; top: 0; right: 0; bottom: 0; width: 620px; max-width: 96vw;
   background: var(--white); z-index: 1201; overflow-y: auto;
   box-shadow: -8px 0 40px rgba(11,34,64,.18);
-  transform: translateX(102%); transition: transform .22s ease;
+  transform: translateX(102%);
+  /* aria-hidden alone left the rendered drawer focusable while it sat
+     off-screen — a keyboard user tabbed into buttons that screen readers had
+     been told did not exist. visibility takes it out of both, and is delayed
+     so the slide-out still animates. */
+  visibility: hidden;
+  transition: transform .22s ease, visibility 0s linear .22s;
 }
-.cov-drawer.open { transform: none; }
+.cov-drawer.open {
+  transform: none;
+  visibility: visible;
+  transition: transform .22s ease, visibility 0s;
+}
 .cov-hdr { position: sticky; top: 0; background: var(--navy); color: #fff; padding: 1.15rem 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; z-index: 2; }
 .cov-hdr h3 { font-family: var(--serif); font-size: 1.35rem; font-weight: 400; line-height: 1.2; }
 .cov-hdr .cov-sub { font-size: 12.5px; color: rgba(255,255,255,.6); margin-top: 3px; }
@@ -604,6 +635,17 @@ button.lnk-track:hover { background: var(--teal); color: #fff; }
 .cov-cell { font-size: 11.5px; color: var(--muted); font-family: var(--mono); white-space: nowrap; }
 .cov-cell .dash { color: var(--light); }
 
+@media (max-width: 620px) {
+  /* The header row — 44px mark, two lines of wordmark, four nav links and
+     2rem of side padding — overflowed 320px viewports and scrolled the page
+     sideways, which 1.4.10 does not allow. */
+  .hdr-inner { flex-direction: column; align-items: flex-start; gap: 6px;
+               height: auto; padding: 10px 1rem; }
+  nav { flex-wrap: wrap; }
+  .logo-sub { display: none; }
+  .site-warning { font-size: 10.5px; letter-spacing: .03em; padding: 7px .75rem; }
+}
+
 @media (max-width: 860px) {
   .stats { grid-template-columns: repeat(2, 1fr); }
   .hero { padding: 2rem; }
@@ -621,7 +663,7 @@ button.lnk-track:hover { background: var(--teal); color: #fff; }
    onclick="document.getElementById('main').focus(); return false;">Skip to content</a>
 
 <!-- LIGHTBOX -->
-<div id="lightbox" onclick="closeLB()">
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Plot viewer" onclick="closeLB()">
   <button type="button" id="lb-close" aria-label="Close plot viewer"
           onclick="event.stopPropagation(); closeLB()">×</button>
   <button type="button" class="lb-nav" id="lb-prev" aria-label="Previous plot" onclick="event.stopPropagation(); stepLB(-1)">‹</button>
@@ -633,7 +675,8 @@ button.lnk-track:hover { background: var(--teal); color: #fff; }
 
 <!-- COVERAGE DRAWER (measured tracks: per-cruise data coverage) -->
 <div class="cov-backdrop" id="cov-backdrop" onclick="closeCoverage()"></div>
-<aside class="cov-drawer" id="cov-drawer" aria-hidden="true"><!-- filled by JS --></aside>
+<aside class="cov-drawer" id="cov-drawer" role="dialog" aria-modal="true"
+       aria-labelledby="cov-title" aria-hidden="true"><!-- filled by JS --></aside>
 
 <!-- HEADER -->
 <header>
@@ -904,6 +947,17 @@ async function loadData() {
     SITE = EMBEDDED_DATA;
   }
   initSite();
+  setTitle('home');
+  markExternalLinks();
+  // Large blocks of this page are re-rendered as you navigate, so watch for
+  // new links rather than remembering to decorate them at every render site.
+  new MutationObserver(records => {
+    for (const r of records) {
+      for (const node of r.addedNodes) {
+        if (node.nodeType === 1) markExternalLinks(node.parentElement || document.body);
+      }
+    }
+  }).observe(document.body, {childList: true, subtree: true});
   history.replaceState({navId: 'home'}, '', location.pathname + location.search);
 }
 
@@ -1311,12 +1365,79 @@ function focusCruiseFromCalibration(projId, cruiseId) {
 }
 
 /* ════════════════════════════════════════════════════════
+   FOCUS MANAGEMENT, TITLES, EXTERNAL LINKS
+   ════════════════════════════════════════════════════════ */
+
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]),'
+                + ' select:not([disabled]), textarea, [tabindex]:not([tabindex="-1"])';
+
+/* The element focus came from, so closing an overlay can give it back rather
+   than dropping the reader at the top of the document. */
+let overlayOpener = null;
+
+function openOverlay(el, firstFocus) {
+  overlayOpener = document.activeElement;
+  // Let the open transition start before moving focus, or the browser scrolls
+  // to where the panel *was*.
+  requestAnimationFrame(() => (firstFocus || el.querySelector(FOCUSABLE))?.focus());
+}
+
+function closeOverlay() {
+  const back = overlayOpener;
+  overlayOpener = null;
+  // Only restore if the opener is still in the document and still focusable —
+  // the cruise table is rebuilt often enough that it may not be.
+  if (back && back.isConnected) back.focus();
+}
+
+/* Tab must not walk out of a modal into the page behind it (WCAG 2.4.3). */
+function trapTab(e) {
+  if (e.key !== 'Tab') return;
+  const modal = document.getElementById('lightbox').classList.contains('open')
+    ? document.getElementById('lightbox')
+    : document.getElementById('cov-drawer').classList.contains('open')
+      ? document.getElementById('cov-drawer') : null;
+  if (!modal) return;
+  const items = [...modal.querySelectorAll(FOCUSABLE)].filter(el => el.offsetParent !== null || el === document.activeElement);
+  if (!items.length) return;
+  const first = items[0], last = items[items.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}
+
+/* Each view is a separate history entry and a separate bookmark, so it needs
+   its own title (WCAG 2.4.2) — otherwise all four read "ADCP Data Portal". */
+const BASE_TITLE = 'Chereskin Lab · ADCP Data Portal';
+function setTitle(id) {
+  const proj = SITE && SITE.projects.find(p => p.id === id);
+  const name = proj ? proj.name
+    : {home: 'Overview', docs: 'Documentation', calibration: 'Calibrations'}[id] || '';
+  document.title = name ? `${name} · ${BASE_TITLE}` : BASE_TITLE;
+}
+
+/* Every link that opens a new window says so, and carries rel="noopener".
+   The portal rebuilds large blocks of HTML as you move around, so this runs
+   off a MutationObserver rather than being remembered at each render site. */
+function markExternalLinks(root = document.body) {
+  root.querySelectorAll('a[target="_blank"]:not([data-ext])').forEach(a => {
+    a.dataset.ext = '1';
+    a.rel = 'noopener noreferrer';
+    a.insertAdjacentHTML('beforeend', '<span class="sr-only"> (opens in a new window)</span>');
+  });
+}
+
+/* ════════════════════════════════════════════════════════
    NAVIGATION
    ════════════════════════════════════════════════════════ */
 function showSection(id, push = true) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
   document.getElementById('section-' + id).classList.add('visible');
   window.scrollTo({top: 0, behavior: 'smooth'});
+  setTitle(id);
+  // Focus follows the content. Without this the next Tab carried on through
+  // the header while the reader was looking at a different view.
+  const main = document.getElementById('main');
+  if (main) main.focus({preventScroll: true});
   if (push) history.pushState({navId: id}, '', '#' + id);
 }
 
@@ -1355,6 +1476,7 @@ function showProject(projId, push = true) {
 
   buildProjectHTML(p);
   showSection('project', false);
+  setTitle(projId);
   if (push) history.pushState({navId: projId}, '', '#' + projId);
 
   // Defer map init until DOM is painted
@@ -1410,7 +1532,7 @@ function buildProjectHTML(p) {
           <div class="panel-sub">${measuredCount ? 'Click a track or its marker for cruise details and depth-coverage statistics.' : 'Click a marker to view cruise details and access data.'}</div>
         </div>
         <div class="map-legend">
-          <div class="leg-item"><div class="leg-dot" style="background:${p.color}"></div> Cruise track</div>
+          <div class="leg-item"><div class="leg-line" style="background:${p.color}"></div> Cruise track</div>
           <div class="leg-item"><div class="leg-dot" style="background:#2874c5"></div> Station</div>
         </div>
       </div>
@@ -1941,7 +2063,7 @@ function openCoverage(projId, cruiseId) {
   drawer.innerHTML = `
     <div class="cov-hdr">
       <div>
-        <h3>${cruise.id} · data coverage</h3>
+        <h3 id="cov-title">${cruise.id} · data coverage</h3>
         <div class="cov-sub">${cruise.ship} · ${cruise.dates} · ${cruise.region}</div>
       </div>
       <div style="display:flex;align-items:center;gap:8px">
@@ -2024,13 +2146,16 @@ function openCoverage(projId, cruiseId) {
   drawer.classList.add('open');
   drawer.setAttribute('aria-hidden', 'false');
   document.getElementById('cov-backdrop').classList.add('open');
+  openOverlay(drawer, drawer.querySelector('.cov-close'));
 }
 
 function closeCoverage() {
   const d = document.getElementById('cov-drawer');
+  if (!d.classList.contains('open')) return;   // nothing to restore focus from
   d.classList.remove('open');
   d.setAttribute('aria-hidden', 'true');
   document.getElementById('cov-backdrop').classList.remove('open');
+  closeOverlay();
 }
 
 /* Depth profile: value on x, depth increasing downwards on y. */
@@ -2424,7 +2549,9 @@ function openLB(src, cap, item, index) {
     lightboxIndex = 0;
   }
   renderLB();
-  document.getElementById('lightbox').classList.add('open');
+  const lb = document.getElementById('lightbox');
+  lb.classList.add('open');
+  openOverlay(lb, document.getElementById('lb-close'));
 }
 function renderLB() {
   const current = lightboxItems[lightboxIndex];
@@ -2447,12 +2574,32 @@ function stepLB(direction) {
   renderLB();
 }
 function closeLB() {
-  document.getElementById('lightbox').classList.remove('open');
+  const lb = document.getElementById('lightbox');
+  if (!lb.classList.contains('open')) return;
+  lb.classList.remove('open');
+  closeOverlay();
 }
 document.addEventListener('keydown', e => {
+  trapTab(e);
   if (e.key === 'Escape') { closeLB(); closeCoverage(); }
-  if (e.key === 'ArrowLeft') stepLB(-1);
-  if (e.key === 'ArrowRight') stepLB(1);
+
+  // Arrow keys step the lightbox, but only while it is the thing on screen —
+  // otherwise they also fired while someone was editing a filter box.
+  const lbOpen = document.getElementById('lightbox').classList.contains('open');
+  if (lbOpen && e.key === 'ArrowLeft') stepLB(-1);
+  if (lbOpen && e.key === 'ArrowRight') stepLB(1);
+
+  // A checkbox answers to Space; it ignores Enter. These chips read as "show
+  // this cruise on the map" and keyboard users reach for Enter first, so take
+  // both. The checkbox stays a checkbox — that is the right role for one of a
+  // few hundred independent on/off choices, and it is what a screen reader
+  // announces — this only widens how it can be operated.
+  if (e.key === 'Enter' && e.target instanceof HTMLInputElement
+      && e.target.type === 'checkbox' && e.target.closest('.cruise-chip')) {
+    e.preventDefault();
+    e.target.checked = !e.target.checked;
+    e.target.dispatchEvent(new Event('change', {bubbles: true}));
+  }
 });
 
 /* ════════════════════════════════════════════════════════

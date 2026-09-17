@@ -1,0 +1,38 @@
+cruise_name,ship,start,end,sac_ids,sonars,ncei_accession,ncei_url,source
+KM1606,kilomoan,2016/04/09,2016/05/20,02515 02516 02517,os38bb os38nb wh300,0223175,https://www.ncei.noaa.gov/archive/accession/0223175,JASADCP inventory + NCEI accession listing
+MGL1115,langseth,2011/11/26,2011/12/29,02519 02520,os75bb os75nb,0223175,https://www.ncei.noaa.gov/archive/accession/0223175,JASADCP inventory + NCEI accession listing
+MV1218,melville,2012/12/19,2013/01/14,02534 02535,os75bb os75nb,0223175,https://www.ncei.noaa.gov/archive/accession/0223175,JASADCP inventory + NCEI accession listing
+ps1240,pointsur,2012/11/29,2013/01/06,02523 02524 02525,os75bb os75nb wh300,0223175,https://www.ncei.noaa.gov/archive/accession/0223175,JASADCP inventory + NCEI accession listing
+ps1307,pointsur,2013/03/22,2013/04/12,02526 02527 02528,os75bb wh300,0223175,https://www.ncei.noaa.gov/archive/accession/0223175,JASADCP inventory + NCEI accession listing
+rb1401,ronbrown,2014/02/28,2014/03/13,02540 02541,os75bb os75nb,0223175,https://www.ncei.noaa.gov/archive/accession/0223175,JASADCP inventory + NCEI accession listing
+rb1402,ronbrown,2014/03/23,2014/04/08,02542 02543,os75bb os75nb,0223175,https://www.ncei.noaa.gov/archive/accession/0223175,JASADCP inventory + NCEI accession listing
+RB1702_leg2,ronbrown,2017/05/09,2017/05/19,02536 02537,os75bb os75nb,0223175,https://www.ncei.noaa.gov/archive/accession/0223175,JASADCP inventory + NCEI accession listing
+RB1703_leg1,ronbrown,2017/05/28,2017/06/25,02538 02539,os75bb os75nb,0223175,https://www.ncei.noaa.gov/archive/accession/0223175,JASADCP inventory + NCEI accession listing
+RR1610,rrevelle,2016/08/14,2016/09/23,02546 02547 02548,os150bb os150nb os75nb,0223175,https://www.ncei.noaa.gov/archive/accession/0223175,JASADCP inventory + NCEI accession listing
+tn188_calib,thompson,2005/12/03,2006/01/09,02551 02552,os75bb os75nb,0223175,https://www.ncei.noaa.gov/archive/accession/0223175,JASADCP inventory + NCEI accession listing
+tn188_transit,thompson,2005/11/22,2005/12/03,02553 02554,os75bb os75nb,0223175,https://www.ncei.noaa.gov/archive/accession/0223175,JASADCP inventory + NCEI accession listing
+tn189_glued,thompson,2006/01/31,2006/02/10,02555 02556,os75bb os75nb,0223175,https://www.ncei.noaa.gov/archive/accession/0223175,JASADCP inventory + NCEI accession listing
+tn320,thompson,2015/04/06,2015/05/08,02557 02558,os75bb os75nb,0223175,https://www.ncei.noaa.gov/archive/accession/0223175,JASADCP inventory + NCEI accession listing
+tn340,thompson,2016/03/01,2016/04/18,02559 02560,os75bb os75nb,0223175,https://www.ncei.noaa.gov/archive/accession/0223175,JASADCP inventory + NCEI accession listing
+mv1104,melville,,,,,,,not in the JASADCP archive — no NCEI accession found
+SKQ2014,sikuliaq,,,,,,,not in the JASADCP archive — no NCEI accession found
+TN265,thompson,,,,,,,not in the JASADCP archive — no NCEI accession found
+TN310,thompson,,,,,,,not in the JASADCP archive — no NCEI accession found
+TN411,thompson,,,,,,,not in the JASADCP archive — no NCEI accession found
+OC1911X,oceanus,,,,,,,not in the JASADCP archive — no NCEI accession found
+RR1710,revelle,,,,,,,not in the JASADCP archive — no NCEI accession found
+RR2105,revelle,,,,,,,not in the JASADCP archive — no NCEI accession found
+SH1704,shimada,,,,,,,not in the JASADCP archive — no NCEI accession found
+SH2103,shimada,,,,,,,not in the JASADCP archive — no NCEI accession found
+SH2204,shimada,,,,,,,not in the JASADCP archive — no NCEI accession found
+SR1717,sally ride,,,,,,,not in the JASADCP archive — no NCEI accession found
+SR1808,sally ride,,,,,,,not in the JASADCP archive — no NCEI accession found
+SR1815,sally ride,,,,,,,not in the JASADCP archive — no NCEI accession found
+SR2004,sally ride,,,,,,,not in the JASADCP archive — no NCEI accession found
+SR2006,sally ride,,,,,,,not in the JASADCP archive — no NCEI accession found
+SR2008,sally ride,,,,,,,not in the JASADCP archive — no NCEI accession found
+SR2105,sally ride,,,,,,,not in the JASADCP archive — no NCEI accession found
+SR2112,sally ride,,,,,,,not in the JASADCP archive — no NCEI accession found
+SR2204,sally ride,,,,,,,not in the JASADCP archive — no NCEI accession found
+SR2206,sally ride,,,,,,,not in the JASADCP archive — no NCEI accession found
+SR2211,sally ride,,,,,,,not in the JASADCP archive — no NCEI accession found

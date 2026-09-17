@@ -25,6 +25,7 @@ The site has three source files and six data files:
 - **`tools/admin.html`** — a standalone form tool for composing new cruise records. Its output is JSON to copy-paste into `site_data.json`; it does not write files directly. It lives under `tools/` and is *not* published: it serves no purpose on the live site, and keeping it out of the deploy keeps it out of the accessibility scope described below.
 `tools/` holds local, uncommitted tooling — `harvest_calibrations.py` and `build_calcofi_cruises.py` (both below), which need nothing but the web, `site_data.json` and the generated data files. Their output is committed; the scripts are not, like the CODAS builders under `../../science/technical_sadcp/scripts/`.
 - **`images/`** — manually curated image files referenced by `site_data.json` (`cruise.images[].filename` paths are relative to this folder) are ignored. The reproducible generated figures under `images/antarctic-webpy/` and `images/calcofi-webpy/` are committed static assets.
+- **`reports/`** — ignored. The accessibility audit (`accessibility-audit.html`, a saved copy of the published Artifact) and `reports/checks/`, the scripts its numbers come from: four jsdom suites over the JavaScript-built DOM, plus the JASADCP search and the spreadsheet merge. `reports/README.md` has the Artifact link and how to re-run everything.
 - **`input_info/harvest/`** — the only part of `input_info/` that is committed: the original-portal pages the generated data is derived from (the three calibration pages, the CalCOFI atlas cruise index, and JASADCP's CalCOFI inventory), kept so the harvests stay reproducible after adcp.ucsd.edu and uhslc are gone.
 
 ## Measured tracks — Antarctic (`data/drake_passage_tracks.json`)
@@ -394,7 +395,13 @@ The `_README` key at the top of the file documents the schema. Key points:
 - `cruise.sac_id` / `cruise.sac_ids` — the JASADCP (NODC/UH SAC) cruise id of the primary database, and one `{sac_id, sonar}` entry per submitted database. `jasadcp_url` is `https://uhslc.soest.hawaii.edu/sadcp/DATABASE/<sac_id>.html`. Cruises processed in house and not yet submitted have none of these — the Antarctic series from 2019, the CalCOFI series from 2017.
 - `cruise.calcofi_cruise` — CalCOFI only: the programme's own name for the cruise (`2107SR` — year, month, ship), which is how CalCOFI indexes the hydrography and plankton data from the same stations.
 - `project.plots_link_label` — names the external plot page a cruise row links to *beside* its generated CODAS gallery. Set to `"Atlas"` on CalCOFI, where `cruise.plots_url` is the 2008 CalCOFI ADCP Digital Atlas page of objectively mapped velocity at 50 m and 100 m, which the section figures do not replace. Which cruises have one is read from the atlas's own cruise index, committed at `input_info/harvest/calcofi_all_cruise.htm` — 39 of the 55. Left unset (Antarctic), an external `plots_url` is shown only for cruises with no generated gallery.
-- `cruise.ncei_accession` — the bare NCEI accession number behind `ncei_url` (`https://www.ncei.noaa.gov/archive/accession/<n>`). For the recent CalCOFI cruises the numbers come from `input_info/harvest/Cryosat Accessions.xlsx`, the group's own submission record; four of the fifteen in-house cruises are archived (OC1911A `0316807`, RL2001 `0314048`, RL2101 `0314054`, RL2302 `0314049`, each verified against its NCEI ISO landing page by ship and date range), and the other eleven — SH1704, SR1717, SR1808, SR1815, SR2004, SR2008, SH2103, SR2105, SR2112, SH2204, SR2211 — are listed in that spreadsheet with a blank accession, meaning not yet submitted. The accessions are **not** a contiguous block and cannot be guessed by range — `0314051` is an RRS Discovery North Atlantic cruise, `0314047` is a Ryofu Maru III GO-SHIP leg, `0314055` is a Himawari-9 SST granule. The eleven were searched for exhaustively and are genuinely unarchived: **R/V Sally Ride, NOAA Ship Bell M. Shimada and NOAA Ship Reuben Lasker do not appear in the JASADCP ship inventory at all** (`http://uhslc.soest.hawaii.edu/sadcp/ship.html`), so none of the SR/SH/RL cruises can have reached NCEI through an old JASADCP batch; R/V Oceanus *is* indexed there but its inventory stops at OC1610A in October 2016. NCEI's own JASADCP-to-accession mapping page (`.../global-ocean-currents-database/jasadcp/ncei_accns.html`) now 404s, as expected — it went with the GOCD. Re-check the spreadsheet when cruises are submitted.
+- `cruise.ncei_accession` — the bare NCEI accession number behind `ncei_url` (`https://www.ncei.noaa.gov/archive/accession/<n>`). For the recent CalCOFI cruises the numbers come from `input_info/harvest/Cryosat Accessions.xlsx`, the group's own submission record; four of the fifteen in-house cruises are archived (OC1911A `0316807`, RL2001 `0314048`, RL2101 `0314054`, RL2302 `0314049`, each verified against its NCEI ISO landing page by ship and date range), and the other eleven — SH1704, SR1717, SR1808, SR1815, SR2004, SR2008, SH2103, SR2105, SR2112, SH2204, SR2211 — are listed in that spreadsheet with a blank accession, meaning not yet submitted. The accessions are **not** a contiguous block and cannot be guessed by range — `0314051` is an RRS Discovery North Atlantic cruise, `0314047` is a Ryofu Maru III GO-SHIP leg, `0314055` is a Himawari-9 SST granule. The eleven were searched for exhaustively and are genuinely unarchived: **R/V Sally Ride and NOAA Ship Bell M. Shimada do not appear in the JASADCP ship inventory at all** (`http://uhslc.soest.hawaii.edu/sadcp/ship.html`), so none of the SR/SH cruises can have reached NCEI through an old JASADCP batch; R/V Oceanus *is* indexed there but its inventory stops at OC1610A in October 2016.
+
+  **How to search the archive exhaustively.** Each ship's page has a companion `.inv` plain-text inventory (`.../sadcp/INVNTORY/<ship>.inv`, 72 of them, 2,561 rows covering the whole 718-cruise database) listing SAC id, project, dates, position range and the `cruise:sonar` name. Download them all and grep — that is a complete search of JASADCP in one pass, and far better than reading the HTML pages one at a time. Match on the cruise stem as well as the full name, because the archive writes `rb1702_leg2:os75bb` where a local load is `RB1702_leg2`, and one submitted cruise becomes one SAC id *per sonar*. Map a SAC id to its accession with `scripts/resolve_jasadcp_ncei_accessions.py` (below), or — faster when you only need one — grep its page cache for `href="<sac>/"`.
+
+  **Result of that search, September 2026.** Of the 37 cruises in the spreadsheet with a blank accession, **15 are in fact archived, all in accession `0223175`** — the JASADCP batch `ADCP_to_NCEI_202012`, which holds 156 SAC directories spanning 02430–02585: KM1606, MGL1115, MV1218, ps1240, ps1307, rb1401, rb1402, RB1702_leg2, RB1703_leg1, RR1610, tn188_calib, tn188_transit, tn189_glued, tn320 and tn340 (34 SAC ids in total, each verified present in the accession's own directory listing). None of the 15 is a portal cruise, so `site_data.json` is unchanged; the table is written to `input_info/harvest/cryosat_accessions_resolved.csv` for merging back into the spreadsheet. The remaining 22 — every SR and SH cruise, plus mv1104, SKQ2014, TN265, TN310, TN411, OC1911X, RR1710 and RR2105 — are in neither JASADCP nor NCEI. NCEI's own JASADCP-to-accession mapping page (`.../global-ocean-currents-database/jasadcp/ncei_accns.html`) now 404s, as expected — it went with the GOCD. Re-check the spreadsheet when cruises are submitted.
+
+  **The spreadsheet now records all of this.** `input_info/Cryosat Accessions.xlsx` (and its committed copy under `harvest/`) gained four columns — `SAC IDs (JASADCP)`, `JASADCP accession`, `NCEI link` and `Archive status (resolved Sept 2026)` — filled for all 58 rows; the untouched original is kept beside it as `Cryosat Accessions (pre-merge original).xlsx`. Fifteen blank `Accession #` cells were filled from the JASADCP batch and their `Comment` set to `Published`, which is one of the three values column D's own dropdown allows — anything else would break the validation, which is why the explanatory text went into a new column instead. Five rows that already carried an accession turn out to be archived **twice**, once directly and once through JASADCP (at26_26, km1415, km1416, km1417, MGL1703), so their existing `Accession #` was left alone and the JASADCP copy recorded separately. Accessions stored as floats (`314052.0`) were normalised to `0314052`. The merge is `reports/checks/merge_xlsx.py`, which rewrites only `sheet1.xml` and its relationships and copies every other part of the workbook byte for byte, so the styles, the drawing and the dropdown survive.
 
   Separately, NOAA's OMAO ship-data pages *do* list cruise records matching SH1704, SH2103 and SH2204 by date (e.g. cruise `332220170319`, 2017-03-19 to 2017-04-20, project "CalCOFI - Spring"), and there is an OMAO ADCP accession `0279675` for a July 2019 Shimada leg. These are NOAA's own underway ADCP holdings, **not** this lab's processed CODAS submission, so they are deliberately not used as `ncei_accession` — that field means "where this portal's processed data is archived". Note these four were written into `site_data.json` by hand, because `tools/build_calcofi_cruises.py` needs `calcofi_cruises.json` and `jasadcp_ncei_accessions.json` from `../../science/technical_sadcp/`, which are not present — a regeneration without them would drop the links. JASADCP submissions up to ~2018 were archived in batches, so many cruises share one accession; from 2019 each Drake Passage season has its own. `../../science/technical_sadcp/scripts/resolve_jasadcp_ncei_accessions.py` rebuilds the SAC-id-to-accession mapping by walking the NCEI archive directories (NCEI's own mapping page went with the GOCD when it was decommissioned in April 2025).
 - The gallery manifests are intentionally separate from `cruise.images[]`; they carry generated CODAS section-figure paths, thumbnails, checksums, per-window time and position metadata, and per-cruise availability.
@@ -448,6 +455,14 @@ accident:
   and the Leaflet track click both duplicate the row's Coverage button, which
   is why they may stay as they are. A control that is the *only* route to
   something must be focusable.
+- **A toggle that is a checkbox still has to answer to Enter.** A checkbox
+  responds to Space and ignores Enter; the cruise chips read as "show this
+  cruise on the map", and keyboard users reach for Enter first and conclude the
+  control is broken. The global `keydown` handler turns Enter on a chip
+  checkbox into a toggle plus a `change` event. The control stays a checkbox —
+  that is the right role for one of a few hundred independent on/off choices,
+  and it is what a screen reader announces; this only widens how it can be
+  operated.
 - **A control that hides its own input must clip it, not remove it.** The
   cruise chips are a `<label>` wrapping a checkbox; `display: none` on that
   checkbox (the original styling) took a few hundred map toggles out of the tab
@@ -524,8 +539,28 @@ Three more contracts, all verifiable:
 
 The three filter controls carry `aria-label` (a placeholder is not a name).
 
-Still outstanding: the drawer and lightbox are not marked up as dialogs and
-manage no focus, and the closed drawer keeps focusable content inside
-`aria-hidden`; `document.title` never changes between views; the header does
-not reflow below ~380px; 18 `target="_blank"` links do not announce the new
-window; and there is no `prefers-reduced-motion` guard.
+### Overlays, titles and the rest
+
+- **Both overlays are modal dialogs.** `role="dialog" aria-modal="true"` with a
+  label, focus moved in on open and returned to the opener on close
+  (`openOverlay()` / `closeOverlay()`), and `trapTab()` keeping Tab inside.
+  The closed drawer takes `visibility: hidden` — `aria-hidden` alone left it
+  rendered and focusable off-screen, so a keyboard user tabbed into controls
+  screen readers had been told did not exist. The `visibility` transition is
+  delayed by the slide duration so the animation still plays.
+- **Each view sets `document.title`.** `setTitle()` runs from `showSection()`
+  and `showProject()`; the four views are separate history entries and separate
+  bookmarks, so they cannot share one title (2.4.2).
+- **New-window links are decorated by a `MutationObserver`,** not at each
+  render site. `markExternalLinks()` adds `rel="noopener noreferrer"` and a
+  visually-hidden "(opens in a new window)" to any `a[target="_blank"]`; the
+  portal rebuilds large blocks of HTML as you navigate, so remembering to call
+  it everywhere would not have survived.
+- `prefers-reduced-motion: reduce` neutralises the smooth scrolling and the
+  drawer slide; a `max-width: 620px` block stacks the header, which used to
+  overflow a 320px viewport (1.4.10); and the map legend distinguishes a track
+  from a station by shape (`.leg-line` vs `.leg-dot`) as well as colour (1.4.1).
+
+**Every blocking, serious and moderate finding from the September 2026 audit is
+now closed.** Re-verify with `python3 tools/check_contrast.py` and a tab-through
+with the mouse unplugged before changing any of the above.

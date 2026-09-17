@@ -26,4 +26,9 @@ input_info/*
 # WCAG 2.1 AA scope the DOJ ADA Title II rule puts on the portal.
 tools/
 
+# The accessibility audit and the checks behind it: a working record, not part
+# of the published site. The report itself lives as an Artifact; see
+# reports/README.md for the link.
+reports/
+
 __pycache__/

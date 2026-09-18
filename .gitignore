@@ -8,6 +8,8 @@ images/*
 !images/antarctic-webpy/**
 !images/calcofi-webpy/
 !images/calcofi-webpy/**
+!images/epac-webpy/
+!images/epac-webpy/**
 !images/branding/
 !images/branding/**
 

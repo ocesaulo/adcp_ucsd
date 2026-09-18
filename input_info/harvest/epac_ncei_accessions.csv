@@ -1,0 +1,65 @@
+# NCEI accessions for the Eastern Pacific portal cruises (42 rows).
+# Columns: cruise, accession (the one the portal links), route,
+#   batch_accession (the 2020 JASADCP batch, where the cruise is also in it),
+#   sac_ids, evidence.
+# "route" is how the data reached NCEI:
+#   direct            - the group's own submission, per Cryosat Accessions.xlsx
+#   jasadcp-batch     - the 2020 JASADCP batch accession 0223175
+#   jasadcp-accession - a per-cruise JASADCP accession found by searching NCEI
+#                       in September 2026, matched on platform plus the exact
+#                       date range in the accession title and confirmed against
+#                       the cruise's measured extent
+#   none              - searched and not archived
+# Where a cruise has both a per-cruise accession and the 2020 batch, the
+# per-cruise one is linked: it lands on that cruise's own package rather than
+# on a 156-directory batch. The batch is kept in batch_accession and the
+# cruise note says the data is archived twice.
+cruise,accession,route,batch_accession,sac_ids,evidence
+AT26_26,0309821,direct,0223175,02499,Cryosat Accessions.xlsx
+AT37_07,0309822,direct,,,Cryosat Accessions.xlsx
+AT37_08,0309820,direct,,,Cryosat Accessions.xlsx
+AT42-14,0308398,direct,,,Cryosat Accessions.xlsx
+AT42-15,0308524,direct,,,Cryosat Accessions.xlsx
+AT42-16,0308564,direct,,,Cryosat Accessions.xlsx
+KM1415,0313189,direct,0223175,02506 02507 02508,Cryosat Accessions.xlsx
+KM1416,0313191,direct,0223175,02509 02510 02511,Cryosat Accessions.xlsx
+KM1417,0313190,direct,0223175,02512 02513 02514,Cryosat Accessions.xlsx
+KM1606,0223175,jasadcp-batch,,02515 02516 02517,SAC ids in accession 0223175
+KOK1605,0314052,direct,,,Cryosat Accessions.xlsx
+KOK1607,0314053,direct,,,Cryosat Accessions.xlsx
+MGL1115,0223175,jasadcp-batch,,02519 02520,SAC ids in accession 0223175
+MGL1703,0314506,direct,0223175,02521 02522,Cryosat Accessions.xlsx
+MV1104,,none,,,"searched JASADCP inventories and NCEI, Sept 2026"
+MV1218,0223175,jasadcp-batch,,02534 02535,SAC ids in accession 0223175
+OC1907X2,0314508,direct,,,Cryosat Accessions.xlsx
+OC1911X,0317756,jasadcp-accession,,,"NCEI title match: Oceanus, 2019-11-21 to 2019-11-24"
+PS1240,0317755,jasadcp-accession,0223175,02523 02524 02525,"NCEI title match: Point Sur, 2012-11-29 to 2013-01-06"
+PS1307,0317754,jasadcp-accession,0223175,02526 02527 02528,"NCEI title match: Point Sur, 2013-03-22 to 2013-04-12"
+RB1401,0223175,jasadcp-batch,,02540 02541,SAC ids in accession 0223175
+RB1402,0317532,jasadcp-accession,0223175,02542 02543,"NCEI title match: Ron Brown, 2014-03-23 to 2014-04-08"
+RB1702_LEG2,0317530,jasadcp-accession,0223175,02536 02537,"NCEI title match: Ron Brown, 2017-05-09 to 2017-05-19"
+RB1703_LEG1,0317533,jasadcp-accession,0223175,02538 02539,"NCEI title match: Ron Brown, 2017-05-28 to 2017-06-25"
+RR1610,0223175,jasadcp-batch,,02546 02547 02548,SAC ids in accession 0223175
+RR1710,,none,,,"searched JASADCP inventories and NCEI, Sept 2026"
+RR2104,,none,,,"searched JASADCP inventories and NCEI, Sept 2026"
+RR2105,0317531,jasadcp-accession,,,"NCEI title match: Roger Revelle, 2021-07-13 to 2021-08-13"
+SKQ2014,0223175,jasadcp-batch,,02549 02550,SAC ids in accession 0223175
+SR2006,,none,,,"searched JASADCP inventories and NCEI, Sept 2026"
+SR2007,,none,,,"searched JASADCP inventories and NCEI, Sept 2026"
+SR2204,,none,,,"searched JASADCP inventories and NCEI, Sept 2026"
+SR2206,,none,,,"searched JASADCP inventories and NCEI, Sept 2026"
+SR2212,,none,,,"searched JASADCP inventories and NCEI, Sept 2026"
+TN188_CALIB,0223175,jasadcp-batch,,02551 02552,SAC ids in accession 0223175
+TN188_TRANSIT,0223175,jasadcp-batch,,02553 02554,SAC ids in accession 0223175
+TN189_GLUED,0223175,jasadcp-batch,,02555 02556,SAC ids in accession 0223175
+TN265,,none,,,"searched JASADCP inventories and NCEI, Sept 2026"
+TN310,,none,,,"searched JASADCP inventories and NCEI, Sept 2026"
+TN320,0223175,jasadcp-batch,,02557 02558,SAC ids in accession 0223175
+TN340,0223175,jasadcp-batch,,02559 02560,SAC ids in accession 0223175
+TN411,,none,,,"searched JASADCP inventories and NCEI, Sept 2026"
+# The same NCEI search also turned up per-cruise JASADCP accessions for two
+# CalCOFI cruises, which that project still records as processed but not
+# submitted. Noted here rather than applied, because that is the other
+# project's data:
+#   SR1717  0317529  Sally Ride, 2017-11-09 to 2017-11-24
+#   SR1808  0317528  Sally Ride, 2018-06-09 to 2018-06-24

@@ -2083,11 +2083,159 @@
       "track_key": "RB1402"
     },
     {
-      "availability": "unavailable",
+      "availability": "available",
       "cruise_id": "TN310",
-      "plots": [],
-      "reason": "no measured track record",
-      "sources": []
+      "omitted": [
+        {
+          "database": "TN310/os75bb",
+          "reason": "a better database of the same sonar is published",
+          "sonar": "os75bb"
+        }
+      ],
+      "plots": [
+        {
+          "bytes": 303453,
+          "caption": "TN310 - OS75NB - section 1 of 5 - 21 May to 24 May 2014 (3.3 days)",
+          "database": "TN310/os75nb",
+          "family": "section",
+          "image": "images/epac-webpy/TN310/os75nb/os75nb_section000.png",
+          "n_ens": 949,
+          "section": 0,
+          "section_bbox": [
+            -13.706,
+            -171.715,
+            -1.189,
+            -162.628
+          ],
+          "section_count": 5,
+          "section_days": 3.29,
+          "section_dday": [
+            140.1619,
+            143.4536
+          ],
+          "section_end": "2014-05-24T10:53:11Z",
+          "section_start": "2014-05-21T03:53:11Z",
+          "sha256": "75fdc7c70b18711278e4b8d3a9711206f0bdecffb90174c9e1c30965a6ac2e40",
+          "sonar": "os75nb",
+          "thumbnail": "images/epac-webpy/TN310/os75nb/thumbnails/os75nb_section000_thumb.png"
+        },
+        {
+          "bytes": 311850,
+          "caption": "TN310 - OS75NB - section 2 of 5 - 24 May to 27 May 2014 (3.3 days)",
+          "database": "TN310/os75nb",
+          "family": "section",
+          "image": "images/epac-webpy/TN310/os75nb/os75nb_section001.png",
+          "n_ens": 947,
+          "section": 1,
+          "section_bbox": [
+            -1.176,
+            -162.619,
+            11.171,
+            -153.273
+          ],
+          "section_count": 5,
+          "section_days": 3.28,
+          "section_dday": [
+            143.4571,
+            146.7418
+          ],
+          "section_end": "2014-05-27T17:48:11Z",
+          "section_start": "2014-05-24T10:58:10Z",
+          "sha256": "d457efe5a164f597fc6200895b154abd3f464d2ee2e673527d005f45fefaaa1a",
+          "sonar": "os75nb",
+          "thumbnail": "images/epac-webpy/TN310/os75nb/thumbnails/os75nb_section001_thumb.png"
+        },
+        {
+          "bytes": 310268,
+          "caption": "TN310 - OS75NB - section 3 of 5 - 27 May to 31 May 2014 (3.3 days)",
+          "database": "TN310/os75nb",
+          "family": "section",
+          "image": "images/epac-webpy/TN310/os75nb/os75nb_section002.png",
+          "n_ens": 948,
+          "section": 2,
+          "section_bbox": [
+            11.184,
+            -153.264,
+            23.076,
+            -143.871
+          ],
+          "section_count": 5,
+          "section_days": 3.29,
+          "section_dday": [
+            146.7453,
+            150.0335
+          ],
+          "section_end": "2014-05-31T00:48:12Z",
+          "section_start": "2014-05-27T17:53:13Z",
+          "sha256": "dc6a978fb7f7e451cbb19320d26ccb726bbc0fe553c3dfa9b43005888e36dce9",
+          "sonar": "os75nb",
+          "thumbnail": "images/epac-webpy/TN310/os75nb/thumbnails/os75nb_section002_thumb.png"
+        },
+        {
+          "bytes": 311232,
+          "caption": "TN310 - OS75NB - section 4 of 5 - 31 May to 03 Jun 2014 (3.3 days)",
+          "database": "TN310/os75nb",
+          "family": "section",
+          "image": "images/epac-webpy/TN310/os75nb/os75nb_section003.png",
+          "n_ens": 949,
+          "section": 3,
+          "section_bbox": [
+            23.089,
+            -143.861,
+            34.811,
+            -133.742
+          ],
+          "section_count": 5,
+          "section_days": 3.29,
+          "section_dday": [
+            150.0369,
+            153.3286
+          ],
+          "section_end": "2014-06-03T07:53:10Z",
+          "section_start": "2014-05-31T00:53:12Z",
+          "sha256": "933d9ca367c8d0efe44c051c985d4692d2a9231e9dedb5a2dd923c26849c3603",
+          "sonar": "os75nb",
+          "thumbnail": "images/epac-webpy/TN310/os75nb/thumbnails/os75nb_section003_thumb.png"
+        },
+        {
+          "bytes": 289275,
+          "caption": "TN310 - OS75NB - section 5 of 5 - 03 Jun to 06 Jun 2014 (3.3 days)",
+          "database": "TN310/os75nb",
+          "family": "section",
+          "image": "images/epac-webpy/TN310/os75nb/os75nb_section004.png",
+          "n_ens": 948,
+          "section": 4,
+          "section_bbox": [
+            34.823,
+            -133.73,
+            44.627,
+            -124.05
+          ],
+          "section_count": 5,
+          "section_days": 3.29,
+          "section_dday": [
+            153.332,
+            156.6203
+          ],
+          "section_end": "2014-06-06T14:53:12Z",
+          "section_start": "2014-06-03T07:58:09Z",
+          "sha256": "d0fc6553ee3b0137d4c5a266864a462e4ed6541439f6e4f1497b7ba996f2af7b",
+          "sonar": "os75nb",
+          "thumbnail": "images/epac-webpy/TN310/os75nb/thumbnails/os75nb_section004_thumb.png"
+        }
+      ],
+      "section_count": 5,
+      "sonars": [
+        "os75nb"
+      ],
+      "sources": [
+        {
+          "database": "TN310/os75nb",
+          "sonar": "os75nb",
+          "source_database": "/work/smullersoares_work/data/adcp/uh_repo_from_tarballs/TN310/os75nb/adcpdb/aship"
+        }
+      ],
+      "track_key": "TN310"
     },
     {
       "availability": "available",

@@ -1741,7 +1741,9 @@ function buildProjectHTML(p) {
     /* A cruise whose navigation survives but whose velocity databases do not.
        It is deliberately not "Processed": that status promises the data is
        available in house on request, and for these cruises only the track is.
-       Two Eastern Pacific cruises are in this state. */
+       No cruise is in this state now: TN310 was the last one, and its CODAS
+       databases turned up in September 2026. Kept, like "processed" and
+       "pending", so the vocabulary is complete when one appears. */
     nav_only:  '<span class="badge b-gray">Navigation only</span>'
   };
 

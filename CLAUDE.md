@@ -24,7 +24,7 @@ The site has three source files and eight data files:
 - **`index.html`** — the public-facing portal. Fetches the data files at runtime and builds all UI (Leaflet maps, coverage charts, image gallery, cruise table) via JavaScript. Contains embedded fallback data (`EMBEDDED_DATA`) for `file://` preview.
 - **`tools/admin.html`** — a standalone form tool for composing new cruise records. Its output is JSON to copy-paste into `site_data.json`; it does not write files directly. It lives under `tools/` and is *not* published: it serves no purpose on the live site, and keeping it out of the deploy keeps it out of the accessibility scope described below.
 `tools/` holds local, uncommitted tooling — `harvest_calibrations.py`, `build_calcofi_cruises.py` and `build_epac_cruises.py` (all below), which need nothing but the web, `site_data.json` and the generated data files. Their output is committed; the scripts are not, like the CODAS builders under `../../science/technical_sadcp/scripts/`.
-- **`images/`** — manually curated image files referenced by `site_data.json` (`cruise.images[].filename` paths are relative to this folder) are ignored. The reproducible generated figures under `images/antarctic-webpy/`, `images/calcofi-webpy/` and `images/epac-webpy/` are committed static assets, 738 MB together.
+- **`images/`** — manually curated image files referenced by `site_data.json` (`cruise.images[].filename` paths are relative to this folder) are ignored. The reproducible generated figures under `images/antarctic-webpy/`, `images/calcofi-webpy/` and `images/epac-webpy/` are committed static assets, 739 MB together.
 - **`reports/`** — ignored. The accessibility audit (`accessibility-audit.html`, a saved copy of the published Artifact) and `reports/checks/`, the scripts its numbers come from: four jsdom suites over the JavaScript-built DOM, plus the JASADCP search and the spreadsheet merge. `reports/README.md` has the Artifact link and how to re-run everything.
 - **`input_info/harvest/`** — the only part of `input_info/` that is committed: the sources the generated data is derived from (the three calibration pages, the CalCOFI atlas cruise index, JASADCP's CalCOFI inventory, the Eastern Pacific inventory extract `jasadcp_epac_inventory.txt` and the accession table `epac_ncei_accessions.csv`), kept so the harvests stay reproducible after adcp.ucsd.edu and uhslc are gone.
 
@@ -166,19 +166,22 @@ break down exactly:
 
 | group | n | disposition |
 | --- | --- | --- |
-| Eastern Pacific, CODAS database found | 38 | published |
+| Eastern Pacific, CODAS database found | 39 | published |
 | CalCOFI | 15 | the `calcofi` project |
 | North Atlantic (AT30_01, AR46, AR60_01, AR69-03) | 4 | out of region |
-| no CODAS database anywhere (TN310) | 1 | navigation only, see below |
 
 Three more come from `my_codas_proc` and are not in the spreadsheet at all:
-**RR2104, SR2007 and SR2212**. That is **41 cruises with measured tracks over
-88 CODAS databases**, spanning 53.5°S to 49.1°N and 169.6°W to 70.3°W.
+**RR2104, SR2007 and SR2212**. That is **42 cruises with measured tracks over
+90 CODAS databases**, spanning 53.5°S to 49.1°N and 171.7°W to 70.3°W — every
+cruise on the list, since TN310's databases arrived (below). It is TN310 that
+sets the western limit.
 
-**Three cruises were recovered from tarballs.** The portal first listed TN265
-and KOK1605 as having no data, and KOK1607 as archive-only. Crawling *every*
-CODAS database in the repositories (579 of them, across `uh_repo`,
-`uh_repo_ccs_dbs`, `my_codas_proc` and `unprocessed_data`) settled all three:
+**Four cruises the portal had written off were recovered**, three of them from
+tarballs. It first listed TN265 and KOK1605 as having no data, KOK1607 as
+archive-only, and TN310 as navigation-only. Crawling *every* CODAS database in
+the repositories (579 of them, across `uh_repo`, `uh_repo_ccs_dbs`,
+`my_codas_proc` and `unprocessed_data`) settled the first three; TN310 was
+settled later, when its tarball appeared:
 
 - **KOK1607** is archived as SAC 02518 (`kk1607:wh300`) and the database is in
   `jas_repo_complete/02518`, so it is built from the archive like the other 21.
@@ -189,8 +192,18 @@ CODAS database in the repositories (579 of them, across `uh_repo`,
   has its own README saying where each came from; the tarballs are untouched.
   TN265's yearbase reads 2011 straight off the database, confirming exactly
   what its navigation file's timestamp had implied.
-- **TN310** really has nothing: no tarball, no directory, no archive entry.
-  Only its navigation survives.
+- **TN310** had nothing at all when the project was first built — no tarball,
+  no directory, no archive entry, only its navigation — and the portal carried
+  it as `nav_only` on that basis. On **2026-09-18** a 222 MB `TN310.tar.gz`
+  appeared in `uh_repo/tarballs/` — an `os75bb` + `os75nb` UHDAS load — and
+  was unpacked to `uh_repo_from_tarballs/TN310/`, so it is now selected,
+  measured and published like any other load: 8,016 km over 16 days,
+  2014-05-21 to 2014-06-06, 13.7°S–44.0°N and 171.7°W–124.8°W, reaching 745 m
+  at 50% coverage. Its `dbinfo.txt` reads `yearbase 2014`, which is the second
+  confirmation — after TN265's 2011 — that the year inferred for a
+  navigation-only cruise from its file timestamps and the ship's cruise
+  numbering was right. It carries `status: "submitted"`: the data went to the
+  repository and no accession has come back.
 
 A search of the same crawl for cruises *not* in the spreadsheet found a pool of
 about 35 more eastern-Pacific loads under
@@ -212,8 +225,8 @@ in **`scripts/select_epac_dbs.py`**, in two tables:
   `input_info/harvest/jasadcp_epac_inventory.txt`, which also supplies the
   platform, the archive date range and the PI. The script fails rather than
   guessing if an id is absent from the extract or off disk.
-- **LOCAL** — 19 cruises that exist only as in-house loads, across `uh_repo`,
-  `uh_repo_ccs_dbs`, `my_codas_proc` and `uh_repo_from_tarballs`, 39
+- **LOCAL** — 20 cruises that exist only as in-house loads, across `uh_repo`,
+  `uh_repo_ccs_dbs`, `my_codas_proc` and `uh_repo_from_tarballs`, 41
   databases. The load directory is *named*, not discovered, because most of
   these loads keep alternate processing beside the publishable product and
   walking the tree would publish both. The table's comments say why each
@@ -298,19 +311,43 @@ and 1487 m, with the deepest bin anywhere in the series at 1988 m. Clipping
 real data is worse than matching an axis, and the coverage chart's axis is
 per-cruise anyway.
 
-### TN310, the one cruise with no database
+### TN310, the cruise that was navigation-only until its tarball arrived
 
-Carried by `tools/build_epac_cruises.py`, not by the selector, and the only row
-in the portal with no `track_key`. Its navigation survives under
-`tracks_nav_data_uh_repo/thompson/TN310/proc/<sonar>/nav/a_tt.gps`; those fixes
-become an illustrative `cruise.track`, drawn dashed, and the row gets the
-**`nav_only`** status rather than `submitted`, because only the track is
-available. The directory records no yearbase, so the year is fixed by two facts
-that agree: the `.gps` modification time (2014-06-06), which falls on the day
-of the last fix, and the Thompson's cruise numbering, which the archive pins at
-TN189 in 2006 and TN320 in 2015. The same reasoning gave TN265 2011 — and
-reading its recovered database confirmed it exactly, which is the only check of
-this method available.
+Until **2026-09-18** TN310 had no CODAS database anywhere, and it was the one
+cruise `tools/build_epac_cruises.py` described on its own rather than from a
+measured track: its navigation under
+`tracks_nav_data_uh_repo/thompson/TN310/proc/<sonar>/nav/a_tt.gps` became an
+illustrative `cruise.track`, drawn dashed, the row carried no `track_key` and
+so had no coverage drawer, and its status was **`nav_only`** rather than
+`submitted`, because only the track was available.
+
+`uh_repo/tarballs/TN310.tar.gz` then appeared and was unpacked to
+`uh_repo_from_tarballs/TN310/`, an ordinary UHDAS load with `os75bb` and
+`os75nb` databases. TN310 is now selected by `select_epac_dbs.py` like any
+other in-house load, measured by `make_epac_web_tracks.py`, drawn solid from
+its valid-velocity ensembles, and publishes five section figures from the
+narrowband database; its row carries `status: "submitted"`. Both databases
+name their own ping type, so nothing here needs `SONAR_OVERRIDE`.
+
+**The year inference was right, and this was its second test.** That navigation
+directory recorded no yearbase — no `dbinfo.txt`, no `cruise_info.txt`, no
+`.bft`, only `a_tt.gps` — so 2014 had been fixed by two facts that agreed: the
+`.gps` modification time (2014-06-06), which falls on the day of the last fix,
+and the Thompson's cruise numbering, which the archive pins at TN189 in 2006
+and TN320 in 2015. The recovered load's `dbinfo.txt` reads `yearbase 2014`, and
+the measured track starts 2014-05-21 and ends 2014-06-06 — the same last day.
+TN265's recovered database confirmed 2011 the same way. Both cruises the method
+was used on have now been checked against a real load and both were right,
+which is worth knowing the next time only navigation survives.
+
+`NAV_ONLY` in `tools/build_epac_cruises.py` is consequently empty and the
+nav-reading code below it unused. It is kept rather than deleted: that script
+is local, uncommitted tooling, so deleting it would lose it for good, and
+`tracks_nav_data_uh_repo` holds navigation for cruises whose databases may
+never turn up. The portal keeps `nav_only` in its status vocabulary for the
+same reason — `processed` and `pending` are likewise unused by any current
+row, so the caption and filter list the closed vocabulary, not the statuses in
+use.
 
 ## Antarctic CODAS section gallery (`data/antarctic_webpy_gallery.json`)
 
@@ -515,19 +552,20 @@ four-panel product under `images/epac-webpy/`. Two things differ.
   ping modes is one physical sonar, so a cruise running an OS75 pair plus a
   Workhorse publishes two families, not three.
 
-Across the series that is **182 windows and 272 figures for 41 cruises** — 20
+Across the series that is **187 windows and 277 figures for 42 cruises** — 21
 publishing one sonar, 20 two and 1 three — averaging 3.4 days per window. At
-**96 MB** it sits beside the Antarctic gallery's 518 MB and CalCOFI's 124 MB,
-for a published total of **738 MB**, leaving about 286 MB under the 1 GB
+**97 MB** it sits beside the Antarctic gallery's 518 MB and CalCOFI's 124 MB,
+for a published total of **739 MB**, leaving about 285 MB under the 1 GB
 ceiling GitHub Pages puts on a published site. A full rebuild takes roughly
 half an hour.
 
-Two cruises are worth knowing about. **SR2206 publishes only its WH300**: both
+One cruise is worth knowing about. **SR2206 publishes only its WH300**: both
 OS38 databases fail the ensemble-count health test, the sonar having been down
 for most of a six-day cruise, so a 300 kHz Workhorse reaching ~80 m is all
-there is. And **TN310** is the one cruise with no CODAS database, so it
-resolves to `availability: "unavailable"` with the reason `no measured track
-record`, which is what the portal shows rather than an empty gallery.
+there is. Every cruise in the series now resolves to
+`availability: "available"` — TN310 was the one exception, `"unavailable"` with
+the reason `no measured track record`, until its databases arrived on
+2026-09-18; it publishes five `os75nb` windows.
 
 ```bash
 cd ../../science/technical_sadcp
@@ -545,8 +583,8 @@ json.tool data/epac_webpy_gallery.json >/dev/null`, then preview over HTTP.
 
 The dry run reports the planned window and figure totals before anything is
 written, which is the cheap way to check the size budget: at the 393 kB per
-figure the CalCOFI gallery measured, 272 figures predicted ~105 MB against the
-96 MB actually produced.
+figure the CalCOFI gallery measured, 277 figures predicted ~107 MB against the
+97 MB actually produced.
 
 
 ## Calibration tables (`data/calibrations.json`)
@@ -608,7 +646,7 @@ The `_README` key at the top of the file documents the schema. Key points:
 - `cruise.track` — array of `[latitude, longitude]` pairs (negative = S/W) forming the map polyline.
 - `cruise.stations` — array of `{lat, lng, label}` objects for individual markers.
 - `cruise.images[].filename` — basename only; file must exist at `images/<filename>`.
-- `cruise.status` — one of `"processed"`, `"archived"`, `"submitted"`, `"in_review"`, `"pending"`, `"nav_only"`. The vocabulary is closed and lives in three places that must agree: the `statusBadge` map, the `.status-caption` definition list and the filter `<select>` options. `"nav_only"` means the ship track survives but the velocity databases do not — it is deliberately not `"processed"`, which promises the data is available in house on request. The Eastern Pacific project uses `archived` where an accession exists, `submitted` otherwise, `in_review` for SR2212 alone (processing complete, pending final manual review) and `nav_only` for TN310; it never uses `processed`. `cruise_status()` in `tools/build_epac_cruises.py` is the only place that decides this, with `IN_REVIEW` naming the exception.
+- `cruise.status` — one of `"processed"`, `"archived"`, `"submitted"`, `"in_review"`, `"pending"`, `"nav_only"`. The vocabulary is closed and lives in three places that must agree: the `statusBadge` map, the `.status-caption` definition list and the filter `<select>` options. `"nav_only"` means the ship track survives but the velocity databases do not — it is deliberately not `"processed"`, which promises the data is available in house on request. The Eastern Pacific project uses `archived` where an accession exists, `submitted` otherwise and `in_review` for SR2212 alone (processing complete, pending final manual review); it never uses `processed`. `cruise_status()` in `tools/build_epac_cruises.py` is the only place that decides this, with `IN_REVIEW` naming the exception. **No row carries `nav_only` any more** — TN310 was the only one and its databases arrived on 2026-09-18 — and no row has ever carried `processed` or `pending`, so those three are vocabulary the portal can render rather than statuses in use. They stay in all three places in `index.html`: dropping one would make the next cruise in that state a three-place edit instead of a one-word one.
 - `cruise.jasadcp_url` — optional; renders a purple "JASADCP" button in the data table when present.
 - `cruise.track_key` — links the cruise to its measured track in `data/drake_passage_tracks.json` or `data/calcofi_tracks.json`. When it resolves, the measured track replaces `cruise.track` on the map and the row becomes clickable.
 - `cruise.CODAS_dbs` — the CODAS database directories the cruise was built from; the table is expected to stay in step with these loads.
@@ -639,8 +677,10 @@ The `_README` key at the top of the file documents the schema. Key points:
     the 2,569-cruise inventory — but it does have a complete `wh300` load
     inside `uh_repo/tarballs/kok1605_seaflow.tar.gz`, and so does **TN265**
     (`TN265_seaflow.tar.gz`, os75bb + os75nb). Both are now published; see the
-    Eastern Pacific tracks section. **TN310** is the only cruise in the list
-    with no database anywhere.
+    Eastern Pacific tracks section. **TN310** was the only cruise in the list
+    with no database anywhere, until `TN310.tar.gz` appeared in the same
+    directory on 2026-09-18; it is absent from the archive too, so it is
+    published as an in-house load.
   - **Nine cruises have per-cruise JASADCP accessions that post-date the
     batch**, found by searching NCEI's geoportal for the title template
     "Current velocity profiles taken by shipboard ADCP" (the `Soares` search).
@@ -671,9 +711,9 @@ The `_README` key at the top of the file documents the schema. Key points:
   ship inventory altogether — so there is nothing newer in JASADCP for these
   ships. Note the ASCII inventory for Revelle is `rrevelle.inv`, not
   `revelle.inv`. These eleven carry `status: "submitted"` in the portal (with
-  SR2212 `in_review` and TN310 `nav_only`), so their rows say the data went to
-  the repository and no accession has come back yet — do not read the absence
-  of an accession as an absence of a submission.
+  SR2212 `in_review`), so their rows say the data went to the repository and
+  no accession has come back yet — do not read the absence of an accession as
+  an absence of a submission.
 
   **The spreadsheet now records all of this.** `input_info/Cryosat Accessions.xlsx` (and its committed copy under `harvest/`) gained four columns — `SAC IDs (JASADCP)`, `JASADCP accession`, `NCEI link` and `Archive status (resolved Sept 2026)` — filled for all 58 rows; the untouched original is kept beside it as `Cryosat Accessions (pre-merge original).xlsx`. Fifteen blank `Accession #` cells were filled from the JASADCP batch and their `Comment` set to `Published`, which is one of the three values column D's own dropdown allows — anything else would break the validation, which is why the explanatory text went into a new column instead. Five rows that already carried an accession turn out to be archived **twice**, once directly and once through JASADCP (at26_26, km1415, km1416, km1417, MGL1703), so their existing `Accession #` was left alone and the JASADCP copy recorded separately. Accessions stored as floats (`314052.0`) were normalised to `0314052`. The merge is `reports/checks/merge_xlsx.py`, which rewrites only `sheet1.xml` and its relationships and copies every other part of the workbook byte for byte, so the styles, the drawing and the dropdown survive.
 

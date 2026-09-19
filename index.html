@@ -826,6 +826,14 @@ let galleryProjId = null;  // the project whose CODAS gallery DOM is on screen
 let mapsInitialized = {}; // track which Leaflet maps are built
 let mapCruiseLayers = {}; // per-project, per-cruise LayerGroups
 let mapCruiseLines  = {}; // per-project, per-cruise track polylines (for highlighting)
+/* Which season each project's map is showing, or null for the whole series.
+   Seeded from project.map_default_year: the Antarctic and CalCOFI series
+   repeat a comparable line every year, so opening on one season is the way to
+   read them, while the Eastern Pacific cruises are an opportunity sample with
+   no repeated season — and no year-2000 cruise at all — so that map opens on
+   everything. Kept here rather than read back off the map so that re-rendering
+   the chip bar keeps the right year button highlighted. */
+let mapYearFilter = {};
 
 /* Files holding measured tracks + depth-coverage statistics, produced from the
    CODAS databases by make_drake_passage_web_tracks.py,
@@ -1607,13 +1615,16 @@ function buildProjectHTML(p) {
       ${(() => {
         const withTracks = p.cruises.filter(hasTrack);
         if (!withTracks.length) return '';
+        const yearFilter = mapYearFor(p);
         const chips = withTracks.map(c => {
           const map = mapsInitialized[p.id];
           const lg  = mapCruiseLayers[p.id]?.[c.id];
-          // Every cruise is shown by default. Once the map exists it is the
-          // authority on what is visible, so re-rendering the bar (filtering,
-          // navigating away and back) keeps the user's selection.
-          const on  = map && lg ? map.hasLayer(lg) : true;
+          // Before the map exists the project's default season decides what is
+          // checked; after that the map is the authority on what is visible, so
+          // re-rendering the bar (filtering, navigating away and back) keeps the
+          // user's selection.
+          const on  = map && lg ? map.hasLayer(lg)
+                                : (!yearFilter || cruiseYear(c) === yearFilter);
           return `<label class="cruise-chip${on ? ' active' : ''}" id="chip-${p.id}-${c.id}">`
             + `<input type="checkbox" ${on ? 'checked' : ''} data-cruise="${c.id}"`
             + ` data-year="${cruiseYear(c)}"`
@@ -1622,7 +1633,8 @@ function buildProjectHTML(p) {
         }).join('');
         const years = [...new Set(withTracks.map(cruiseYear))].filter(Boolean).sort();
         const yrBtns = years.length > 1
-          ? years.map(y => `<button class="cruise-sel-yr" data-year="${y}" title="Show only ${y}"`
+          ? years.map(y => `<button class="cruise-sel-yr${y === yearFilter ? ' active' : ''}"`
+              + ` data-year="${y}" title="Show only ${y}"`
               + ` onclick="setCruisesYear('${p.id}','${y}')">${y}</button>`).join('')
           : '';
         return `<div class="cruise-sel-bar" id="cruise-sel-${p.id}">`
@@ -1905,6 +1917,7 @@ function initProjectMap(p) {
   // Draw cruise tracks and markers — one LayerGroup per cruise for toggling
   if (!mapCruiseLayers[p.id]) mapCruiseLayers[p.id] = {};
   if (!mapCruiseLines[p.id])  mapCruiseLines[p.id]  = {};
+  const yearFilter = mapYearFor(p);
 
   p.cruises.forEach(cruise => {
     const meas = trackFor(cruise);
@@ -1954,15 +1967,25 @@ function initProjectMap(p) {
 
     mapCruiseLayers[p.id][cruise.id] = lg;
     mapCruiseLines[p.id][cruise.id]  = lines;
-    lg.addTo(map);
+    // buildProjectHTML has already rendered the chip bar from the same filter,
+    // so the chips are the authority here: on a first build they carry the
+    // project's default season, and on a rebuild (navigating away and back)
+    // whatever the reader had selected.
+    const chip = document.querySelector(`#chip-${p.id}-${cruise.id} input`);
+    const show = chip ? chip.checked
+                      : (!yearFilter || cruiseYear(cruise) === yearFilter);
+    if (show) lg.addTo(map);
   });
 
   mapsInitialized[p.id] = map;
 
-  // The whole series is drawn to begin with, which is what the chip bar
-  // reports; the year buttons and None narrow it from there. This used to
-  // open on the 2000 season alone, which left the two projects that have no
-  // year-2000 cruise with an empty map.
+  // What is drawn to begin with is project.map_default_year where the project
+  // sets one and has a cruise in it — the 2000 season for the Antarctic and
+  // CalCOFI series — and the whole series otherwise, which is the Eastern
+  // Pacific case. The chip bar reports it either way, and the year buttons,
+  // All and None move from there. The default is guarded by mapYearFor()
+  // because naming a season a project has no cruise in would open on an empty
+  // map, which is how this behaved when the 2000 default was unconditional.
   if (hasCodasGallery(p.id) && !selectedGalleryCruise) {
     const firstGallery = p.cruises.find(c => WEBPY_GALLERY[c.id]);
     if (firstGallery) selectWebpyGallery(firstGallery.id);
@@ -2362,6 +2385,7 @@ function toggleCruiseLayer(projId, cruiseId, show) {
 function setCruisesAll(projId, show) {
   const bar = document.getElementById(`cruise-sel-${projId}`);
   if (!bar) return;
+  mapYearFilter[projId] = null;   // no longer one season: All, or None
   bar.querySelectorAll('.cruise-sel-yr').forEach(btn => btn.classList.remove('active'));
   bar.querySelectorAll('input[type=checkbox]').forEach(cb => {
     cb.checked = show;
@@ -2376,11 +2400,26 @@ function cruiseYear(cruise) {
   return iso.slice(0, 4);
 }
 
+/* The season a project's map opens on, resolved once per project and then
+   owned by the chip bar. A default naming a season the project has no cruise
+   in would open on an empty map, so it only takes effect when a drawable
+   cruise actually falls in it. */
+function mapYearFor(p) {
+  if (!(p.id in mapYearFilter)) {
+    const want = p.map_default_year ? String(p.map_default_year) : null;
+    mapYearFilter[p.id] =
+      want && p.cruises.some(c => hasTrack(c) && cruiseYear(c) === want)
+        ? want : null;
+  }
+  return mapYearFilter[p.id];
+}
+
 /* Show one season only — with two decades of crossings on the map, stepping
    year by year is the way to read the series. */
 function setCruisesYear(projId, year) {
   const bar = document.getElementById(`cruise-sel-${projId}`);
   if (!bar) return;
+  mapYearFilter[projId] = String(year);
   bar.querySelectorAll('.cruise-sel-yr').forEach(btn =>
     btn.classList.toggle('active', btn.dataset.year === String(year)));
   bar.querySelectorAll('input[type=checkbox]').forEach(cb => {

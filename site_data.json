@@ -3,6 +3,7 @@
   "description": "Master data file for the Chereskin Lab ADCP Data Portal. Edit this file to update all site content. Then run 'python3 -m http.server 8000' and open localhost:8000 to preview changes.",
   "image_paths": "All image filenames in cruise.images[] are relative to the images/ folder. Example: 'nh9310_100_oa.jpg' → place file at images/nh9310_100_oa.jpg",
   "branding_note": "project.logo, project.header_image and project.illustration_image are relative to the images/ folder (harvested from the original adcp.ucsd.edu under images/branding/). logo appears on the overview project card and the project page hero; header_image is the project hero banner photo (paired with header_credit); illustration_image sits beside the project page's Acknowledgments panel (paired with illustration_credit). All are optional — omit them to fall back to the plain card/hero layout.",
+  "map_default_year_note": "project.map_default_year is optional: set it to a four-digit year and that project's map, and its cruise-chip bar, open showing only that season, with the year's button highlighted; leave it out and the map opens on the whole series. The Antarctic and CalCOFI series repeat a comparable line every year, so one season is the readable default (2000 for both); the Eastern Pacific cruises are an opportunity sample with no repeated season, and none in 2000, so that project sets no default and opens on everything. A year no cruise of the project falls in is ignored rather than opening on an empty map. The All, None and year buttons move from the default; the table and the gallery are not affected.",
   "track_format": "cruise.track is an optional array of [latitude, longitude] pairs used only when no measured track exists in the files listed under tracks_file.",
   "station_format": "cruise.stations is an array of {lat, lon, label} objects for individual station markers on the map.",
   "status_values": [
@@ -67,6 +68,7 @@
     -61
    ],
    "map_zoom": 5,
+   "map_default_year": "2000",
    "references": [
     "Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619–22629.",
     "Lenn, Y.-D., Chereskin, T.K., Sprintall, J. and McClean, J.L. (2011). Near-surface eddy heat and momentum fluxes in the Antarctic Circumpolar Current in Drake Passage. J. Phys. Oceanogr., 41, 1385–1407."
@@ -9726,6 +9728,7 @@
     -121.5
    ],
    "map_zoom": 6,
+   "map_default_year": "2000",
    "plots_link_label": "Atlas",
    "references": [
     "Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619–22629.",

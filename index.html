@@ -451,6 +451,13 @@ button.lnk-plots { background: var(--white); cursor: pointer; font-family: var(-
 .info-panel-media .ipm-img img { max-width: 100%; max-height: 160px; object-fit: contain; border-radius: 8px; }
 .info-panel-media .ipm-img .ipm-credit { font-size: 10.5px; color: var(--light); margin-top: 6px; line-height: 1.4; }
 @media (max-width: 700px) { .info-panel-media { flex-direction: column; } .info-panel-media .ipm-img { width: 100%; } }
+.atlas-map-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-top: 1rem; }
+.atlas-map-card { display: block; border: 1px solid var(--border-ui); background: var(--white); color: var(--ink); text-align: left; }
+.atlas-map-card:hover { border-color: var(--teal); box-shadow: 0 4px 14px rgba(14,140,122,.12); }
+.atlas-map-open { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.atlas-map-card img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.atlas-map-caption { display: block; padding: 8px 10px; font-size: 12px; line-height: 1.35; }
+.atlas-map-caption a { display: block; margin-top: 3px; font-size: 11px; }
 .ref-list { list-style: none; }
 .ref-list li { font-size: 13px; color: var(--muted); padding: .6rem 0; border-bottom: 1px solid var(--border); line-height: 1.6; }
 .ref-list li:last-child { border-bottom: none; }
@@ -1090,8 +1097,8 @@ const EMBEDDED_DATA = {
       years: "1993\u20132023",
       logo: "branding/calcofi_logo.png", header_image: "branding/calcofi_header.jpg", header_credit: "Channel Islands, California — photo by Jamie Holte",
       illustration_image: "branding/calcofi_illustration.jpg", illustration_credit: "Objectively mapped 100 m velocity, cruise NH9310",
-      description: "Three decades of shipboard ADCP measurements of upper-ocean currents off southern and central California, made on the quarterly cruises of the California Cooperative Oceanic Fisheries Investigations (CalCOFI).",
-      project_description: "CalCOFI has occupied the same station grid off southern California since 1949, and since 1993 the Chereskin Lab has measured the currents over it with a shipboard ADCP. The quarterly cruises trace the California Current, the eastern limb of the North Pacific subtropical gyre, as it carries cool, fresh subarctic water equatorward past the coast, together with the poleward California Undercurrent beneath it and the eddies and filaments that carry water offshore. Because the grid is reoccupied four times a year on fixed lines, the velocity sections stack into a record long enough to separate the seasonal cycle from interannual signals \u2014 the 1997\u201398 El Ni\u00f1o, the warm anomaly of 2014\u201316 \u2014 and to be read alongside the hydrography, nutrients and plankton the same stations have collected for seventy years. The first decade of the record, 1993\u20132004, was mapped objectively to velocity streamfunctions consistent with geostrophy and published as the CalCOFI ADCP Digital Atlas (Chereskin and Trunnell, 1996; Chereskin, 2008); the 2017-onwards cruises are processed in house and carry up to three sonars each, reaching past 1,000 m where the 38 kHz Ocean Surveyor is fitted.",
+      description: "The California Current System (CCS) comprises multiple currents. The California Current is the eastern limb of the North Pacific subtropical gyre, and it carries cool, fresh subarctic water equatorward. It is opposed by the California Undercurrent, carrying tropical water poleward. Seasonally-varying currents are observed near the coast as well as eddies and filaments that carry water offshore. Due to the great economic and environmental importance of the CCS, the California Cooperative Oceanic Fisheries Investigations (CalCOFI) began collecting routine measurements in 1949. The scope of the sampling has been redefined several times, but since 1984 six transect lines off southern California have been occupied quarterly. ADCP sampling on CalCOFI cruises began in 1993.",
+      project_description: "The California Current System (CCS) comprises multiple currents. The California Current is the eastern limb of the North Pacific subtropical gyre, and it carries cool, fresh subarctic water equatorward. It is opposed by the California Undercurrent, carrying tropical water poleward. Seasonally-varying currents are observed near the coast as well as eddies and filaments that carry water offshore. Due to the great economic and environmental importance of the CCS, the California Cooperative Oceanic Fisheries Investigations (CalCOFI) began collecting routine measurements in 1949. The scope of the sampling has been redefined several times, but since 1984 six transect lines off southern California have been occupied quarterly. ADCP sampling on CalCOFI cruises began in 1993.\n\nBecause the grid is reoccupied four times a year on fixed lines, the velocity sections stack into a record long enough to separate the seasonal cycle from interannual signals \u2014 highlighting the 1997\u201398 El Ni\u00f1o as well as the warm anomaly of 2014\u201316. Current information can be read alongside the hydrography, nutrients and plankton collected for seventy years at the same stations. The first decade of the record, 1993\u20132004, was mapped objectively to produce velocity streamfunctions consistent with geostrophy and published as the CalCOFI ADCP Digital Atlas (Chereskin and Trunnell, 1996; Chereskin, 2008); the 2017-onwards cruises have been processed by the UH ADCP group or by Saulo Soares at SIO/UCSD and include up to three sonars each, reaching past 1,000 m in locations where the 38 kHz Ocean Surveyor is available.",
       methods_text: "The 1993\u20132009 cruises were measured with a hull-mounted RDI 150 kHz narrowband ADCP and processed with CODAS3; all forty were submitted to the Joint Archive for Shipboard ADCP and are archived at NOAA/NCEI. Objective mapping was applied to the 1993\u20132004 cruises to produce velocity streamfunctions consistent with geostrophy, which is what the CalCOFI ADCP Digital Atlas publishes at 50 m and 100 m. The 2017-onwards cruises were logged with UHDAS and processed with CODAS in house: an Ocean Surveyor 75 kHz on the NOAA ships, and an Ocean Surveyor 38 kHz, an Ocean Surveyor 150 kHz and a Workhorse 300 kHz together on R/V Sally Ride, the three sonars covering the water column from about 10 m to beyond 1,000 m.",
       map_center: [34.5, -121.5], map_zoom: 6,
       plots_link_label: "Atlas",
@@ -1564,6 +1571,36 @@ window.addEventListener('popstate', (e) => {
   navTo(navId, null, false);
 });
 
+function projectDescription(text) {
+  return String(text || '').split(/\n\n+/).map(part => `<p>${part}</p>`).join('');
+}
+
+function calcofiAtlasMaps(project) {
+  if (project.id !== 'calcofi') return '';
+  const maps = project.cruises.flatMap(cruise => {
+    const match = String(cruise.plots_url || '').match(/\/([^/]+)\.html?$/i);
+    if (!match) return [];
+    const baseUrl = cruise.plots_url.replace(/[^/]+\.html?$/i, '');
+    const stem = match[1].toLowerCase();
+    return [50, 100].map(depth => ({
+      image: `${baseUrl}${stem}_${depth}_oa.jpg`,
+      caption: `${cruise.id} — objective-analysis velocity map at ${depth} m`,
+      page: cruise.plots_url
+    }));
+  });
+  if (!maps.length) return '';
+  return `
+    <div class="info-panel">
+      <h2>Objective Mapping and Digital Atlas</h2>
+      <p>The 1993–2004 CalCOFI ADCP sections were objectively mapped to produce velocity streamfunctions consistent with geostrophy. The original 50 m and 100 m objective-analysis maps are reproduced below from the <a href="https://adcp.ucsd.edu/calcofi/" target="_blank">CalCOFI ADCP Digital Atlas</a> (Chereskin, 2008; Chereskin and Trunnell, 1996). Map images may be used with the credit line “From the CalCOFI ADCP Digital Atlas.”</p>
+      <div class="atlas-map-grid">
+        ${maps.map(map => `<div class="atlas-map-card"><button type="button" class="atlas-map-open" aria-label="Open ${map.caption}" onclick="openLB('${map.image}','${map.caption.replace(/'/g, "\\'")}', this)">
+          <img src="${map.image}" alt="${map.caption}" loading="lazy">
+        </button><span class="atlas-map-caption">${map.caption}<a href="${map.page}" target="_blank">Open Atlas cruise page ↗</a></span></div>`).join('')}
+      </div>
+    </div>`;
+}
+
 /* ════════════════════════════════════════════════════════
    PROJECT PAGE BUILDER
    ════════════════════════════════════════════════════════ */
@@ -1596,7 +1633,7 @@ function buildProjectHTML(p) {
     <div class="sec-sub">${p.vessel} · ${p.region} · ${p.years}</div>
 
     ${measuredCount
-      ? `<div class="notice">📡 &nbsp;<span><strong>${measuredCount} of ${p.cruises.length} cruises</strong> draw their measured ship track: the positions of the ADCP ensembles that carry valid <em>u</em> and <em>v</em>, read straight from the CODAS databases. Click a track (or a table row) for that cruise's data coverage by depth bin. Cruises whose loads have not been processed yet carry no track.</span></div>`
+      ? `<div class="notice">📡 &nbsp;<span><strong>${measuredCount} of ${p.cruises.length} cruises</strong> draw their measured ship track: the positions of the ADCP ensembles that carry valid <em>u</em> and <em>v</em>, read straight from the CODAS databases. Click a track (or a table row) for that cruise's data coverage by depth bin. Tracks are shown only for cruises with processed ADCP data.</span></div>`
       : `<div class="notice">⚠️ &nbsp;<span>Station positions shown are representative waypoints. Full cruise tracks are in the NCEI accession files. All coordinates from shipboard GPS integrated with CODAS3.</span></div>`}
 
     <!-- ── MAP ── -->
@@ -1821,11 +1858,11 @@ function buildProjectHTML(p) {
     <!-- ── DESCRIPTION ── -->
     <div class="info-panel">
       <h2>Project Description</h2>
-      <p>${p.project_description}</p>
+      ${projectDescription(p.project_description)}
     </div>
     <div class="info-panel">
       <h2>Acknowledgments</h2>
-      ${p.illustration_image ? `
+      ${p.illustration_image && p.id !== 'calcofi' ? `
       <div class="info-panel-media">
         <div class="ipm-text"><p>${p.acknowledgments}</p></div>
         <div class="ipm-img">
@@ -1834,6 +1871,7 @@ function buildProjectHTML(p) {
         </div>
       </div>` : `<p>${p.acknowledgments}</p>`}
     </div>
+    ${calcofiAtlasMaps(p)}
     <div class="info-panel">
       <h2>Publications</h2>
       <ul class="ref-list">${(p.publications || []).map(pub => `<li>${pub}</li>`).join('')}</ul>
@@ -2188,7 +2226,7 @@ function openCoverage(projId, cruiseId) {
       </div>
 
       <h4 class="cov-sec-title">Sonars in this load</h4>
-      <div class="cov-sec-sub">Coverage depths are the deepest bin still holding valid velocity in at least half (50%) or four fifths (80%) of the cruise's ensembles.</div>
+      <div class="cov-sec-sub">Coverage depths indicate the deepest bin that contains a valid velocity in at least half (50%) or four fifths (80%) of the cruise's ensembles.</div>
       <div class="cov-inst">
         ${inst.map(i => `
           <div class="cov-inst-card" style="border-left-color:${SONAR_COLORS[i.sonar] || p.color}">
@@ -2213,12 +2251,12 @@ function openCoverage(projId, cruiseId) {
         <div class="cov-chart-box">
           <h5 class="cov-chart-ttl">Ensembles with valid u, v</h5>
           ${profileChart('cov-c1', covSeries, {maxDepth, xMax: 100, xTicks: [0,25,50,75,100], refX: 50, xLabel: 'percent of ensembles', unit: '%', dec: 0})}
-          <div class="cov-readout" id="cov-c1-readout">Hover the profile for values by depth</div>
+          <div class="cov-readout" id="cov-c1-readout">Hover over the profile to see values by depth</div>
         </div>
         <div class="cov-chart-box">
           <h5 class="cov-chart-ttl">Error velocity (RMS)</h5>
           ${profileChart('cov-c2', errSeries, {maxDepth, xLabel: 'cm s⁻¹', unit: ' cm/s', dec: 1})}
-          <div class="cov-readout" id="cov-c2-readout">A rising error velocity marks the loss of range</div>
+          <div class="cov-readout" id="cov-c2-readout">Larger error velocities indicate reduced range</div>
         </div>
       </div>
 
@@ -2366,8 +2404,8 @@ function covHoverOut(id) {
   if (cross) cross.style.opacity = 0;
   const out = document.getElementById(id + '-readout');
   if (out) out.textContent = id === 'cov-c1'
-    ? 'Hover the profile for values by depth'
-    : 'A rising error velocity marks the loss of range';
+    ? 'Hover over the profile to see values by depth'
+    : 'Larger error velocities indicate reduced range';
 }
 
 /* ════════════════════════════════════════════════════════

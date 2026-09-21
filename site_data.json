@@ -60,7 +60,7 @@
    "illustration_image": "branding/lmgould_sticker.png",
    "illustration_credit": "LMG ADCP program sticker, Chereskin Lab",
    "description": "The Antarctic Circumpolar Current (ACC)  is the largest current on the planet. As the narrowest land gap on its  circumpolar path, Drake Passage is an ideal monitoring spot. The NSF-funded Drake Passage time series collected shipboard ADCP observations from 1998 to 2024 during all transits of Drake Passage and on cruises to the Antarctic Peninsula made by the supply vessel for Palmer Station. A primary goal was to obtain a long time series at near-repeat locations to unambiguously separate temporal from spatial variability and short-term variability from long-term trends. The time series comprises 455 transects of upper ocean currents from a NB150 ADCP (profiling depths 22 m to 250 m) and 309 transects from an OS38 ADCP (profiling depths 46 m to 950 m). These transects have been used to study the ACC on time scales from seasonal to interannual and on space scales from eddies to jets.",
-   "project_description": "The ACC is the largest current on the planet. It plays a key role in the Earth system connecting all the world’s oceans. As the narrowest land gap on its  circumpolar path, Drake Passage is an ideal monitoring spot. However, it is also one of the windiest and roughest stretches of water on the globe. The only ship that crosses Drake Passage year-round is the supply vessel for Palmer Station. The ACC comprises multiple velocity jets that flow west to east around Antarctica and form a  barrier that separates warmer waters to the north from colder waters to the south. Ocean eddies break through the ACC barrier, transferring heat across the ACC towards Antarctica. When warmer ocean waters intrude onto the Antarctic continental shelf, they contribute to glacial melt and ice shelf retreat. Over the past several decades the Southern Ocean has warmed and winds have increased. Somewhat surprisingly, the Drake Passage ADCP observations show that the ACC, though pushed by faster winds, has not accelerated (Gutierrez et al., Nature Comms 2024); a faster current would present a stronger barrier to heat transfer. Instead, ocean eddies have increased in the region between the northernmost ACC fronts in Drake Passage. Combining concurrent temperature and velocity observations from the time series has provided a better understanding of heat transfer across the ACC by eddies (Gutierrez et al., JPO 2020). Additionally, the time series has provided valuable measurements to resolve the coastal circulation of the Antarctic Peninsula (e.g., Savidge and Amft, DSR 2009) as well as ground-truth for satellite measurements and numerical model predictions covering the entire ACC.",
+    "project_description": "The ACC is the largest current on the planet. It plays a key role in the Earth system connecting all the world’s oceans. As the narrowest land gap on its  circumpolar path, Drake Passage is an ideal monitoring spot. However, it is also one of the windiest and roughest stretches of water on the globe. Historically, the Palmer Station supply vessel has been the only ship that crossed Drake Passage year-round. The ACC comprises multiple velocity jets that flow west to east around Antarctica and form a  barrier that separates warmer waters to the north from colder waters to the south. Ocean eddies break through the ACC barrier, transferring heat across the ACC towards Antarctica. When warmer ocean waters intrude onto the Antarctic continental shelf, they contribute to glacial melt and ice shelf retreat. Over the past several decades the Southern Ocean has warmed and winds have increased. Somewhat surprisingly, the Drake Passage ADCP observations show that the ACC, though pushed by faster winds, has not accelerated (Gutierrez et al., Nature Comms 2024); a faster current would present a stronger barrier to heat transfer. Instead, ocean eddies have increased in the region between the northernmost ACC fronts in Drake Passage. Combining concurrent temperature and velocity observations from the time series has provided a better understanding of heat transfer across the ACC by eddies (Gutierrez et al., JPO 2020). Additionally, the time series has provided valuable measurements to resolve the coastal circulation of the Antarctic Peninsula (e.g., Savidge and Amft, DSR 2009) as well as ground-truth for satellite measurements and numerical model predictions covering the entire ACC.",
    "methods_text": "Data processed using CODAS3 with standard heading calibration procedures. Bottom tracking was available for shallow transits near the Peninsula. Navigation corrections applied via differential GPS.",
    "acknowledgments": "The collection, processing and dissemination of these data was carried out by the Chereskin Lab at Scripps Institution of Oceanography, UCSD with support from NSF awards 9816226, 0338103, 0838750, 1341431, 1542902, and 2001646. Eric Firing and Jules Hummon at the University of Hawaii provide critical support for the data acquisition and processing of these ADCP data through the development and maintenance of the UHDAS and CODAS software.",
    "map_center": [
@@ -9719,8 +9719,8 @@
    "header_credit": "Channel Islands, California — photo by Jamie Holte",
    "illustration_image": "branding/calcofi_illustration.jpg",
    "illustration_credit": "Objectively mapped 100 m velocity, cruise NH9310",
-   "description": "Three decades of shipboard ADCP measurements of upper-ocean currents off southern and central California, made on the quarterly cruises of the California Cooperative Oceanic Fisheries Investigations (CalCOFI).",
-   "project_description": "CalCOFI has occupied the same station grid off southern California since 1949, and since 1993 the Chereskin Lab has measured the currents over it with a shipboard ADCP. The quarterly cruises trace the California Current, the eastern limb of the North Pacific subtropical gyre, as it carries cool, fresh subarctic water equatorward past the coast, together with the poleward California Undercurrent beneath it and the eddies and filaments that carry water offshore. Because the grid is reoccupied four times a year on fixed lines, the velocity sections stack into a record long enough to separate the seasonal cycle from interannual signals — the 1997–98 El Niño, the warm anomaly of 2014–16 — and to be read alongside the hydrography, nutrients and plankton the same stations have collected for seventy years. The first decade of the record, 1993–2004, was mapped objectively to velocity streamfunctions consistent with geostrophy and published as the CalCOFI ADCP Digital Atlas (Chereskin and Trunnell, 1996; Chereskin, 2008); the 2017-onwards cruises are processed in house and carry up to three sonars each, reaching past 1,000 m where the 38 kHz Ocean Surveyor is fitted.",
+    "description": "The California Current System (CCS) comprises multiple currents. The California Current is the eastern limb of the North Pacific subtropical gyre, and it carries cool, fresh subarctic water equatorward. It is opposed by the California Undercurrent, carrying tropical water poleward. Seasonally-varying currents are observed near the coast as well as eddies and filaments that carry water offshore. Due to the great economic and environmental importance of the CCS, the California Cooperative Oceanic Fisheries Investigations (CalCOFI) began collecting routine measurements in 1949. The scope of the sampling has been redefined several times, but since 1984 six transect lines off southern California have been occupied quarterly. ADCP sampling on CalCOFI cruises began in 1993.",
+    "project_description": "The California Current System (CCS) comprises multiple currents. The California Current is the eastern limb of the North Pacific subtropical gyre, and it carries cool, fresh subarctic water equatorward. It is opposed by the California Undercurrent, carrying tropical water poleward. Seasonally-varying currents are observed near the coast as well as eddies and filaments that carry water offshore. Due to the great economic and environmental importance of the CCS, the California Cooperative Oceanic Fisheries Investigations (CalCOFI) began collecting routine measurements in 1949. The scope of the sampling has been redefined several times, but since 1984 six transect lines off southern California have been occupied quarterly. ADCP sampling on CalCOFI cruises began in 1993.\n\nBecause the grid is reoccupied four times a year on fixed lines, the velocity sections stack into a record long enough to separate the seasonal cycle from interannual signals — highlighting the 1997–98 El Niño as well as the warm anomaly of 2014–16. Current information can be read alongside the hydrography, nutrients and plankton collected for seventy years at the same stations. The first decade of the record, 1993–2004, was mapped objectively to produce velocity streamfunctions consistent with geostrophy and published as the CalCOFI ADCP Digital Atlas (Chereskin and Trunnell, 1996; Chereskin, 2008); the 2017-onwards cruises have been processed by the UH ADCP group or by Saulo Soares at SIO/UCSD and include up to three sonars each, reaching past 1,000 m in locations where the 38 kHz Ocean Surveyor is available.",
    "methods_text": "The 1993–2009 cruises were measured with a hull-mounted RDI 150 kHz narrowband ADCP and processed with CODAS3; all forty were submitted to the Joint Archive for Shipboard ADCP and are archived at NOAA/NCEI. Objective mapping was applied to the 1993–2004 cruises to produce velocity streamfunctions consistent with geostrophy, which is what the CalCOFI ADCP Digital Atlas publishes at 50 m and 100 m. The 2017-onwards cruises were logged with UHDAS and processed with CODAS in house: an Ocean Surveyor 75 kHz on the NOAA ships, and an Ocean Surveyor 38 kHz, an Ocean Surveyor 150 kHz and a Workhorse 300 kHz together on R/V Sally Ride, the three sonars covering the water column from about 10 m to beyond 1,000 m.",
    "acknowledgments": "The CalCOFI ADCP data were collected aboard R/V New Horizon, NOAA Ship David Starr Jordan, R/V Roger Revelle, NOAA Ship Bell M. Shimada, NOAA Ship Reuben Lasker, R/V Oceanus and R/V Sally Ride as part of the California Cooperative Oceanic Fisheries Investigations program. The collection, processing and dissemination of these data was carried out by the Chereskin Lab at Scripps Institution of Oceanography, UCSD with support from NSF award 0324360. The archived cruises are distributed through the Joint Archive for Shipboard ADCP at the University of Hawaii and NOAA/NCEI. We thank the officers and crew of every ship, and the CalCOFI program, for making the measurements possible.",
    "map_center": [
@@ -9731,13 +9731,18 @@
    "map_default_year": "2000",
    "plots_link_label": "Atlas",
    "references": [
-    "Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619–22629.",
+    "Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic flow in the California Current. J. Geophys. Res., 101, 22619–22629.",
     "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography."
    ],
-   "publications": [
-    "Chereskin, T. K., and M. Trunnell, 1996. Correlation scales, objective mapping, and absolute geostrophic flow in the California Current. J. Geophys. Res., 101(C10), 22619–22629. DOI: 10.1029/96JC02004",
-    "Chereskin, T. K., 2008. CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography. http://adcp.ucsd.edu/calcofi"
-   ],
+    "publications": [
+     "Chereskin, T.K., and M. Trunnell. Correlation Scales, Objective Mapping, and Absolute Geostrophic Flow in the California Current. Journal of Geophysical Research, 101: 22619-22629. (1996)",
+     "Bograd, S.J., T.K. Chereskin, and D. Roemmich. Transport of mass, heat, salt, and nutrients in the southern California Current System: Annual cycle and interannual variability. Journal of Geophysical Research, 106, 9255-9275. American Geophysical Union. (2001)",
+     "Lynn, R.J., S.J. Bograd, T.K. Chereskin, and J. Huyer. Seasonal renewal of the California Current: The spring transition off California, Journal of Geophysical Research, 108, 3279, 10.1029/2003JC001787. American Geophysical Union. (2003)",
+     "Taylor, C.A., W. Watson, T.K. Chereskin, J. Hyde, and R. Vetter. Retention in larval rockfishes, Sebastes, near natal habitat, in the Southern California Bight, as indicated by molecular identification methods. Calif. Coop. Oceanic Fish Invest. Rep., 45, 152-166. (2004)",
+     "Gay, P.S., and T.K. Chereskin. Mean structure and seasonal variability of the poleward undercurrent off southern California. Journal of Geophysical Research, 114, C02007, doi:10.1029/2008JC004886. American Geophysical Union. (2009)",
+     "Chereskin, T.K., C.B. Rocha, S.T. Gille, D. Menemenlis, and M. Passaro. Characterizing the transition from balanced to unbalanced motions in the southern California Current. Journal of Geophysical Research: Oceans, 124, 2088-2109, doi:10.1029/2018JC014583. American Geophysical Union. (2019)",
+     "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography. http://adcp.ucsd.edu/calcofi"
+    ],
    "other_links": [
     {
      "label": "CalCOFI program",
@@ -11293,9 +11298,9 @@
      ],
      "instrument": "RDI Ocean Surveyor 75 kHz narrowband",
      "sonar": "OS75NB",
-     "status": "submitted",
-     "ncei_url": null,
-     "ncei_accession": null,
+    "status": "processed",
+    "ncei_url": null,
+    "ncei_accession": null,
      "plots_url": null,
      "jasadcp_url": null,
      "sac_id": null,
@@ -11963,14 +11968,14 @@
      ],
      "instrument": "RDI Ocean Surveyor 150 kHz narrowband + RDI Ocean Surveyor 75 kHz narrowband",
      "sonar": "OS150NB + OS75NB",
-     "status": "submitted",
-     "ncei_url": null,
-     "ncei_accession": null,
+    "status": "archived",
+    "ncei_url": "https://www.ncei.noaa.gov/archive/accession/0283044",
+    "ncei_accession": "0283044",
      "plots_url": null,
      "jasadcp_url": null,
      "sac_id": null,
      "sac_ids": [],
-     "notes": "8,691 km of track over 28 days, 32.3°S–9.8°S and 100.2°W–72.1°W. Processed in house. CODAS databases: mv1104/os150, mv1104/os75. Submitted for archival; no accession assigned yet.",
+        "notes": "8,691 km of track over 28 days, 32.3°S–9.8°S and 100.2°W–72.1°W. CODAS databases: mv1104/os150, mv1104/os75. Archived at NCEI accession 0283044.",
      "CODAS_dbs": [
       "mv1104/os150",
       "mv1104/os75"

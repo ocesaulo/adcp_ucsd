@@ -452,6 +452,8 @@ button.lnk-plots { background: var(--white); cursor: pointer; font-family: var(-
 .info-panel-media .ipm-img .ipm-credit { font-size: 10.5px; color: var(--light); margin-top: 6px; line-height: 1.4; }
 @media (max-width: 700px) { .info-panel-media { flex-direction: column; } .info-panel-media .ipm-img { width: 100%; } }
 .atlas-map-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-top: 1rem; }
+.atlas-year { margin-top: 1.25rem; }
+.atlas-year h3 { color: var(--navy); font-family: var(--serif); font-size: 1.05rem; margin: 0 0 .6rem; }
 .atlas-map-card { display: block; border: 1px solid var(--border-ui); background: var(--white); color: var(--ink); text-align: left; }
 .atlas-map-card:hover { border-color: var(--teal); box-shadow: 0 4px 14px rgba(14,140,122,.12); }
 .atlas-map-open { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: pointer; }
@@ -1577,27 +1579,35 @@ function projectDescription(text) {
 
 function calcofiAtlasMaps(project) {
   if (project.id !== 'calcofi') return '';
-  const maps = project.cruises.flatMap(cruise => {
+  const mapsByYear = {};
+  project.cruises.forEach(cruise => {
     const match = String(cruise.plots_url || '').match(/\/([^/]+)\.html?$/i);
-    if (!match) return [];
+    if (!match) return;
     const baseUrl = cruise.plots_url.replace(/[^/]+\.html?$/i, '');
     const stem = match[1].toLowerCase();
-    return [50, 100].map(depth => ({
-      image: `${baseUrl}${stem}_${depth}_oa.jpg`,
-      caption: `${cruise.id} — objective-analysis velocity map at ${depth} m`,
-      page: cruise.plots_url
-    }));
+    const year = cruiseYear(cruise);
+    if (!mapsByYear[year]) mapsByYear[year] = [];
+    mapsByYear[year].push({
+      id: cruise.id,
+      maps: [50, 100].map(depth => ({
+        image: `${baseUrl}${stem}_${depth}_oa.jpg`,
+        caption: `${cruise.id} — objective-analysis velocity map at ${depth} m`
+      }))
+    });
   });
-  if (!maps.length) return '';
+  const years = Object.keys(mapsByYear).sort();
+  if (!years.length) return '';
   return `
     <div class="info-panel">
-      <h2>Objective Mapping and Digital Atlas</h2>
-      <p>The 1993–2004 CalCOFI ADCP sections were objectively mapped to produce velocity streamfunctions consistent with geostrophy. The original 50 m and 100 m objective-analysis maps are reproduced below from the <a href="https://adcp.ucsd.edu/calcofi/" target="_blank">CalCOFI ADCP Digital Atlas</a> (Chereskin, 2008; Chereskin and Trunnell, 1996). Map images may be used with the credit line “From the CalCOFI ADCP Digital Atlas.”</p>
-      <div class="atlas-map-grid">
-        ${maps.map(map => `<div class="atlas-map-card"><button type="button" class="atlas-map-open" aria-label="Open ${map.caption}" onclick="openLB('${map.image}','${map.caption.replace(/'/g, "\\'")}', this)">
+      <h2>Digital Atlas</h2>
+      <p>The CalCOFI ADCP Program produced a decade of shipboard acoustic Doppler current profiling of upper-ocean currents off southern and central California on the quarterly CalCOFI cruises. The Digital Atlas presents plots at two standard depths and applies objective mapping to produce a velocity streamfunction consistent with geostrophy (Chereskin and Trunnell, 1996; Chereskin, 2008).</p>
+      <p>Browse the original objective-analysis figures by year and cruise below. Graphical images may be used in publications, websites, and presentations with the credit line “From the CalCOFI ADCP Digital Atlas.” Select a thumbnail to view the figure.</p>
+      ${years.map(year => `<div class="atlas-year"><h3>${year}</h3><div class="atlas-map-grid">
+        ${mapsByYear[year].map(cruise => `<div class="atlas-map-card"><span class="atlas-map-caption"><strong>${cruise.id}</strong></span>${cruise.maps.map(map => `<button type="button" class="atlas-map-open" aria-label="Open ${map.caption}" onclick="openLB('${map.image}','${map.caption.replace(/'/g, "\\'")}', this)">
           <img src="${map.image}" alt="${map.caption}" loading="lazy">
-        </button><span class="atlas-map-caption">${map.caption}<a href="${map.page}" target="_blank">Open Atlas cruise page ↗</a></span></div>`).join('')}
-      </div>
+          <span class="atlas-map-caption">${map.caption}</span>
+        </button>`).join('')}</div>`).join('')}
+      </div></div>`).join('')}
     </div>`;
 }
 

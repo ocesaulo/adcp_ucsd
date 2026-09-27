@@ -1643,7 +1643,7 @@ function buildProjectHTML(p) {
     <div class="sec-sub">${p.vessel} · ${p.region} · ${p.years}</div>
 
     ${measuredCount
-      ? `<div class="notice">📡 &nbsp;<span><strong>${measuredCount} of ${p.cruises.length} cruises</strong> draw their measured ship track: the positions of the ADCP ensembles that carry valid <em>u</em> and <em>v</em>, read straight from the CODAS databases. Click a track (or a table row) for that cruise's data coverage by depth bin. Tracks are shown only for cruises with processed ADCP data.</span></div>`
+      ? `<div class="notice">📡 &nbsp;<span><strong>${measuredCount} of ${p.cruises.length} cruises:</strong> Ship tracks are drawn based on the positions in the respective CODAS databases that correspond with valid velocity estimates. Click a track (or a table row) to see the cruise's data coverage by depth bin. Tracks are shown only for cruises with processed ADCP data.</span></div>`
       : `<div class="notice">⚠️ &nbsp;<span>Station positions shown are representative waypoints. Full cruise tracks are in the NCEI accession files. All coordinates from shipboard GPS integrated with CODAS3.</span></div>`}
 
     <!-- ── MAP ── -->

@@ -11805,16 +11805,32 @@
    "vessel": "R/V Atlantis, R/V Ka'imikai-o-Kanaloa, R/V Kilo Moana, R/V Marcus G. Langseth, R/V Melville, R/V Oceanus, R/V Point Sur, R/V Roger Revelle, NOAA Ship Ronald H. Brown, R/V Sally Ride, R/V Sikuliaq, R/V Thomas G. Thompson",
    "years": "2005–2023",
    "description": "Shipboard ADCP measurements of upper-ocean currents from cruises across the eastern Pacific in both hemispheres, processed under the NASA Ocean Surface Topography Science Team to examine submesoscale processes. The series reaches from the Chilean and Peruvian margins and the equatorial line to the California Current and the Oregon and Washington shelf, and includes the long transits that connect them.",
-   "project_description": "Submesoscale motions — fronts, filaments and eddies a few kilometres across — sit at the limit of what satellite altimetry can resolve, and shipboard ADCP sections are one of the few ways to measure them directly over a wide range of dynamical regimes. The cruises gathered here were processed together for that purpose: rather than one programme repeating one station grid, they are an opportunity sample of eastern Pacific cruises whose underway velocity data was reprocessed to a common standard. They span 54°S to 49°N and the eastern-boundary upwelling systems, the equatorial current system and the open subtropical gyre. The work was carried out for the NASA Ocean Surface Topography Science Team (OSTST) under awards NNX17AH53G and 80NSSC21K1822.",
+   "project_description": "Submesoscale and other fine-scale motions — including internal waves, fronts, filaments and eddies a few kilometres across — sit near the limit of what satellite altimetry can resolve, yet can drive substantial lateral exchange between coastal and open-ocean waters as well as vertical exchanges between the surface and deep ocean. Their velocities also typically have a significant ageostrophic components that altimetry alone cannot capture. Shipboard ADCP sections provide one of the few means of directly observing these motions across a wide range of dynamical regimes. The cruises assembled and processed here were selected to provide near-synoptic velocity sections, diverse sampling directions, and broad dynamical coverage across the eastern Pacific. Although many are opportunistic transit sections rather than repeated surveys, together they span 54°S to 49°N and sample eastern-boundary upwelling systems, the equatorial current system, and the open subtropical gyres.",
    "methods_text": "All cruises were processed with CODAS3 under UHDAS or its predecessors, with standard heading and phase calibration. Most carry more than one sonar — an Ocean Surveyor in both ping modes, often with a 300 kHz Workhorse alongside — and every database the cruise published is reported separately, so the depth reach and data return of each instrument can be read on its own. Twenty-two of the cruises were submitted to the Joint Archive for Shipboard ADCP and carry SAC ids; the rest were processed in house.",
-   "acknowledgments": "These data were collected aboard many vessels and processed by the Chereskin Lab at Scripps Institution of Oceanography, UCSD, and by the University of Hawaii Currents Group, with support from the NASA Ocean Surface Topography Science Team under awards NNX17AH53G and 80NSSC21K1822. The archived cruises were submitted through the Joint Archive for Shipboard ADCP, a collaboration of NOAA and the University of Hawaii Currents Group.",
+   "acknowledgments": "These data were collected aboard many vessels and processed by the Chereskin Lab at Scripps Institution of Oceanography, UCSD, and by the University of Hawaii Currents Group, with support from the NASA Ocean Surface Topography Science Team under awards NNX17AH53G, 80NSSC21K1822 and 80NSSC26K0415. The archived cruises were submitted through the Joint Archive for Shipboard ADCP, a collaboration of NOAA and the University of Hawaii Currents Group.",
    "map_center": [
     -2,
     -120
    ],
    "map_zoom": 3,
    "references": [],
-   "publications": [],
+    "publications": [
+     "Portner, E. J., J. M. Chavarry, <u>S. M. Soares</u>, and C. A. Choy (2026). Measurements of pelagic animal biomass exhibit depth-specific bias when trawl volumes are estimated without a flowmeter. <i>Mar. Biol.</i>, <b>173</b>, 144. <a href=\"https://doi.org/10.1007/s00227-026-04880-z\" target=\"_blank\">doi:10.1007/s00227-026-04880-z</a>.",
+     "<u>Soares, S. M.</u>, <u>S. T. Gille</u>, <u>T. K. Chereskin</u>, E. Firing, <u>J. Hummon</u>, and C. B. Rocha (2022). Transition from balanced to unbalanced motion in the eastern tropical Pacific. <i>J. Phys. Oceanogr.</i>, <b>52</b>, 1775–1795. <a href=\"https://doi.org/10.1175/JPO-D-21-0139.1\" target=\"_blank\">doi:10.1175/JPO-D-21-0139.1</a>.",
+     "<u>Soares, S. M.</u>, <u>S. T. Gille</u>, <u>T. K. Chereskin</u>, and M. Passaro (2025). The sea surface height spectrum of internal waves. <i>J. Geophys. Res. – Oceans</i>, <b>130</b>, e2025JC023104. <a href=\"https://doi.org/10.1029/2025JC023104\" target=\"_blank\">doi:10.1029/2025JC023104</a>."
+    ],
+    "derived_data_products": [
+     {
+      "authors": "Soares, Saulo M.; Chereskin, Teresa K.; Gille, Sarah T.",
+      "year": "2022",
+      "title": "Underway Shipboard Acoustic Doppler Current Profiler (SADCP) Data Archive",
+      "publisher": "UC San Diego Library Digital Collections",
+      "doi": "10.6075/J0FJ2GZ3",
+      "url": "https://doi.org/10.6075/J0FJ2GZ3",
+      "image_url": "https://library.ucsd.edu/assets/dams/collections/img/bb8166851w.jpg",
+      "image_alt": "Cover image for the Underway Shipboard Acoustic Doppler Current Profiler (SADCP) Data Archive"
+     }
+    ],
    "other_links": [
     {
      "label": "Joint Archive for Shipboard ADCP",

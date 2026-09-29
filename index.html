@@ -463,6 +463,12 @@ button.lnk-plots { background: var(--white); cursor: pointer; font-family: var(-
 .ref-list { list-style: none; }
 .ref-list li { font-size: 13px; color: var(--muted); padding: .6rem 0; border-bottom: 1px solid var(--border); line-height: 1.6; }
 .ref-list li:last-child { border-bottom: none; }
+.derived-product { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 1.25rem; }
+.derived-product-citation { flex: 1 1 280px; margin: 0; font-size: 13px; color: var(--muted); line-height: 1.6; }
+.derived-product-figure { flex: 0 1 190px; margin: 0; text-align: center; }
+.derived-product-figure a { display: block; border: 1px solid var(--border-ui); }
+.derived-product-figure img { display: block; width: 100%; height: auto; }
+.derived-product-figure figcaption { margin-top: 6px; font-size: 11px; color: var(--light); line-height: 1.4; }
 
 /* ─── NOTICE ─── */
 .notice { display: flex; align-items: flex-start; gap: 12px; background: var(--accent-pale); border: 1px solid #f0d5b0; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 2rem; font-size: 13px; color: #7a4e1a; line-height: 1.6; }
@@ -1142,6 +1148,21 @@ const EMBEDDED_DATA = {
       methods_text: "Processed with CODAS3 under UHDAS. Most cruises carry more than one sonar.",
       map_center: [-2, -120], map_zoom: 3,
       references: [],
+      publications: [
+        'Portner, E. J., J. M. Chavarry, <u>S. M. Soares</u>, and C. A. Choy (2026). Measurements of pelagic animal biomass exhibit depth-specific bias when trawl volumes are estimated without a flowmeter. <i>Mar. Biol.</i>, <b>173</b>, 144. <a href="https://doi.org/10.1007/s00227-026-04880-z" target="_blank">doi:10.1007/s00227-026-04880-z</a>.',
+        '<u>Soares, S. M.</u>, <u>S. T. Gille</u>, <u>T. K. Chereskin</u>, E. Firing, <u>J. Hummon</u>, and C. B. Rocha (2022). Transition from balanced to unbalanced motion in the eastern tropical Pacific. <i>J. Phys. Oceanogr.</i>, <b>52</b>, 1775–1795. <a href="https://doi.org/10.1175/JPO-D-21-0139.1" target="_blank">doi:10.1175/JPO-D-21-0139.1</a>.',
+        '<u>Soares, S. M.</u>, <u>S. T. Gille</u>, <u>T. K. Chereskin</u>, and M. Passaro (2025). The sea surface height spectrum of internal waves. <i>J. Geophys. Res. – Oceans</i>, <b>130</b>, e2025JC023104. <a href="https://doi.org/10.1029/2025JC023104" target="_blank">doi:10.1029/2025JC023104</a>.'
+      ],
+      derived_data_products: [{
+        authors: 'Soares, Saulo M.; Chereskin, Teresa K.; Gille, Sarah T.',
+        year: '2022',
+        title: 'Underway Shipboard Acoustic Doppler Current Profiler (SADCP) Data Archive',
+        publisher: 'UC San Diego Library Digital Collections',
+        doi: '10.6075/J0FJ2GZ3',
+        url: 'https://doi.org/10.6075/J0FJ2GZ3',
+        image_url: 'https://library.ucsd.edu/assets/dams/collections/img/bb8166851w.jpg',
+        image_alt: 'Cover image for the Underway Shipboard Acoustic Doppler Current Profiler (SADCP) Data Archive'
+      }],
       cruises: [
         { id:"AT26_26", dates:"Jan 2015", ship:"R/V Atlantis", region:"SE Pacific", sonar:"OS75NB", instrument:"RDI Ocean Surveyor 75 kHz narrowband", status:"archived",
           ncei_url:"https://www.ncei.noaa.gov/archive/accession/0309821", jasadcp_url:"https://uhslc.soest.hawaii.edu/sadcp/DATABASE/02499.html", plots_url:null,
@@ -1886,6 +1907,18 @@ function buildProjectHTML(p) {
       <h2>Publications</h2>
       <ul class="ref-list">${(p.publications || []).map(pub => `<li>${pub}</li>`).join('')}</ul>
     </div>
+    ${(p.derived_data_products || []).length ? `
+    <div class="info-panel">
+      <h2>Derived Data Products</h2>
+      ${p.derived_data_products.map(product => `
+      <div class="derived-product">
+        <p class="derived-product-citation">${product.authors} (${product.year}). <a href="${product.url}" target="_blank">${product.title}</a>. ${product.publisher}. DOI: <a href="${product.url}" target="_blank">${product.doi}</a>.</p>
+        <figure class="derived-product-figure">
+          <a href="${product.url}" target="_blank"><img src="${product.image_url}" alt="${product.image_alt}" loading="lazy"></a>
+          <figcaption>${product.publisher}</figcaption>
+        </figure>
+      </div>`).join('')}
+    </div>` : ''}
     ${(p.other_group_publications || []).length ? `
     <div class="info-panel">
       <h2>Publications by Other Groups Using These Data</h2>

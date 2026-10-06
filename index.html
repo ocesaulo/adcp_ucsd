@@ -1203,7 +1203,7 @@ const EMBEDDED_DATA = {
           stations:[], images:[] },
         { id:"TN265", dates:"May\u2013Jun 2011", ship:"R/V Thomas G. Thompson", region:"Oregon & Washington margin", sonar:"OS75BB + OS75NB", instrument:"RDI Ocean Surveyor 75 kHz broadband + RDI Ocean Surveyor 75 kHz narrowband", status:"nav_only",
           ncei_url:null, jasadcp_url:null, plots_url:null,
-          notes:"Navigation only. The ship track survives in the processing directories (os75bb, os75nb) but the CODAS velocity databases have not been located in any repository, so there is no depth coverage to report and the track drawn here is the raw navigation rather than the valid-velocity ensembles used for the rest of the series. 8,700 km of track over 26 days, 40.3\u00b0N\u201349.1\u00b0N and 127.0\u00b0W\u2013122.4\u00b0W. Not in the JASADCP inventory and not at NCEI.",
+          notes:"Navigation only. The CODAS velocity databases not available, so the track drawn here is from the raw navigation feed. 8,700 km of track over 26 days, 40.3\u00b0N\u201349.1\u00b0N and 127.0\u00b0W\u2013122.4\u00b0W. Not in the JASADCP inventory and not at NCEI.",
           track:[[47.72, -122.42], [47.88, -125.67], [47.99, -126.09], [46.25, -126.36], [46.82, -125.43], [47.87, -125.14], [46.36, -124.75], [48.45, -125.77], [44.59, -124.48], [41.15, -124.42], [44.17, -125.51], [45.94, -124.39], [46.82, -126.28], [48.72, -126.49]],
           stations:[], images:[] }
       ]
@@ -1809,7 +1809,6 @@ function buildProjectHTML(p) {
         <span><b>Processed</b> — data has been processed, has not yet been submitted for archival and is available in house upon request</span>
         <span><b>In review</b> — data processing is complete pending final manual review</span>
         <span><b>Pending</b> — data processing ongoing or queued for processing</span>
-        <span><b>Navigation only</b> — the ship track survives, but the processed velocity data has not been located</span>
       </div>
       <div class="tbl-filters">
         <input class="f-input" id="f-input-${p.id}" type="search"

@@ -5431,7 +5431,8 @@
       "In NOTES column: dx,dy=x,y - the dx=x and dy=y correction to navigation applied to database",
       "Column \"nb150 calc'd dx,dy,sig \" - the nb150 calculated dx,dy,signal after time-angle file and calibration was applied to the nb150 database. Used for tracking purposes",
       "Column \"os38nb calc'd dx,dy \" - the os38nb calculated dx,dy,signal after time-angle file and calibration was applied to the os38nb database. Used for tracking purposes",
-      "UnixID note: although the UNIXID time stamp is off by 30 seconds in the lg1612 gpsnav files, codas processing does not use it. It uses the GPGGA time stamp."
+    "UnixID note: although the UNIXID time stamp is off by 30 seconds in the lg1612 gpsnav files, codas processing does not use it. It uses the GPGGA time stamp.",
+    "The codes above were used for in-house bookkeeping and software and hardware version control."
      ]
     },
     {

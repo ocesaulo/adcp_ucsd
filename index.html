@@ -173,6 +173,8 @@ nav a.active { background: var(--teal); color: #fff; }
 .pm { font-size: 12px; color: var(--light); }
 .pm strong { display: block; color: var(--text); font-weight: 600; }
 .proj-foot { padding: .75rem 1.5rem; border-top: 1px solid var(--border); background: var(--sand); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--muted); }
+#project-cards .proj-card { display: flex; flex-direction: column; height: 100%; }
+#project-cards .proj-body { flex: 1; }
 
 /* ─── PROJECT CARD MEDIA (harvested header photos) ─── */
 .proj-card-media { position: relative; height: 150px; overflow: hidden; background: var(--sand); }
@@ -186,8 +188,12 @@ nav a.active { background: var(--teal); color: #fff; }
 .proj-card-media .pcm-logo img { width: auto; height: 50px; object-fit: contain; }
 
 /* ─── PROJECT HERO BANNER (harvested cruise photo + logo) ─── */
-.proj-hero { position: relative; border-radius: 14px; overflow: hidden; margin-bottom: 1.5rem; height: 210px; }
-.proj-hero img.ph-bg { width: 100%; height: 100%; object-fit: cover; display: block; }
+.proj-hero { position: relative; border-radius: 14px; overflow: hidden; margin-bottom: 1.5rem; height: 280px; }
+.proj-hero--panorama { height: 210px; }
+.proj-hero img.ph-bg { width: 100%; height: 100%; object-fit: cover; object-position: center center; display: block; }
+.proj-hero--antarctic img.ph-bg { object-position: center 85%; }
+.proj-hero--epac img.ph-bg { object-position: center 69%; }
+/* .proj-hero--full-photo img.ph-bg { object-fit: fill; } */
 .proj-hero-overlay {
   position: absolute; inset: 0; display: flex; align-items: flex-end;
   padding: 1.5rem 2rem; background: linear-gradient(180deg, rgba(11,34,64,0) 35%, rgba(11,34,64,.82) 100%);
@@ -556,6 +562,8 @@ footer a:hover { color: #fff; }
 .cal-legend dt { font-family: var(--mono); font-weight: 500; color: var(--navy); }
 .cal-legend dd { color: var(--muted); line-height: 1.5; }
 .cal-legend .lg-note { font-size: 12.5px; color: var(--muted); line-height: 1.6; margin-top: .6rem; }
+.docs-code { margin: .5rem 0 .75rem; padding: .8rem 1rem; overflow-x: auto; border-radius: 6px; background: var(--navy); color: #fff; font: 12.5px/1.6 var(--mono); }
+.docs-code code { color: inherit; }
 .cal-sn { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
 .cal-sn-card { border: 1px solid var(--border); border-radius: 10px; padding: .9rem 1rem; background: var(--white); }
 .cal-sn-card h4 { font-family: var(--mono); font-size: 13px; color: var(--navy); margin-bottom: .5rem; }
@@ -727,7 +735,7 @@ button.lnk-track:hover { background: var(--teal); color: #fff; }
     <div class="hero">
       <div class="hero-label">Shipboard ADCP Research Data</div>
       <h1>Upper Ocean Current Measurements from Research Cruises</h1>
-      <p>Processed acoustic Doppler current profiler data from the Chereskin Lab at Scripps Institution of Oceanography — collected aboard research vessels in the Southern Ocean and California Current System.</p>
+      <p>Processed acoustic Doppler current profiler data from the Chereskin Lab at Scripps Institution of Oceanography — collected aboard research vessels in the Southern and Eastern Pacific Oceans and the California Current System.</p>
       <div class="hero-btns" id="hero-btns">
         <!-- filled by JS -->
       </div>
@@ -780,15 +788,15 @@ button.lnk-track:hover { background: var(--teal); color: #fff; }
 
     <div class="info-panel">
       <h2>Instrumentation</h2>
-      <p>Shipboard ADCP data were collected with RD Instruments narrowband (NB, 150 kHz) and broadband (BB, 150 kHz) instruments. The transducer was mounted in the ship's hull, pinging continuously during transit and on-station periods. Data were recorded at 2-minute ensemble intervals with 8 m depth bins.</p>
-      <p>Navigation data were integrated from shipboard GPS and from the PHINS/Octans gyrocompass systems depending on cruise year. Heading corrections were applied using the Firing et al. (1995) calibration procedure based on GPS velocity.</p>
+      <p>Shipboard ADCP data were collected using a number of different ADCP models, all manufactured by Teledyne RD Instruments (RDI). Older cruise data were collected with the original RDI narrowband (NB) ADCP and, less frequently, the RDI broadband (BB) ADCP. More recent cruise data were collected with the RDI Ocean Surveyor (OS), an ADCP capable of sampling in narrowband, broadband, or interleaved mode. The most common acoustic frequencies were 300 kHz, 150 kHz, 75 kHz, and 38 kHz. As a general rule, the higher the ADCP frequency, the shorter the vertical range but the finer the vertical resolution. The maximum sampling rate was about once per second. When a ship had more than one ADCP in operation, sampling was configured to avoid acoustic interference, resulting in a somewhat slower ping rate for each instrument.</p>
+      <p>ADCP transducers are normally mounted in acoustic wells located in the ship's hull. There is often an acoustic window to protect the instrument and deflect bubbles. The well is usually filled with either seawater or fresh water; the main exception is for icebreakers, where an antifreeze solution is used.</p>
+      <p>Older recorded datasets often consist of short-term averaged data, typically 1 to 5 minute averages, due to the speed and space limitations of the older computers used for data acquisition. More recent datasets were processed using the raw data at the sampled rate.</p>
+      <p>Ancillary sensors provided the position and heading measurements required to compute absolute ocean currents from the ADCP-measured ship-relative velocity. ADCP navigation data were recorded from shipboard GPS positions and from a variety of heading sensors, such as the ship's gyrocompass and high-accuracy GPS heading sensors. Common manufacturers include Ashtech, Seapath, and PHINS/Octans, depending on the ship and cruise year.</p>
     </div>
 
     <div class="info-panel">
       <h2>Data Processing — CODAS3</h2>
-      <p>All data were processed using <strong>CODAS3</strong> (Common Ocean Data Access System version 3), developed by E. Firing at the University of Hawaii. Standard processing steps:</p>
-      <p><strong>1.</strong> Navigation smoothing and heading calibration via GPS ship velocity. <strong>2.</strong> Water-tracking mode; bottom-tracking correction when available. <strong>3.</strong> Outlier editing and ensemble averaging. <strong>4.</strong> Absolute velocity referencing via GPS. <strong>5.</strong> Echo intensity profiling for bin quality assessment.</p>
-      <p>Calibration constants (amplitude A and phase φ) were determined from dedicated calibration runs and applied to correct for transducer misalignment.</p>
+      <p>All data were processed using <a href="https://currents.soest.hawaii.edu/docs/adcp_doc/codas_doc/index.html" target="_blank">CODAS3</a> (Common Ocean Data Access System version 3), developed by E. Firing at the University of Hawaii. Single-ping editing, vector averaging, screening and application of heading corrections, addition of the ship's velocity, and outlier editing and ensemble averaging were applied sequentially to the ADCP velocities to yield absolute ocean currents. Quality assessment used additional parameters such as percent-good pings per ensemble and echo intensity.</p>
       <div id="docs-methods-by-project"><!-- filled by JS: per-project processing methods --></div>
     </div>
 
@@ -799,8 +807,11 @@ button.lnk-track:hover { background: var(--teal); color: #fff; }
 
     <div class="info-panel">
       <h2>Available File Formats</h2>
-      <p><strong>CODAS3 binary</strong> — native format, readable with the <code>pycurrents</code> Python package (UH Currents Group). <strong>NetCDF (.nc)</strong> — CF-convention compliant, one file per cruise. <strong>ASCII/CSV</strong> — tabular text of ensemble-averaged profiles. <strong>MATLAB (.mat)</strong> — available on request.</p>
-      <p>Python reading example: <code>from pycurrents.data.navcalc import lonlat_inside_km</code> — see the <a href="https://currents.soest.hawaii.edu/home/software/" target="_blank">UH CODAS documentation</a> for full API details.</p>
+      <p><strong>CODAS3 binary</strong> — native format, readable with the <code>pycurrents</code> Python package (UH Currents Group). <strong>NetCDF (.nc)</strong> — CF-convention compliant, one file per cruise. <strong>ASCII/CSV</strong> — tabular text of ensemble-averaged profiles; may be available on request. <strong>MATLAB (.mat)</strong> — may be available on request.</p>
+      <p>To read a CODAS database with Python, install CODAS and <code>pycurrents</code>, then use:</p>
+      <pre class="docs-code"><code>from pycurrents.codas import get_profiles&#10;&#10;db = 'PATH_TO_CODAS_DB'&#10;data = get_profiles(db)</code></pre>
+      <p>For workflows with multiple CODAS databases or their NetCDF files, consider <a href="https://github.com/ocesaulo/pysadcp" target="_blank">pysadcp</a>.</p>
+      <p>See the <a href="https://currents.soest.hawaii.edu/docs/adcp_doc/" target="_blank">UH CODAS and UHDAS documentation</a> for installation and full API details.</p>
     </div>
 
     <div class="info-panel">
@@ -1060,11 +1071,16 @@ const EMBEDDED_DATA = {
       id: "antarctic", name: "Antarctic — Laurence M. Gould", short_name: "Antarctic LMG",
       region: "Southern Ocean", color: "#0e8c7a", color_light: "#e0f4f1",
       vessel: "ARSV Laurence M. Gould", years: "2004–2010",
-      logo: "branding/lmgould_logo.png", header_image: "branding/lmgould_header.jpg", header_credit: "Neumayer Channel, Antarctic Peninsula",
+      logo: "branding/lmgould_logo.png", header_image: "branding/LMG_and_penguins_at_Petermann.jpeg", header_credit: "R/V Gould at Petermann Island, Antarctic Peninsula — photo by Teresa Chereskin",
       illustration_image: "branding/lmgould_sticker.png", illustration_credit: "LMG ADCP program sticker, Chereskin Lab",
       description: "Shipboard ADCP data from the ARSV Laurence M. Gould in Drake Passage and the Antarctic Peninsula region.",
       project_description: "Shipboard ADCP data from the ARSV Laurence M. Gould in Drake Passage and the Antarctic Peninsula region.",
-      methods_text: "Processed with CODAS3. RDI 150 kHz NB instrument, hull-mounted.",
+      methods_text: `Early cruises used the RDI acquisition program DAS248 and collected data from an RDI 150 kHz narrowband ADCP. With the addition of a 38 kHz Ocean Surveyor in November 2004 (LMG0413A), the <a href="https://currents.soest.hawaii.edu/docs/adcp_doc/UHDAS_OPERATIONS/index.html" target="_blank">UHDAS acquisition software</a>, developed by E. Firing, was used to control data acquisition from both sonars and record data from ancillary navigation devices.
+
+    Data from all cruises were processed using CODAS3 with standard heading calibration procedures. Bottom tracking was available in shallow water over the South American continental shelf and near the Antarctic Peninsula. Speed of sound at the transducer was measured by a sound velocity probe mounted in the transducer well. Navigation corrections were determined from GPS position and heading measurements and applied in post-processing. Data were quality-controlled using percent-good pings, error velocity, and echo intensity. All final processed cruise data are archived at <a href="https://www.ncei.noaa.gov/products/global-ocean-currents-database-gocd" target="_blank">NOAA/NCEI</a>. Processed cruise data from 1998–2018 can also be found at the <a href="https://uhslc.soest.hawaii.edu/sadcp/" target="_blank">Joint Archive for Shipboard ADCP (JASADCP)</a>.
+
+    Funding for this data was provided by NSF Polar Programs (<a href="#acknowledgments-antarctic" onclick="showProject('antarctic'); setTimeout(() => document.getElementById('acknowledgments-antarctic').scrollIntoView({block:'start'}), 150); return false;">LMG Antarctic acknowledgements</a>).`,
+      acknowledgments: "The collection, processing and dissemination of these data was carried out by the Chereskin Lab at Scripps Institution of Oceanography, UCSD with support from NSF awards 9816226, 0338103, 0636493, 0838750, 1341431, 1542902, and 2001646. Eric Firing and Jules Hummon at the University of Hawaii provide critical support for the data acquisition and processing of these ADCP data through the development and maintenance of the UHDAS and CODAS software.",
       map_center: [-61, -61], map_zoom: 5,
       references: ["Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619–22629."],
       cruises: [
@@ -1107,7 +1123,11 @@ const EMBEDDED_DATA = {
       illustration_image: "branding/calcofi_illustration.jpg", illustration_credit: "Objectively mapped 100 m velocity, cruise NH9310",
       description: "The California Current System (CCS) comprises multiple currents. The California Current is the eastern limb of the North Pacific subtropical gyre, and it carries cool, fresh subarctic water equatorward. It is opposed by the California Undercurrent, carrying tropical water poleward. Seasonally-varying currents are observed near the coast as well as eddies and filaments that carry water offshore. Due to the great economic and environmental importance of the CCS, the California Cooperative Oceanic Fisheries Investigations (CalCOFI) began collecting routine measurements in 1949. The scope of the sampling has been redefined several times, but since 1984 six transect lines off southern California have been occupied quarterly. ADCP sampling on CalCOFI cruises began in 1993.",
       project_description: "The California Current System (CCS) comprises multiple currents. The California Current is the eastern limb of the North Pacific subtropical gyre, and it carries cool, fresh subarctic water equatorward. It is opposed by the California Undercurrent, carrying tropical water poleward. Seasonally-varying currents are observed near the coast as well as eddies and filaments that carry water offshore. Due to the great economic and environmental importance of the CCS, the California Cooperative Oceanic Fisheries Investigations (CalCOFI) began collecting routine measurements in 1949. The scope of the sampling has been redefined several times, but since 1984 six transect lines off southern California have been occupied quarterly. ADCP sampling on CalCOFI cruises began in 1993.\n\nBecause the grid is reoccupied four times a year on fixed lines, the velocity sections stack into a record long enough to separate the seasonal cycle from interannual signals \u2014 highlighting the 1997\u201398 El Ni\u00f1o as well as the warm anomaly of 2014\u201316. Current information can be read alongside the hydrography, nutrients and plankton collected for seventy years at the same stations. The first decade of the record, 1993\u20132004, was mapped objectively to produce velocity streamfunctions consistent with geostrophy and published as the CalCOFI ADCP Digital Atlas (Chereskin and Trunnell, 1996; Chereskin, 2008); the 2017-onwards cruises have been processed by the UH ADCP group or by Saulo Soares at SIO/UCSD and include up to three sonars each, reaching past 1,000 m in locations where the 38 kHz Ocean Surveyor is available.",
-      methods_text: "The 1993\u20132009 cruises were measured with a hull-mounted RDI 150 kHz narrowband ADCP and processed with CODAS3; all forty were submitted to the Joint Archive for Shipboard ADCP and are archived at NOAA/NCEI. Objective mapping was applied to the 1993\u20132004 cruises to produce velocity streamfunctions consistent with geostrophy, which is what the CalCOFI ADCP Digital Atlas publishes at 50 m and 100 m. The 2017-onwards cruises were logged with UHDAS and processed with CODAS in house: an Ocean Surveyor 75 kHz on the NOAA ships, and an Ocean Surveyor 38 kHz, an Ocean Surveyor 150 kHz and a Workhorse 300 kHz together on R/V Sally Ride, the three sonars covering the water column from about 10 m to beyond 1,000 m.",
+      methods_text: `The 1993–2009 cruises were carried out on the New Horizon, David Starr Jordan, and the Roger Revelle (one cruise) using the RDI acquisition program DAS248. Ocean currents were measured with a hull-mounted RDI 150 kHz narrowband ADCP and processed in house with CODAS3; all forty cruise datasets can be found at the <a href="https://uhslc.soest.hawaii.edu/sadcp/" target="_blank">Joint Archive for Shipboard ADCP (JASADCP)</a> and at <a href="https://www.ncei.noaa.gov/products/global-ocean-currents-database-gocd" target="_blank">NOAA/NCEI</a>.
+
+    Objective mapping was applied to the 1993–2004 cruises to produce velocity streamfunctions consistent with geostrophy. The CalCOFI ADCP Digital Atlas provides maps of geostrophic streamfunction overlain with velocity at depths of 50 m and 100 m (Chereskin and Trunnell, JGR, 1996).
+
+    The 2017-onwards cruises were logged with UHDAS and processed with CODAS in house: an Ocean Surveyor 75 kHz on the NOAA ships, and an Ocean Surveyor 38 kHz, an Ocean Surveyor 150 kHz, and a Workhorse 300 kHz together on R/V Sally Ride, the three sonars covering the water column from about 10 m to beyond 1,000 m.`,
       map_center: [34.5, -121.5], map_zoom: 6,
       plots_link_label: "Atlas",
       references: ["Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619\u201322629.", "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography."],
@@ -1140,9 +1160,11 @@ const EMBEDDED_DATA = {
       ]
     },
     {
-      id: "epac", name: "Eastern Pacific \u2014 submesoscale process cruises", short_name: "Eastern Pacific",
+      id: "epac", name: "Eastern Pacific \u2014 submesoscale motions cruises", short_name: "Eastern Pacific",
       region: "Eastern Pacific", color: "#a8447f", color_light: "#f6ecf2",
       vessel: "R/V Atlantis, R/V Thomas G. Thompson, R/V Sally Ride", years: "2005\u20132023",
+      header_image: "branding/P1010832.JPG",
+      header_credit: "R/V Ka'imimoana working on the TAO buoy array in the eastern equatorial Pacific, 2010. Photo by Saulo Soares.",
       description: "Shipboard ADCP measurements of upper-ocean currents from eastern Pacific cruises in both hemispheres, processed under a NASA project examining submesoscale processes.",
       project_description: "Eastern Pacific cruises whose underway velocity data was reprocessed to a common standard, spanning 54\u00b0S to 49\u00b0N.",
       methods_text: "Processed with CODAS3 under UHDAS. Most cruises carry more than one sonar.",
@@ -1282,7 +1304,9 @@ function initSite() {
   if (dm) {
     s.projects.forEach(p => {
       // nested inside the "Data Processing — CODAS3" panel, whose heading is h2
-      dm.innerHTML += `<h3 style="margin-top:1rem">${p.short_name}</h3><p>${p.methods_text}</p>`;
+      const methodParagraphs = String(p.methods_text || '').split(/\n\n+/)
+        .map(paragraph => `<p>${paragraph}</p>`).join('');
+      dm.innerHTML += `<h3 style="margin-top:1rem">${p.short_name}</h3>${methodParagraphs}`;
     });
   }
 
@@ -1649,7 +1673,7 @@ function buildProjectHTML(p) {
     </div>
 
     ${p.header_image ? `
-    <div class="proj-hero">
+    <div class="proj-hero proj-hero--${p.id}${p.id === 'calcofi' ? ' proj-hero--panorama' : ''}${p.id === 'antarctic' ? ' proj-hero--full-photo' : ''}">
       <img class="ph-bg" src="images/${p.header_image}" alt="${p.name}">
       ${p.logo ? `<div class="proj-hero-logo"><img src="images/${p.logo}" alt="${p.short_name} logo"></div>` : ''}
       <div class="proj-hero-overlay">
@@ -1781,7 +1805,7 @@ function buildProjectHTML(p) {
       </div>
       <div class="status-caption" aria-label="Cruise status definitions">
         <span><b>Archived</b> — data has been archived in long term repository</span>
-        <span><b>Submitted</b> — data has been submitted to repository for long term archival</span>
+        <span><b>Submitted</b> — data has been submitted to the long-term archival repository</span>
         <span><b>Processed</b> — data has been processed, has not yet been submitted for archival and is available in house upon request</span>
         <span><b>In review</b> — data processing is complete pending final manual review</span>
         <span><b>Pending</b> — data processing ongoing or queued for processing</span>
@@ -1891,13 +1915,13 @@ function buildProjectHTML(p) {
       <h2>Project Description</h2>
       ${projectDescription(p.project_description)}
     </div>
-    <div class="info-panel">
+    <div class="info-panel" id="acknowledgments-${p.id}">
       <h2>Acknowledgments</h2>
       ${p.illustration_image && p.id !== 'calcofi' ? `
       <div class="info-panel-media">
         <div class="ipm-text"><p>${p.acknowledgments}</p></div>
         <div class="ipm-img">
-          <img src="images/${p.illustration_image}" alt="${p.short_name} illustration" loading="lazy">
+          <img src="images/${p.illustration_image}" alt="${p.illustration_alt || `${p.short_name} illustration`}" loading="lazy">
           ${p.illustration_credit ? `<div class="ipm-credit">${p.illustration_credit}</div>` : ''}
         </div>
       </div>` : `<p>${p.acknowledgments}</p>`}

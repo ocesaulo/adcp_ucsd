@@ -12,10 +12,12 @@ build images; it preserves the static assets that the website displays.
 
 import argparse
 import json
+import re
 import shutil
 import subprocess
 import sys
 from pathlib import Path, PurePosixPath
+from urllib.parse import urlsplit
 
 
 DATA_FILES = {
@@ -56,6 +58,21 @@ def collect_image_references(root):
         for cruise in project.get("cruises", []):
             for image in cruise.get("images", []):
                 add_image_reference(references, image.get("filename"))
+            if project.get("id") == "calcofi":
+                url_path = urlsplit(cruise.get("plots_url") or "").path
+                match = re.search(r"/calcofi/(.+)/([^/]+)\.html?$", url_path, re.IGNORECASE)
+                if match:
+                    directory = PurePosixPath(match.group(1))
+                    if directory.is_absolute() or ".." in directory.parts:
+                        raise ValueError("Unsafe CalCOFI plots_url: " + cruise["plots_url"])
+                    stem = match.group(2).lower()
+                    for depth in (50, 100):
+                        add_image_reference(
+                            references,
+                            "calcofi-atlas/{}/{}_{}_oa.jpg".format(
+                                directory.as_posix(), stem, depth
+                            ),
+                        )
 
     for name in (
         "antarctic_webpy_gallery.json",

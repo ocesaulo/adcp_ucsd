@@ -10,6 +10,8 @@ images/*
 !images/calcofi-webpy/**
 !images/epac-webpy/
 !images/epac-webpy/**
+!images/calcofi-atlas/
+!images/calcofi-atlas/**
 !images/branding/
 !images/branding/**
 

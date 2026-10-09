@@ -41,7 +41,7 @@
   "original_site_url": "https://adcp.ucsd.edu",
   "jasadcp_url": "https://uhslc.soest.hawaii.edu/sadcp/",
   "ncei_search_base": "https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=",
-  "citation": "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography, UC San Diego. http://adcp.ucsd.edu/calcofi",
+    "citation": "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography, UC San Diego.",
   "footer_note": "Data archived at NCEI / NOAA. Processing via CODAS3."
  },
  "projects": [
@@ -69,10 +69,9 @@
    ],
    "map_zoom": 5,
    "map_default_year": "2000",
-   "references": [
-    "Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619–22629.",
-    "Lenn, Y.-D., Chereskin, T.K., Sprintall, J. and McClean, J.L. (2011). Near-surface eddy heat and momentum fluxes in the Antarctic Circumpolar Current in Drake Passage. J. Phys. Oceanogr., 41, 1385–1407."
-   ],
+    "references": [
+     "Firing, E., Hummon, J. M., and Chereskin, T. K., 2012. Improving the quality and accessibility of current profile measurements in the Southern Ocean, Oceanography, 25(3):164-165. DOI: 10.5670/oceanog.2012.91"
+    ],
    "publications": [
     "Lenn, Y.-D., T. K. Chereskin, and R. C. Glatts, 2003. Seasonal to tidal variability in currents, stratification, and acoustic backscatter in an Antarctic ecosystem at Deception Island. Deep-Sea Res. II, 50, 1665–1684.",
     "Lenn, Y.-D., T. K. Chereskin, J. Sprintall, and E. Firing, 2007. Mean Jets, Mesoscale Variability and Eddy Momentum Fluxes in the Surface Layer of the Antarctic Circumpolar Current in Drake Passage, J. Mar. Res., 65, 27-58. DOI: 10.1357/002224007780388694",
@@ -9731,10 +9730,7 @@
    "map_zoom": 6,
    "map_default_year": "2000",
    "plots_link_label": "Atlas",
-   "references": [
-    "Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic flow in the California Current. J. Geophys. Res., 101, 22619–22629.",
-    "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography."
-   ],
+    "references": [],
     "publications": [
      "Chereskin, T.K., and M. Trunnell. Correlation Scales, Objective Mapping, and Absolute Geostrophic Flow in the California Current. Journal of Geophysical Research, 101: 22619-22629. (1996)",
      "Bograd, S.J., T.K. Chereskin, and D. Roemmich. Transport of mass, heat, salt, and nutrients in the southern California Current System: Annual cycle and interannual variability. Journal of Geophysical Research, 106, 9255-9275. American Geophysical Union. (2001)",
@@ -9742,7 +9738,7 @@
      "Taylor, C.A., W. Watson, T.K. Chereskin, J. Hyde, and R. Vetter. Retention in larval rockfishes, Sebastes, near natal habitat, in the Southern California Bight, as indicated by molecular identification methods. Calif. Coop. Oceanic Fish Invest. Rep., 45, 152-166. (2004)",
      "Gay, P.S., and T.K. Chereskin. Mean structure and seasonal variability of the poleward undercurrent off southern California. Journal of Geophysical Research, 114, C02007, doi:10.1029/2008JC004886. American Geophysical Union. (2009)",
      "Chereskin, T.K., C.B. Rocha, S.T. Gille, D. Menemenlis, and M. Passaro. Characterizing the transition from balanced to unbalanced motions in the southern California Current. Journal of Geophysical Research: Oceans, 124, 2088-2109, doi:10.1029/2018JC014583. American Geophysical Union. (2019)",
-     "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography. http://adcp.ucsd.edu/calcofi"
+    "Chereskin, T.K. (2008). <a href=\"#calcofi-digital-atlas\" onclick=\"document.getElementById('calcofi-digital-atlas').scrollIntoView({behavior:'smooth',block:'start'}); return false;\">CalCOFI ADCP Digital Atlas</a>. Scripps Institution of Oceanography."
     ],
    "other_links": [
     {
@@ -9756,10 +9752,6 @@
     {
      "label": "JASADCP CalCOFI inventory — every archived cruise and its SAC id",
      "url": "https://uhslc.soest.hawaii.edu/sadcp/INVNTORY/calcofi.html"
-    },
-    {
-     "label": "CalCOFI ADCP Digital Atlas (original portal)",
-     "url": "https://adcp.ucsd.edu/calcofi/"
     }
    ],
    "cruises": [

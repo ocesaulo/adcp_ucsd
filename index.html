@@ -1082,7 +1082,7 @@ const EMBEDDED_DATA = {
     Funding for this data was provided by NSF Polar Programs (<a href="#acknowledgments-antarctic" onclick="showProject('antarctic'); setTimeout(() => document.getElementById('acknowledgments-antarctic').scrollIntoView({block:'start'}), 150); return false;">LMG Antarctic acknowledgements</a>).`,
       acknowledgments: "The collection, processing and dissemination of these data was carried out by the Chereskin Lab at Scripps Institution of Oceanography, UCSD with support from NSF awards 9816226, 0338103, 0636493, 0838750, 1341431, 1542902, and 2001646. Eric Firing and Jules Hummon at the University of Hawaii provide critical support for the data acquisition and processing of these ADCP data through the development and maintenance of the UHDAS and CODAS software.",
       map_center: [-61, -61], map_zoom: 5,
-      references: ["Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619–22629."],
+      references: ["Firing, E., Hummon, J. M., and Chereskin, T. K., 2012. Improving the quality and accessibility of current profile measurements in the Southern Ocean, Oceanography, 25(3):164-165. DOI: 10.5670/oceanog.2012.91"],
       cruises: [
         { id:"LMG0402", dates:"Feb–Mar 2004", ship:"ARSV Laurence M. Gould", region:"Drake Passage", sonar:"NB150", instrument:"RDI 150 kHz NB", status:"processed",
           ncei_url:"https://www.ncei.noaa.gov/access/search/data-search/global-ocean-currents?text=LMG0402",
@@ -1130,7 +1130,7 @@ const EMBEDDED_DATA = {
     The 2017-onwards cruises were logged with UHDAS and processed with CODAS in house: an Ocean Surveyor 75 kHz on the NOAA ships, and an Ocean Surveyor 38 kHz, an Ocean Surveyor 150 kHz, and a Workhorse 300 kHz together on R/V Sally Ride, the three sonars covering the water column from about 10 m to beyond 1,000 m.`,
       map_center: [34.5, -121.5], map_zoom: 6,
       plots_link_label: "Atlas",
-      references: ["Chereskin, T.K. and Trunnell, M. (1996). Correlation scales, objective mapping, and absolute geostrophic velocity in the California Current. J. Geophys. Res., 101(C10), 22619\u201322629.", "Chereskin, T.K. (2008). CalCOFI ADCP Digital Atlas. Scripps Institution of Oceanography."],
+      references: [],
       cruises: [
         { id:"NH9310", dates:"Oct 1993", ship:"R/V New Horizon", region:"S. California", sonar:"NB150", instrument:"RDI 150 kHz narrowband", status:"archived",
           ncei_url:"https://www.ncei.noaa.gov/archive/accession/0049878", jasadcp_url:"https://uhslc.soest.hawaii.edu/sadcp/DATABASE/00410.html", plots_url:"https://adcp.ucsd.edu/calcofi/1993/nh9310/nh9310.htm",
@@ -1646,7 +1646,7 @@ function calcofiAtlasMaps(project) {
   const years = Object.keys(mapsByYear).sort();
   if (!years.length) return '';
   return `
-    <div class="info-panel">
+    <div class="info-panel" id="calcofi-digital-atlas">
       <h2>Digital Atlas</h2>
       <p>The CalCOFI ADCP Program produced a decade of shipboard acoustic Doppler current profiling of upper-ocean currents off southern and central California on the quarterly CalCOFI cruises. The Digital Atlas presents plots at two standard depths and applies objective mapping to produce a velocity streamfunction consistent with geostrophy (Chereskin and Trunnell, 1996; Chereskin, 2008).</p>
       <p>Browse the original objective-analysis figures by year and cruise below. Graphical images may be used in publications, websites, and presentations with the credit line “From the CalCOFI ADCP Digital Atlas.” Select a thumbnail to view the figure.</p>
